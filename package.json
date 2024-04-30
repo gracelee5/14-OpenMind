@@ -19,7 +19,11 @@
     "eject": "react-scripts eject",
     "postinstall": "husky install",
     "format": "prettier --cache --write .",
-    "lint": "eslint --cache ."
+    "lint": "eslint --cache .",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +49,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "prettier": "^3.2.5"
   }
 }
