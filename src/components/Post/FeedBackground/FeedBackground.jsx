@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import BgImg from '../../../images/background-img.svg';
 import logo from '../../../images/logo.svg';
@@ -8,8 +8,17 @@ import facebook from '../../../images/facebook-img.svg';
 import profile from '../../../images/profile-img.svg';
 import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
+import Modal from '../Modal/Modal';
 
 function FeedBackground() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleQuestionFormButtonClick = () => {
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
   return (
     <>
       <Header>
@@ -31,8 +40,11 @@ function FeedBackground() {
             아직 질문이 없습니다.
           </QuestionStatus>
         </PostContainer>
-        <QuestionFormButton>질문 작성하기</QuestionFormButton>
+        <QuestionFormButton onClick={handleQuestionFormButtonClick}>
+          질문 작성하기
+        </QuestionFormButton>
       </BodyContainer>
+      {openModal && <Modal onClose={handleCloseModal} />}
     </>
   );
 }
