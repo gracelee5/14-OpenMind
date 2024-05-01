@@ -9,6 +9,7 @@ import profile from '../../../images/profile-img.svg';
 import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
 import Modal from '../Modal/Modal';
+import { Link } from 'react-router-dom';
 
 function FeedBackground() {
   const [openModal, setOpenModal] = useState(false);
@@ -22,7 +23,9 @@ function FeedBackground() {
   return (
     <>
       <Header>
-        <Logo src={logo} />
+        <Link to='/'>
+          <Logo src={logo} />
+        </Link>
       </Header>
       <BodyContainer>
         <Section>
@@ -98,7 +101,6 @@ const UserName = styled.p`
 `;
 const LinkSection = styled.div`
   display: flex;
-  margin-top: -20px;
   gap: 8px;
 `;
 const ShareButton = styled.img`
