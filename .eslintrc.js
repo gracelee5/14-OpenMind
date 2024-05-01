@@ -27,5 +27,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['prettier'],
-  rules: {},
+  rules: {
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+  },
 };
