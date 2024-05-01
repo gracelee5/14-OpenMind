@@ -1,7 +1,11 @@
 import React from 'react';
-
+import ListHeader from './ListHeader';
 function ListPage() {
-  return <div></div>;
+  return (
+    <div>
+      <ListHeader />
+    </div>
+  );
 }
 
 export default ListPage;

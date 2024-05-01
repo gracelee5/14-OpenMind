@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenmindLogo from '../images/OpenmindLogo.png';
+import OpenmindLogo from '../images/logo.svg';
 import { Link } from 'react-router-dom';
 import AnswerButton from './AnswerButton';
 

@@ -17,7 +17,7 @@ function MainPage() {
 }
 export default MainPage;
 
-const Header = Styled.Header`
+const Header = Styled.header`
   width: 100%;
   display: flex; 
   margin: 0 auto;
@@ -25,7 +25,7 @@ const Header = Styled.Header`
 
   `;
 
-const Section = Styled.Section`
+const Section = Styled.section`
   width: 100%;
   display: flex;
   height: 627px;

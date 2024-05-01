@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FeedBackground from '../components/Post/FeedBackground/FeedBackground';
-import MainPage from '../pages/MainPage/MainPage';
+import MainPage from './MainPage/MainPage';
 import FeedCard from '../components/Post/FeedCard';
+import ListPage from '../components/ListPage';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path='/' element={<MainPage />} />
         <Route path='/post' element={<FeedBackground />} />
         <Route path='/post/id' element={<FeedCard />} />
+        <Route path='/list' element={<ListPage />} />
       </Routes>
     </Router>
   );
