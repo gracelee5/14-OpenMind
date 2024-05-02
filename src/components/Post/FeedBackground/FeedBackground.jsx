@@ -13,15 +13,7 @@ import { Link } from 'react-router-dom';
 import Toast from './Toast';
 
 function FeedBackground() {
-  const [openModal, setOpenModal] = useState(false);
   const [toast, setToast] = useState(false);
-
-  const handleQuestionFormButtonClick = () => {
-    setOpenModal(true);
-  };
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
 
   //Url 복사
   const currentUrl = window.location.href;
@@ -61,12 +53,11 @@ function FeedBackground() {
             아직 질문이 없습니다.
           </QuestionStatus>
         </PostContainer>
-        <QuestionFormButton onClick={handleQuestionFormButtonClick}>
-          질문 작성하기
-        </QuestionFormButton>
+        <Modal
+          trigger={<QuestionFormButton>질문 작성하기</QuestionFormButton>}
+        />
         {toast && <Toast setToast={setToast} text='URL이 복사되었습니다.' />}
       </BodyContainer>
-      {openModal && <Modal onClose={handleCloseModal} />}
     </>
   );
 }
