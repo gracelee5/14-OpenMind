@@ -21,11 +21,19 @@ function FeedBackground() {
     setOpenModal(false);
   };
 
+  //Url 복사
   const currentUrl = window.location.href;
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(currentUrl).then(() => {
-      alert('클립보드에 복사되었습니다');
+      alert('URL이 복사되었습니다');
     });
+  };
+
+  //페이스북 공유
+  const url = window.location.href;
+  const shareFacebook = () => {
+    const sharedLink = encodeURIComponent(url);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${sharedLink}`);
   };
 
   return (
@@ -42,7 +50,7 @@ function FeedBackground() {
           <LinkSection>
             <ShareButton src={link} onClick={handleCopyUrl} />
             <ShareButton src={kakao} />
-            <ShareButton src={facebook} />
+            <ShareButton src={facebook} onClick={shareFacebook} />
           </LinkSection>
         </Section>
         <PostContainer>
