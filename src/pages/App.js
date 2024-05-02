@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<MainPage />} />
-        <Route path='/post' element={<FeedBackground />} />
+        <Route path='*' element={<FeedBackground />} />
         <Route path='/post/id' element={<FeedCard />} />
         <Route path='/list' element={<ListPage />} />
       </Routes>
