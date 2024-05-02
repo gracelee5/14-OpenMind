@@ -20,6 +20,14 @@ function FeedBackground() {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  const currentUrl = window.location.href;
+  const handleCopyUrl = () => {
+    navigator.clipboard.writeText(currentUrl).then(() => {
+      alert('클립보드에 복사되었습니다');
+    });
+  };
+
   return (
     <>
       <Header>
@@ -32,7 +40,7 @@ function FeedBackground() {
           <ProfileImg src={profile} />
           <UserName>아초는고양이</UserName>
           <LinkSection>
-            <ShareButton src={link} />
+            <ShareButton src={link} onClick={handleCopyUrl} />
             <ShareButton src={kakao} />
             <ShareButton src={facebook} />
           </LinkSection>
