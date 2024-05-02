@@ -10,9 +10,11 @@ import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
 import Modal from '../Modal/Modal';
 import { Link } from 'react-router-dom';
+import Toast from './Toast';
 
 function FeedBackground() {
   const [openModal, setOpenModal] = useState(false);
+  const [toast, setToast] = useState(false);
 
   const handleQuestionFormButtonClick = () => {
     setOpenModal(true);
@@ -20,6 +22,22 @@ function FeedBackground() {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  //Url 복사
+  const currentUrl = window.location.href;
+  const handleCopyUrl = () => {
+    navigator.clipboard.writeText(currentUrl).then(() => {
+      setToast(true);
+    });
+  };
+
+  //페이스북 공유
+  const url = window.location.href;
+  const shareFacebook = () => {
+    const sharedLink = encodeURIComponent(url);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${sharedLink}`);
+  };
+
   return (
     <>
       <Header>
@@ -32,9 +50,9 @@ function FeedBackground() {
           <ProfileImg src={profile} />
           <UserName>아초는고양이</UserName>
           <LinkSection>
-            <ShareButton src={link} />
+            <ShareButton src={link} onClick={handleCopyUrl} />
             <ShareButton src={kakao} />
-            <ShareButton src={facebook} />
+            <ShareButton src={facebook} onClick={shareFacebook} />
           </LinkSection>
         </Section>
         <PostContainer>
@@ -46,6 +64,7 @@ function FeedBackground() {
         <QuestionFormButton onClick={handleQuestionFormButtonClick}>
           질문 작성하기
         </QuestionFormButton>
+        {toast && <Toast setToast={setToast} text='URL이 복사되었습니다.' />}
       </BodyContainer>
       {openModal && <Modal onClose={handleCloseModal} />}
     </>
