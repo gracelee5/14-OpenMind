@@ -10,9 +10,11 @@ import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
 import Modal from '../Modal/Modal';
 import { Link } from 'react-router-dom';
+import Toast from './Toast';
 
 function FeedBackground() {
   const [openModal, setOpenModal] = useState(false);
+  const [toast, setToast] = useState(false);
 
   const handleQuestionFormButtonClick = () => {
     setOpenModal(true);
@@ -25,7 +27,7 @@ function FeedBackground() {
   const currentUrl = window.location.href;
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(currentUrl).then(() => {
-      alert('URL이 복사되었습니다');
+      setToast(true);
     });
   };
 
@@ -62,6 +64,7 @@ function FeedBackground() {
         <QuestionFormButton onClick={handleQuestionFormButtonClick}>
           질문 작성하기
         </QuestionFormButton>
+        {toast && <Toast setToast={setToast} text='URL이 복사되었습니다.' />}
       </BodyContainer>
       {openModal && <Modal onClose={handleCloseModal} />}
     </>
