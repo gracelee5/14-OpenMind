@@ -9,8 +9,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/main' element={<MainPage />} />
-        <Route path='/' element={<FeedBackground />} />
+        <Route path='/' element={<MainPage />} />
+        <Route path='/post' element={<FeedBackground />} />
         <Route path='/post/id' element={<FeedCard />} />
         <Route path='/list' element={<ListPage />} />
       </Routes>
