@@ -8,7 +8,6 @@ import facebook from '../../../images/facebook-img.svg';
 import profile from '../../../images/profile-img.svg';
 import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
-import Modal from '../Modal/Modal';
 import { Link } from 'react-router-dom';
 import Toast from './Toast';
 
@@ -53,9 +52,7 @@ function FeedBackground() {
             아직 질문이 없습니다.
           </QuestionStatus>
         </PostContainer>
-        <Modal
-          trigger={<QuestionFormButton>질문 작성하기</QuestionFormButton>}
-        />
+
         {toast && <Toast setToast={setToast} text='URL이 복사되었습니다.' />}
       </BodyContainer>
     </>
@@ -77,6 +74,7 @@ const Header = styled.div`
 const BodyContainer = styled.div`
   background-color: #f9f9f9;
   height: 100%;
+  padding-bottom: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -144,22 +142,4 @@ const QuestionStatus = styled.div`
   font-size: 20px;
   height: 25px;
   color: #542f1a;
-`;
-const QuestionFormButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin: 70px 24px 24px auto;
-  background: #542f1a;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 200px;
-  font-family: 'Actor';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 25px;
-  color: #ffffff;
-  height: 54px;
-  width: 208px;
 `;
