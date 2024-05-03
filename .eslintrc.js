@@ -23,9 +23,12 @@ module.exports = {
     },
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: 2021,
     sourceType: 'module',
   },
-  plugins: ['react'],
-  rules: {},
+  plugins: ['prettier'],
+  rules: {
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'react/react-in-jsx-scope': 'off',
+  },
 };

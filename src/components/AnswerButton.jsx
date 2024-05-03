@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const AButton = styled.button`
@@ -26,5 +27,10 @@ display: inline-flex;
 function AnswerButton({ children, ...rest }) {
   return <AButton {...rest}>{children}</AButton>;
 }
+
+AnswerButton.propTypes = {
+  children: PropTypes.node.isRequired,
+  //children에서 오류가 나서 해결하려고 넣었어요! 개발할 때 지우고 하셔도 돼요!
+};
 
 export default AnswerButton;
