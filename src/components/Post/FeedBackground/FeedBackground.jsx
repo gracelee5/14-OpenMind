@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BgImg from '../../../images/background-img.svg';
 import logo from '../../../images/logo.svg';
@@ -10,9 +10,35 @@ import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
 import { Link } from 'react-router-dom';
 import Toast from './Toast';
+import axios from 'axios';
 
 function FeedBackground() {
   const [toast, setToast] = useState(false);
+  const [subject, setSubject] = useState(null);
+
+  let id = 5713;
+  const getSubjectsById = async (id) => {
+    try {
+      const response = await axios.get(
+        `https://openmind-api.vercel.app/6-14/subjects/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const data = await getSubjectsById(id);
+        console.log('Subject data:', data);
+        setSubject(data);
+      } catch (error) {
+        console.error('피드 정보를 불러오는 데 실패했습니다:', error);
+      }
+    };
+    fetchQuestion();
+  }, [id]);
 
   //Url 복사
   const currentUrl = window.location.href;
@@ -47,10 +73,32 @@ function FeedBackground() {
           </LinkSection>
         </Section>
         <PostContainer>
-          <QuestionStatus>
-            <img src={message} alt='message img' />
-            아직 질문이 없습니다.
-          </QuestionStatus>
+          {subject && subject.questionCount !== undefined ? (
+            parseInt(subject.questionCount) === 0 ? (
+              <>
+                <QuestionStatus>
+                  <img src={message} alt='message img' />
+                  <p>아직 질문이 없습니다.</p>
+                </QuestionStatus>
+                <Empty src={empty} alt='No question' />
+              </>
+            ) : (
+              <>
+                <QuestionStatus>
+                  <img src={message} alt='message img' />
+                  <p>${parseInt(subject.questionCount)}개의 질문이 있습니다.</p>
+                </QuestionStatus>
+              </>
+            )
+          ) : (
+            <>
+              <QuestionStatus>
+                <img src={message} alt='message img' />
+                <p>질문 정보를 불러오는 중입니다.</p>
+              </QuestionStatus>
+              <Empty src={empty} alt='No question' />
+            </>
+          )}
         </PostContainer>
 
         {toast && <Toast setToast={setToast} text='URL이 복사되었습니다.' />}
@@ -128,9 +176,11 @@ const PostContainer = styled.div`
   border: 1px solid #c7bbb5;
   border-radius: 16px;
   margin-top: 50px;
-  background-image: url(${empty});
-  background-repeat: no-repeat;
-  background-position: center;
+`;
+const Empty = styled.img`
+  width: 150px;
+  height: 154px;
+  margin-top: 40px;
 `;
 const QuestionStatus = styled.div`
   display: flex;
