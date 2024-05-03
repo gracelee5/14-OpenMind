@@ -3,28 +3,25 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const AButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  outline: none;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  height: 2.25rem;
-  font-size: 1rem;
-  background: #228be6;
-  &:hover {
-    background: #339af0;
-  }
-  &:active {
-    background: #1c7ed6;
-    & + & {
-      margin-left: 1rem;
+display: inline-flex;
+    align-items: center;
+    margin-left: 30px;
+    border: solid;
+    border-radius: 4px;
+    color: #542F1A;
+    font-weight: bold;
+    cursor: pointer;
+    height: 2.25rem;
+    font-size: 1rem;
+    background: #E4D5C9;
+    &:hover{    
+        background: #F5F1EE;
     }
-  }
+    &:active{
+        background: #F5F1EE;
+        & + & {
+            margin-left: 1rem;
+        }
 `;
 
 function AnswerButton({ children, ...rest }) {
