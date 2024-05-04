@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import OpenmindLogo from '../images/OpenmindLogo.png';
+import OpenmindLogo from '../images/logo.svg';
 import AnswerButton from './AnswerButton';
 
 // 상단 고정, 그림자
