@@ -72,6 +72,8 @@ const CardItem = styled.div`
   gap: 32px;
   padding: 32px;
   flex-direction: column;
+  margin: 16px 0;
+  width: 684px;
 `;
 
 const CardTop = styled.div`
