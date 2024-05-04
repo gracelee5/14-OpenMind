@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BgImg from '../../../images/background-img.svg';
 import logo from '../../../images/logo.svg';
@@ -11,8 +11,29 @@ import message from '../../../images/Messages.svg';
 import { Link } from 'react-router-dom';
 import Toast from './Toast';
 
+//원래는 FeedBackground({id})라고 작성해야 하는데 아직 list 페이지가 안 만들어졌으므로 에러 안 나게하려고
 function FeedBackground() {
   const [toast, setToast] = useState(false);
+  const [questionCount, setQuestionCount] = useState(null);
+  let id = 5718;
+  useEffect(() => {
+    const fetchProfileFeed = async () => {
+      try {
+        const response = await fetch(
+          `https://openmind-api.vercel.app/6-14/subjects/${id}/?limit=10`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile feed');
+        }
+        const data = await response.json();
+        setQuestionCount(data.questionCount);
+      } catch (error) {
+        console.error('Error fetching profile feed:', error);
+      }
+    };
+
+    fetchProfileFeed();
+  }, [id]);
 
   //Url 복사
   const currentUrl = window.location.href;
@@ -47,10 +68,22 @@ function FeedBackground() {
           </LinkSection>
         </Section>
         <PostContainer>
-          <QuestionStatus>
-            <img src={message} alt='message img' />
-            아직 질문이 없습니다.
-          </QuestionStatus>
+          {questionCount == null ? (
+            <>
+              <QuestionStatus>
+                <img src={message} alt='message img' />
+                <p>아직 질문이 없습니다.</p>
+              </QuestionStatus>
+              <Empty src={empty} alt='No question' />
+            </>
+          ) : (
+            <>
+              <QuestionStatus>
+                <img src={message} alt='message img' />
+                <p>{questionCount}개의 질문이 있습니다.</p>
+              </QuestionStatus>
+            </>
+          )}
         </PostContainer>
 
         {toast && <Toast setToast={setToast} text='URL이 복사되었습니다.' />}
@@ -128,9 +161,11 @@ const PostContainer = styled.div`
   border: 1px solid #c7bbb5;
   border-radius: 16px;
   margin-top: 50px;
-  background-image: url(${empty});
-  background-repeat: no-repeat;
-  background-position: center;
+`;
+const Empty = styled.img`
+  width: 150px;
+  height: 154px;
+  margin-top: 40px;
 `;
 const QuestionStatus = styled.div`
   display: flex;
