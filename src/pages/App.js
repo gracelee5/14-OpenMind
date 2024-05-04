@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<MainPage />} />
-        <Route path='/post' element={<PostPage />} />
+        <Route path='/post/{id}' element={<PostPage />} />
         <Route path='/post/id' element={<FeedCard />} />
         <Route path='/post/{id}/answer' element={<PostAnswerPage />} />
         <Route path='/list' element={<ListPage />} />
