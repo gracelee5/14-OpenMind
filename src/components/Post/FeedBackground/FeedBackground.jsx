@@ -5,7 +5,6 @@ import logo from '../../../images/logo.svg';
 import link from '../../../images/link-img.svg';
 import kakao from '../../../images/kakao-img.svg';
 import facebook from '../../../images/facebook-img.svg';
-import profile from '../../../images/profile-img.svg';
 import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
 import { Link } from 'react-router-dom';
@@ -15,7 +14,9 @@ import PostCardList from '../../../pages/PostCardList';
 //원래는 FeedBackground({id})라고 작성해야 하는데 아직 list 페이지가 안 만들어졌으므로 에러 안 나게하려고
 function FeedBackground() {
   const [toast, setToast] = useState(false);
-  const [questionCount, setQuestionCount] = useState(null);
+  const [questionCount, setQuestionCount] = useState(0);
+  const [profileImg, setProfileImg] = useState(null);
+
   let id = 5718;
   useEffect(() => {
     const fetchProfileFeed = async () => {
@@ -28,6 +29,7 @@ function FeedBackground() {
         }
         const data = await response.json();
         setQuestionCount(data.questionCount);
+        setProfileImg(data.imageSource);
       } catch (error) {
         console.error('Error fetching profile feed:', error);
       }
@@ -60,7 +62,7 @@ function FeedBackground() {
       </Header>
       <BodyContainer>
         <Section>
-          <ProfileImg src={profile} />
+          <ProfileImg src={profileImg} />
           <UserName>아초는고양이</UserName>
           <LinkSection>
             <ShareButton src={link} onClick={handleCopyUrl} />
@@ -131,6 +133,7 @@ const ProfileImg = styled.img`
   height: 136px;
   margin-top: -100px;
   z-index: 1;
+  border-radius: 50%;
 `;
 const UserName = styled.p`
   align-items: center;
@@ -156,7 +159,6 @@ const PostContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 16px;
-  gap: 16px;
   width: 716px;
   min-height: 330px;
   background: #f5f1ee;
