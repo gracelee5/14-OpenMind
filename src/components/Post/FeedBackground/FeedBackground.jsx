@@ -10,6 +10,7 @@ import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
 import { Link } from 'react-router-dom';
 import Toast from './Toast';
+import PostCardList from '../../../pages/PostCardList';
 
 //원래는 FeedBackground({id})라고 작성해야 하는데 아직 list 페이지가 안 만들어졌으므로 에러 안 나게하려고
 function FeedBackground() {
@@ -82,6 +83,7 @@ function FeedBackground() {
                 <img src={message} alt='message img' />
                 <p>{questionCount}개의 질문이 있습니다.</p>
               </QuestionStatus>
+              <PostCardList />
             </>
           )}
         </PostContainer>
