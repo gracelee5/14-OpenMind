@@ -16,7 +16,7 @@ function FeedBackground() {
   const [toast, setToast] = useState(false);
   const [questionCount, setQuestionCount] = useState(0);
   const [profileImg, setProfileImg] = useState(null);
-
+  const [name, setName] = useState(null);
   let id = 5718;
   useEffect(() => {
     const fetchProfileFeed = async () => {
@@ -30,6 +30,7 @@ function FeedBackground() {
         const data = await response.json();
         setQuestionCount(data.questionCount);
         setProfileImg(data.imageSource);
+        setName(data.name);
       } catch (error) {
         console.error('Error fetching profile feed:', error);
       }
@@ -63,7 +64,7 @@ function FeedBackground() {
       <BodyContainer>
         <Section>
           <ProfileImg src={profileImg} />
-          <UserName>아초는고양이</UserName>
+          <UserName>{name}</UserName>
           <LinkSection>
             <ShareButton src={link} onClick={handleCopyUrl} />
             <ShareButton src={kakao} />
@@ -75,7 +76,7 @@ function FeedBackground() {
             <>
               <QuestionStatus>
                 <img src={message} alt='message img' />
-                <p>아직 질문이 없습니다.</p>
+                <p>아직 질문이 없습니다</p>
               </QuestionStatus>
               <Empty src={empty} alt='No question' />
             </>
@@ -83,7 +84,7 @@ function FeedBackground() {
             <>
               <QuestionStatus>
                 <img src={message} alt='message img' />
-                <p>{questionCount}개의 질문이 있습니다.</p>
+                <p>{questionCount}개의 질문이 있습니다</p>
               </QuestionStatus>
               <PostCardList />
             </>
