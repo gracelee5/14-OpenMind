@@ -5,7 +5,6 @@ import logo from '../../../images/logo.svg';
 import link from '../../../images/link-img.svg';
 import kakao from '../../../images/kakao-img.svg';
 import facebook from '../../../images/facebook-img.svg';
-import profile from '../../../images/profile-img.svg';
 import empty from '../../../images/empty.svg';
 import message from '../../../images/Messages.svg';
 import { Link } from 'react-router-dom';
@@ -15,7 +14,7 @@ import PostCardList from '../../../pages/PostCardList';
 //원래는 FeedBackground({id})라고 작성해야 하는데 아직 list 페이지가 안 만들어졌으므로 에러 안 나게하려고
 function FeedBackground() {
   const [toast, setToast] = useState(false);
-  const [questionCount, setQuestionCount] = useState(null);
+  const [data, setData] = useState(0);
   let id = 5718;
   useEffect(() => {
     const fetchProfileFeed = async () => {
@@ -27,7 +26,7 @@ function FeedBackground() {
           throw new Error('Failed to fetch profile feed');
         }
         const data = await response.json();
-        setQuestionCount(data.questionCount);
+        setData(data);
       } catch (error) {
         console.error('Error fetching profile feed:', error);
       }
@@ -60,8 +59,8 @@ function FeedBackground() {
       </Header>
       <BodyContainer>
         <Section>
-          <ProfileImg src={profile} />
-          <UserName>아초는고양이</UserName>
+          <ProfileImg src={data.imageSource} />
+          <UserName>{data.name}</UserName>
           <LinkSection>
             <ShareButton src={link} onClick={handleCopyUrl} />
             <ShareButton src={kakao} />
@@ -69,11 +68,11 @@ function FeedBackground() {
           </LinkSection>
         </Section>
         <PostContainer>
-          {questionCount == null ? (
+          {data.questionCount == null ? (
             <>
               <QuestionStatus>
                 <img src={message} alt='message img' />
-                <p>아직 질문이 없습니다.</p>
+                <p>아직 질문이 없습니다</p>
               </QuestionStatus>
               <Empty src={empty} alt='No question' />
             </>
@@ -81,7 +80,7 @@ function FeedBackground() {
             <>
               <QuestionStatus>
                 <img src={message} alt='message img' />
-                <p>{questionCount}개의 질문이 있습니다.</p>
+                <p>{data.questionCount}개의 질문이 있습니다</p>
               </QuestionStatus>
               <PostCardList />
             </>
@@ -131,6 +130,7 @@ const ProfileImg = styled.img`
   height: 136px;
   margin-top: -100px;
   z-index: 1;
+  border-radius: 50%;
 `;
 const UserName = styled.p`
   align-items: center;
@@ -156,7 +156,6 @@ const PostContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 16px;
-  gap: 16px;
   width: 716px;
   min-height: 330px;
   background: #f5f1ee;

@@ -90,9 +90,10 @@ function FeedCard({ item, post, answer }) {
           {idCheck === true ? (
             <AnswerEdit />
           ) : (
-            <AnswerView>{answer.content}</AnswerView>
+            <AnswerView>{item.answer?.content}</AnswerView>
           )}
         </UserInfoWrap>
+
         <ButtonWrap>
           <ButtonInput item={item.like} />
         </ButtonWrap>
