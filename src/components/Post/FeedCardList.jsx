@@ -24,7 +24,7 @@ function FeedCard({ item }) {
             <UserName>{item.id}</UserName>
             <Date>2주전</Date>
           </UserInfo>
-          <Answer>{item.answer}</Answer>
+          <Answer>{item.answer?.content}</Answer>
         </AnswerSection>
         <ButtonWrap>
           <ButtonThumbs>
