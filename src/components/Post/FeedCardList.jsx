@@ -145,7 +145,7 @@ const CardItem = styled.div`
   padding: 32px;
   flex-direction: column;
   margin: 16px 0;
-  max-width: 684px;
+  width: 684px;
 `;
 
 const CardTop = styled.div`
