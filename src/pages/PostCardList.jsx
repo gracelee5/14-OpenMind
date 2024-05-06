@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import FeedCardList from '../components/Post/FeedCardList';
+
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
-async function getQuestion(order = 'createdAt') {
+async function getQuestions(postId = 5718, order = 'createdAt') {
   const query = `order=${order}`;
-  const response = await fetch(`${BASE_URL}subjects/5718/questions/?${query}`);
+  const response = await fetch(
+    `${BASE_URL}subjects/${postId}/questions/?${query}`
+  );
   const body = await response.json();
   return body;
 }
@@ -14,7 +17,7 @@ function PostCardList() {
   const sortedItems = items.sort((a, b) => b.createdAt - a.createdAt);
 
   const handleLoad = async () => {
-    const { results } = await getQuestion();
+    const { results } = await getQuestions();
     setItems(results);
   };
 

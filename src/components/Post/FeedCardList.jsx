@@ -1,40 +1,101 @@
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import styled from 'styled-components';
 import profile from '../../images/profile-img.svg';
-import thumbsUp from '../../images/icons/thumbs-up.svg';
-import thumbsDown from '../../images/icons/thumbs-down.svg';
 import more from '../../images/icons/More.svg';
-import PropTypes from 'prop-types';
+import ButtonInput from './ButtonInput';
+import AnswerEdit from './AnswerEdit';
 
-function FeedCard({ item }) {
+const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
+
+async function getSubject(SubjectId = 5718) {
+  const response = await fetch(`${BASE_URL}subjects/${SubjectId}/`);
+  const body = await response.json();
+  return body;
+}
+
+async function getAnswer(questionId = 4393) {
+  const response = await fetch(`${BASE_URL}answers/${questionId}/`);
+  const body = await response.json();
+  return body;
+}
+
+function formatData(value) {
+  const today = new Date();
+  const timeValue = new Date(value);
+
+  const betweenTime = Math.floor(
+    (today.getTime() - timeValue.getTime()) / 1000 / 60
+  );
+  if (betweenTime < 1) return '방금전';
+  if (betweenTime < 60) {
+    return `${betweenTime}분전`;
+  }
+
+  const betweenTimeHour = Math.floor(betweenTime / 60);
+  if (betweenTimeHour < 24) {
+    return `${betweenTimeHour}시간전`;
+  }
+
+  const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+  if (betweenTimeDay < 365) {
+    return `${betweenTimeDay}일전`;
+  }
+
+  return `${Math.floor(betweenTimeDay / 365)}년전`;
+}
+
+function Badge(item) {
+  if (item.answer === null || item.answer === 'undefined') {
+    return <div className='badge yet'>미작성</div>;
+  } else {
+    return <div className='badge done'>답변 완료</div>;
+  }
+}
+
+function FeedCard({ item, post, answer }) {
+  const [idCheck, setIdCheck] = useState(false);
+
   return (
     <>
       <CardItem>
         <CardTop>
-          <Badge>답변 완료</Badge>
-          <ButtonModify></ButtonModify>
+          <BadgeStyle>
+            <Badge item={item} />
+          </BadgeStyle>
+          {post.id === 5718 ? (
+            <ButtonModify
+              onClick={() => {
+                setIdCheck(!idCheck);
+              }}
+            ></ButtonModify>
+          ) : null}
+          {/* <ButtonModify></ButtonModify> */}
         </CardTop>
         <QuestionSection>
-          <Date>질문 · 2주전 {item.createdAt}</Date>
+          <DateText>
+            질문 · <span>{formatData(item.createdAt)}</span>
+          </DateText>
           <Title>{item.content}</Title>
         </QuestionSection>
-        <AnswerSection>
-          <ProfileImg></ProfileImg>
+        <UserInfoWrap>
+          <ProfileImg>
+            <img src={post.imageSource} alt={post.imageSource} />
+          </ProfileImg>
           <UserInfo>
-            <UserName>{item.id}</UserName>
-            <Date>2주전</Date>
+            <UserName>{post.name}</UserName>
+            <DateText>{formatData(answer.createdAt)}</DateText>
           </UserInfo>
-          <Answer>{item.answer?.content}</Answer>
-        </AnswerSection>
+          {idCheck === true ? (
+            <AnswerEdit />
+          ) : (
+            <AnswerView>{item.answer?.content}</AnswerView>
+          )}
+        </UserInfoWrap>
+
         <ButtonWrap>
-          <ButtonThumbs>
-            <img src={thumbsUp} alt='message img' />
-            좋아요
-          </ButtonThumbs>
-          <ButtonThumbs>
-            <img src={thumbsDown} alt='message img' />
-            싫어요
-          </ButtonThumbs>
+          <ButtonInput item={item.like} />
         </ButtonWrap>
       </CardItem>
     </>
@@ -42,12 +103,23 @@ function FeedCard({ item }) {
 }
 
 function FeedCardList({ items }) {
+  const [post, setPost] = useState([]);
+  const [answer, setAnswer] = useState([]);
+
+  useEffect(() => {
+    getSubject().then((post) => setPost(post));
+  }, []);
+
+  useEffect(() => {
+    getAnswer().then((answer) => setAnswer(answer));
+  }, []);
+
   return (
     <ul>
       {items.map((item) => {
         return (
           <li key={item.id}>
-            <FeedCard item={item}></FeedCard>
+            <FeedCard item={item} post={post} answer={answer}></FeedCard>
           </li>
         );
       })}
@@ -73,7 +145,7 @@ const CardItem = styled.div`
   padding: 32px;
   flex-direction: column;
   margin: 16px 0;
-  width: 684px;
+  max-width: 684px;
 `;
 
 const CardTop = styled.div`
@@ -82,13 +154,31 @@ const CardTop = styled.div`
   align-items: center;
 `;
 
-const Badge = styled.div`
-  width: Hug (76px) px;
-  height: Hug (26px) px;
-  padding: 4px 12px 4px 12px;
+const BadgeStyle = styled.div`
+  & .yet {
+    width: 100%;
+    height: 100%;
+    color: #818181;
+    border: 1px solid currentColor;
+    padding: 4px 12px;
+    display: flex;
+    border-radius: 8px;
+  }
+  & .done {
+    width: 100%;
+    height: 100%;
+    color: #542f1a;
+    border: 1px solid currentColor;
+    padding: 4px 12px;
+    display: flex;
+    border-radius: 8px;
+  }
   gap: 10px;
-  border-radius: 8px;
-  border: 1px solid #542f1a;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: left;
 `;
 
 const ButtonModify = styled.button`
@@ -103,7 +193,7 @@ const QuestionSection = styled.div`
   flex-direction: column;
 `;
 
-const Date = styled.div`
+const DateText = styled.div`
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 500;
@@ -120,7 +210,7 @@ const Title = styled.div`
   text-align: left;
 `;
 
-const AnswerSection = styled.div`
+const UserInfoWrap = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 12px;
@@ -131,9 +221,15 @@ const ProfileImg = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-image: url(${profile});
+  overflow: hidden;
+  // background-image: url(${profile});
   background-repeat: no-repeat;
   background-size: cover;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -150,7 +246,7 @@ const UserName = styled.p`
   text-align: left;
 `;
 
-const Answer = styled.div`
+const AnswerView = styled.div`
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 400;
@@ -163,16 +259,4 @@ const ButtonWrap = styled.div`
   border-top: 1px solid #cfcfcf;
   padding-top: 24px;
   gap: 32px;
-`;
-
-const ButtonThumbs = styled.div`
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  text-align: left;
-  color: #818181;
 `;
