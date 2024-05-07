@@ -59,7 +59,7 @@ function FeedCard({ item, post, answer, onSelect, isSelected }) {
 
   return (
     <>
-      <CardItem onClick={() => onSelect(item.id)} isSelected={isSelected}>
+      <CardItem onClick={() => onSelect(item.id)} $isSelected={isSelected}>
         <CardTop>
           <BadgeStyle>
             <Badge item={item} />
