@@ -4,11 +4,29 @@ import { ReactComponent as MessageIcon } from '../../../images/Messages.svg';
 import { ReactComponent as XIcon } from '../../../images/x.svg';
 import profile from '../../../images/profile-img.svg';
 
-// eslint-disable-next-line react/prop-types
+const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
+let id = 5718;
+
+async function postQuestion(content) {
+  try {
+    const response = await fetch(`${BASE_URL}subjects/${id}/questions/`, {
+      method: 'POST',
+      body: JSON.stringify({ content }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const body = await response.json();
+    return body;
+  } catch (error) {
+    console.error('Failed to post question:', error);
+  }
+}
+
 const Modal = ({ trigger }) => {
   const [openModal, setOpenModal] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [buttonColor, setButtonColor] = useState('#AAAAAA'); // initial color
+  const [buttonColor, setButtonColor] = useState('#AAAAAA');
   const [isSendQuestion, setIsSendQuestion] = useState(false);
 
   useEffect(() => {
@@ -42,6 +60,7 @@ const Modal = ({ trigger }) => {
   };
 
   const handleSendQuestion = () => {
+    postQuestion(inputValue);
     setIsSendQuestion(true);
     setOpenModal(false);
   };
@@ -71,6 +90,7 @@ const Modal = ({ trigger }) => {
               onChange={handleInputChange}
             />
             <SendButton
+              disabled={!inputValue}
               style={{ backgroundColor: buttonColor }}
               onClick={handleSendQuestion}
             >
