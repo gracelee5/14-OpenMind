@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-function AnswerEdit() {
+function AnswerInput() {
   const [text, setText] = useState('');
   const { questionId } = useParams();
 
@@ -58,7 +58,7 @@ function AnswerEdit() {
   );
 }
 
-export default AnswerEdit;
+export default AnswerInput;
 const Section = styled.div`
   display: flex;
   flex-direction: column;

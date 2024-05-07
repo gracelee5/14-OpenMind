@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 function AnswerEdit() {
   const [text, setText] = useState('');
+  const { answerId } = useParams();
   const handleChange = (event) => {
     setText(event.target.value);
   };
 
   const handleSubmit = () => {
     if (text) {
-      putData()
+      putData(answerId)
         .then((data) => {
           console.log('POST 요청 응답:', data);
         })
@@ -19,7 +21,8 @@ function AnswerEdit() {
   };
 
   async function putData(
-    answerId = 4407,
+    answerId,
+    //answerId = 4407,
     url = `https://openmind-api.vercel.app/6-14/answers/${answerId}/`,
     data = {
       content: text,
