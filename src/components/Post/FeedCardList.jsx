@@ -88,7 +88,7 @@ function FeedCard({ item, post, answer }) {
             <DateText>{formatData(answer.createdAt)}</DateText>
           </UserInfo>
           {idCheck === true ? (
-            <AnswerEdit />
+            <AnswerEdit initialContent={item.answer?.content} />
           ) : (
             <AnswerView>{item.answer?.content}</AnswerView>
           )}

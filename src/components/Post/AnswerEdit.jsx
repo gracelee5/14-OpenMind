@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-function AnswerEdit() {
-  const [text, setText] = useState('');
+
+function AnswerEdit({ initialContent }) {
+  const [text, setText] = useState(initialContent);
   const { answerId } = useParams();
+
   const handleChange = (event) => {
     setText(event.target.value);
   };
@@ -12,10 +14,10 @@ function AnswerEdit() {
     if (text) {
       putData(answerId)
         .then((data) => {
-          console.log('POST 요청 응답:', data);
+          console.log('PUT 요청 응답:', data);
         })
         .catch((error) => {
-          console.error('POST 요청 오류:', error);
+          console.error('PUT 요청 오류:', error);
         });
     }
   };
