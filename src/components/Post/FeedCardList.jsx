@@ -59,7 +59,18 @@ function FeedCard({ item, post, answer, onSelect, isSelected }) {
 
   return (
     <>
-      <CardItem onClick={() => onSelect(item.id)} $isSelected={isSelected}>
+      <CardItem
+        onClick={() => onSelect(item.id)}
+        style={
+          isSelected
+            ? {
+                border: '2px solid',
+                borderImage:
+                  'linear-gradient(to right, transparent, brown, transparent) 1',
+              }
+            : {}
+        }
+      >
         <CardTop>
           <BadgeStyle>
             <Badge item={item} />
@@ -154,10 +165,6 @@ const CardItem = styled.div`
   margin: 16px 0;
   width: 684px;
   border: 2px solid transparent;
-  border-image: ${(props) =>
-    props.isSelected
-      ? 'linear-gradient(to right, transparent, brown, transparent) 1'
-      : 'none'};
 `;
 
 const CardTop = styled.div`
