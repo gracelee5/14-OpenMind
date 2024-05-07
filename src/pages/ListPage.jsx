@@ -1,6 +1,6 @@
 import ListHeader from '../components/ListHeader';
 import DropDownButton from '../components/DropdownButton';
-import AnswerFeed from '../components/AnswerFeed';
+import UserCard from '../components/UserCard';
 import styled from 'styled-components';
 
 const WhoQuestion = styled.p`
@@ -21,7 +21,7 @@ function ListPage() {
       </div>
       <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
       <DropDownButton />
-      <AnswerFeed />
+      <UserCard />
     </>
   );
 }
