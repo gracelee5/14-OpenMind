@@ -1,53 +1,41 @@
 import React from 'react';
 import Styled from 'styled-components';
-import logo from '../../images/logo.svg';
-import UserIdInputBox from './UserIdInputBox';
-// import GetQuestions  from './GetQuestions';
-import backgroundImg from '../../images/background-img.svg';
+import CreateFeed from './CreateFeed';
+import { Link } from 'react-router-dom';
 
 function MainPage() {
-  const handleClick = () => {
-    history.push('/list');
-  };
-
   return (
     <>
-      <AskButton onClick={handleClick}>
-        {}
-        질문하러 가기
-      </AskButton>
-      <Header>
-        <img alt='' src={logo} />
-      </Header>
-      <UserIdInputBox /> {/* UserIdInputBox 컴포넌트를 추가. */}
-      <Section>
-        <img alt='backgroundImg' src={backgroundImg} />
-      </Section>
+      <Link to='/list'>
+        <AskButton>
+          {}
+          질문하러 가기
+        </AskButton>
+      </Link>
+      <CreateFeed />
+      {}
     </>
   );
 }
 export default MainPage;
 
-const Header = Styled.header`
-  display: flex; 
-  margin: auto;
-  height: 234px;
-
-  `;
-
-const Section = Styled.section`
-  display: flex;
-  height: 627px;
-  width: 100%;
-  
-  `;
-
 const AskButton = Styled.div`
   background-color: rgba(245, 241, 238, 1);
   color: rgba(84, 47, 26, 1);
-  padding: 10px 20px;
-  border-radius: 1px;
+  border-radius: 8px;
+  border: 1px solid rgba(84, 47, 26, 1);
   cursor: pointer;
   width: 161px;
   height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 45px;
+  float: right;
+  margin-right: 130px;
+  padding: 12px 24px 12px 24px;
+  font-family: "Pretendard";
+  font-weight: 400;
+
+
 `;
