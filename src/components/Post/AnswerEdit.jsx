@@ -20,7 +20,7 @@ function AnswerEdit() {
 
   async function putData(
     answerId = 4407,
-    url = `https://openmind-api.vercel.app/6-14/answers/${answerId}`,
+    url = `https://openmind-api.vercel.app/6-14/answers/${answerId}/`,
     data = {
       content: text,
       isRejected: false, // isRejected를 기본값인 false로 설정합니다.
