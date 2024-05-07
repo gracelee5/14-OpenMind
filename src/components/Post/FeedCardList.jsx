@@ -54,12 +54,12 @@ function Badge(item) {
   }
 }
 
-function FeedCard({ item, post, answer }) {
+function FeedCard({ item, post, answer, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
 
   return (
     <>
-      <CardItem>
+      <CardItem onClick={() => onSelect(item.id)} isSelected={isSelected}>
         <CardTop>
           <BadgeStyle>
             <Badge item={item} />
@@ -93,7 +93,6 @@ function FeedCard({ item, post, answer }) {
             <AnswerView>{item.answer?.content}</AnswerView>
           )}
         </UserInfoWrap>
-
         <ButtonWrap>
           <ButtonInput item={item.like} />
         </ButtonWrap>
@@ -105,6 +104,8 @@ function FeedCard({ item, post, answer }) {
 function FeedCardList({ items }) {
   const [post, setPost] = useState([]);
   const [answer, setAnswer] = useState([]);
+  //삭제하기용 선택한 아이템
+  const [selectedCardId, setSelectedCardId] = useState(null);
 
   useEffect(() => {
     getSubject().then((post) => setPost(post));
@@ -119,7 +120,13 @@ function FeedCardList({ items }) {
       {items.map((item) => {
         return (
           <li key={item.id}>
-            <FeedCard item={item} post={post} answer={answer}></FeedCard>
+            <FeedCard
+              item={item}
+              post={post}
+              answer={answer}
+              onSelect={setSelectedCardId}
+              isSelected={item.id === selectedCardId}
+            ></FeedCard>{' '}
           </li>
         );
       })}
@@ -146,6 +153,11 @@ const CardItem = styled.div`
   flex-direction: column;
   margin: 16px 0;
   width: 684px;
+  border: 2px solid transparent;
+  border-image: ${(props) =>
+    props.isSelected
+      ? 'linear-gradient(to right, transparent, brown, transparent) 1'
+      : 'none'};
 `;
 
 const CardTop = styled.div`
