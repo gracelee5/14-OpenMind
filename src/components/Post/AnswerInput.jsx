@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 function AnswerEdit() {
   const [text, setText] = useState('');
+  const { questionId } = useParams();
+
   const handleChange = (event) => {
     setText(event.target.value);
   };
 
   const handleSubmit = () => {
     if (text) {
-      postData()
+      postData(questionId)
         .then((data) => {
           console.log('POST 요청 응답:', data);
         })
@@ -19,7 +22,8 @@ function AnswerEdit() {
   };
 
   async function postData(
-    questionId = 9795,
+    questionId,
+    //questionId = 9795,
     url = `https://openmind-api.vercel.app/6-14/questions/${questionId}/answers/`,
     data = {
       questionId: questionId, // 이 값을 실제로 적절한 값으로 변경해야 합니다.
