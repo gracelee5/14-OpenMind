@@ -28,7 +28,6 @@ const ImgBox = styled.div`
 `;
 
 const CatQuestion = styled.div`
-  position: absolute;
   bottom: 10px;
   top: 150px;
   display: flex;
@@ -37,7 +36,6 @@ const CatQuestion = styled.div`
 `;
 
 const CountNumber = styled.span`
-  display: flex;
   float: right;
 `;
 
