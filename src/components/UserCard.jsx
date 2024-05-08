@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import Catpicture from '../images/Catpictured.svg';
 import QuestionMark from '../images/QuestionMark.svg';
-import { Link, Route, Routes } from 'react-router-dom';
-import PostAnswerPage from '../pages/PostAnswerPage';
+import { Link } from 'react-router-dom';
 
 const AnswerBox = styled.button`
   width: 220px;
@@ -30,6 +29,7 @@ const ImgBox = styled.div`
 `;
 
 const CatQuestion = styled.div`
+  position: absolute;
   bottom: 10px;
   top: 150px;
   display: flex;
@@ -38,10 +38,11 @@ const CatQuestion = styled.div`
 `;
 
 const CountNumber = styled.span`
-  float: right;
+  position: relative;
+  left: 100px;
 `;
 
-function UserCard() {
+function AnswerFeed() {
   return (
     <section>
       <AnswerBox>
@@ -53,10 +54,7 @@ function UserCard() {
 
         <CatQuestion>
           <img src={QuestionMark} alt='questionmark' />
-          <Link to='/PostAnswerPage'> 받은 질문 </Link>
-          <Routes>
-            <Route to='/PostAnswerPage' element={PostAnswerPage}></Route>
-          </Routes>
+          <Link to='/Post'> 받은 질문 </Link>
           <CountNumber> 9개 </CountNumber>
         </CatQuestion>
       </AnswerBox>
@@ -64,4 +62,4 @@ function UserCard() {
   );
 }
 
-export default UserCard;
+export default AnswerFeed;
