@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-function AnswerInput() {
+function AnswerInput({ questionId }) {
   const [text, setText] = useState('');
-  const { questionId } = useParams();
 
   const handleChange = (event) => {
     setText(event.target.value);
   };
-
   const handleSubmit = () => {
     if (text) {
       postData(questionId)

@@ -6,6 +6,7 @@ import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
 import ButtonInput from './ButtonInput';
 import AnswerEdit from './AnswerEdit';
+import AnswerInput from './AnswerInput';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
@@ -14,8 +15,8 @@ async function getSubject(SubjectId = 5718) {
   const body = await response.json();
   return body;
 }
-
-async function getAnswer(questionId = 4393) {
+let questionId = 9917;
+async function getAnswer(questionId) {
   const response = await fetch(`${BASE_URL}answers/${questionId}/`);
   const body = await response.json();
   return body;
@@ -99,7 +100,11 @@ function FeedCard({ item, post, answer, onSelect, isSelected }) {
             <DateText>{formatData(answer.createdAt)}</DateText>
           </UserInfo>
           {idCheck === true ? (
-            <AnswerEdit initialContent={item.answer?.content} />
+            <>
+              {' '}
+              <AnswerEdit initialContent={item.answer?.content} />
+              <AnswerInput questionId={questionId} />
+            </>
           ) : (
             <AnswerView>{item.answer?.content}</AnswerView>
           )}
