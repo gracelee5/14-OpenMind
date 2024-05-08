@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
-function AnswerEdit({ initialContent }) {
+function AnswerEdit({ initialContent, answerId }) {
   const [text, setText] = useState(initialContent);
-  const { answerId } = useParams();
 
   const handleChange = (event) => {
     setText(event.target.value);
