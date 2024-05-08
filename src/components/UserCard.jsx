@@ -42,9 +42,20 @@ const CountNumber = styled.span`
   left: 100px;
 `;
 
+const GlobalSection = styled.div`
+  position: relative;
+  left: 200px;
+  right: 200px;
+  width: 940px;
+  height: 474px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
 function AnswerFeed() {
   return (
-    <section>
+    <GlobalSection>
       <AnswerBox>
         <ImgBox>
           <img src={Catpicture} alt='고양이 사진' />
@@ -58,7 +69,61 @@ function AnswerFeed() {
           <CountNumber> 9개 </CountNumber>
         </CatQuestion>
       </AnswerBox>
-    </section>
+
+      <AnswerBox>
+        <ImgBox>
+          <img src={Catpicture} alt='고양이 사진' />
+        </ImgBox>
+
+        <CatBox>아초는 고양이</CatBox>
+
+        <CatQuestion>
+          <img src={QuestionMark} alt='questionmark' />
+          <Link to='/Post'> 받은 질문 </Link>
+          <CountNumber> 9개 </CountNumber>
+        </CatQuestion>
+      </AnswerBox>
+
+      <AnswerBox>
+        <ImgBox>
+          <img src={Catpicture} alt='고양이 사진' />
+        </ImgBox>
+
+        <CatBox>아초는 고양이</CatBox>
+
+        <CatQuestion>
+          <img src={QuestionMark} alt='questionmark' />
+          <Link to='/Post'> 받은 질문 </Link>
+          <CountNumber> 9개 </CountNumber>
+        </CatQuestion>
+      </AnswerBox>
+      <AnswerBox>
+        <ImgBox>
+          <img src={Catpicture} alt='고양이 사진' />
+        </ImgBox>
+
+        <CatBox>아초는 고양이</CatBox>
+
+        <CatQuestion>
+          <img src={QuestionMark} alt='questionmark' />
+          <Link to='/Post'> 받은 질문 </Link>
+          <CountNumber> 9개 </CountNumber>
+        </CatQuestion>
+      </AnswerBox>
+      <AnswerBox>
+        <ImgBox>
+          <img src={Catpicture} alt='고양이 사진' />
+        </ImgBox>
+
+        <CatBox>아초는 고양이</CatBox>
+
+        <CatQuestion>
+          <img src={QuestionMark} alt='questionmark' />
+          <Link to='/Post'> 받은 질문 </Link>
+          <CountNumber> 9개 </CountNumber>
+        </CatQuestion>
+      </AnswerBox>
+    </GlobalSection>
   );
 }
 
