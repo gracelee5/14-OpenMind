@@ -26,4 +26,12 @@ const QuestionFormButton = styled.div`
   color: #ffffff;
   height: 54px;
   width: 208px;
+  transition: all 0.05s ease-in-out;
+  cursor: pointer;
+  &:active {
+    transform: scale(0.95);
+  }
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  }
 `;
