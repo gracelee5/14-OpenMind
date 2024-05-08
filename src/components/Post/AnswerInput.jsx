@@ -1,17 +1,14 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-function AnswerInput() {
+function AnswerInput({ questionId }) {
   const [text, setText] = useState('');
-  const { questionId } = useParams();
 
   const handleChange = (event) => {
     setText(event.target.value);
   };
-
-  const handleSubmit = () => {
-    if (text) {
-      postData(questionId)
+  const handleSubmit = (isRejected) => {
+    if (text !== '' || isRejected) {
+      postData(questionId, isRejected)
         .then((data) => {
           console.log('POST 요청 응답:', data);
         })
@@ -23,12 +20,13 @@ function AnswerInput() {
 
   async function postData(
     questionId,
+    isRejected,
     //questionId = 9795,
     url = `https://openmind-api.vercel.app/6-14/questions/${questionId}/answers/`,
     data = {
       questionId: questionId,
       content: text,
-      isRejected: false, // isRejected를 기본값인 false로 설정합니다.
+      isRejected: isRejected,
       team: '6-14',
     }
   ) {
@@ -50,10 +48,10 @@ function AnswerInput() {
         value={text}
         onChange={handleChange}
       ></TextArea>
-      <Button onClick={handleSubmit} disabled={!text}>
+      <Button onClick={() => handleSubmit(false)} disabled={!text}>
         답변 완료
       </Button>
-      <RejectButton>답변 거절</RejectButton>
+      <RejectButton onClick={() => handleSubmit(true)}>답변 거절</RejectButton>
     </Section>
   );
 }
