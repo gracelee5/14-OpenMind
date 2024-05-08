@@ -26,10 +26,10 @@ function AnswerInput() {
     //questionId = 9795,
     url = `https://openmind-api.vercel.app/6-14/questions/${questionId}/answers/`,
     data = {
-      questionId: questionId, // 이 값을 실제로 적절한 값으로 변경해야 합니다.
+      questionId: questionId,
       content: text,
       isRejected: false, // isRejected를 기본값인 false로 설정합니다.
-      team: '6-14', // 적절한 팀 값을 지정해야 합니다.
+      team: '6-14',
     }
   ) {
     const response = await fetch(url, {
