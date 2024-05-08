@@ -102,11 +102,14 @@ function FeedCard({ item, post, answer, onSelect, isSelected }) {
           {idCheck === true ? (
             <>
               {' '}
-              <AnswerEdit
-                initialContent={item.answer?.content}
-                answerId={item.answer.id}
-              />
-              <AnswerInput questionId={questionId} />
+              {item.answer ? (
+                <AnswerEdit
+                  initialContent={item.answer?.content}
+                  answerId={item.answer.id}
+                />
+              ) : (
+                <AnswerInput questionId={questionId} />
+              )}
             </>
           ) : (
             <AnswerView>{item.answer?.content}</AnswerView>
