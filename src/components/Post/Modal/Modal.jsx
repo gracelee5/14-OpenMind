@@ -63,6 +63,7 @@ const Modal = ({ trigger }) => {
     postQuestion(inputValue);
     setIsSendQuestion(true);
     setOpenModal(false);
+    location.reload();
   };
 
   return (
@@ -236,6 +237,9 @@ const InputField = styled.textarea`
   @media (max-width: 768px) {
     width: 279px;
     height: 358px;
+  }
+  &:focus {
+    outline: none;
   }
 `;
 
