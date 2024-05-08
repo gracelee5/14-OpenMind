@@ -51,6 +51,7 @@ const GlobalSection = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: cetner;
 `;
 
 function AnswerFeed() {
