@@ -1,10 +1,12 @@
 import React from 'react';
-import Modal from './Modal/Modal';
+import AddQuestionModal from './Modal/AddQuestionModal';
 import styled from 'styled-components';
 
 export default function QuestionButton() {
   return (
-    <Modal trigger={<QuestionFormButton>질문 작성하기</QuestionFormButton>} />
+    <AddQuestionModal
+      trigger={<QuestionFormButton>질문 작성하기</QuestionFormButton>}
+    />
   );
 }
 const QuestionFormButton = styled.div`
