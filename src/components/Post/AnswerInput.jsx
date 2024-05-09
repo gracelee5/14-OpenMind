@@ -8,7 +8,8 @@ function AnswerInput({ questionId }) {
   };
   const handleSubmit = (isRejected) => {
     if (text !== '' || isRejected) {
-      postData(questionId, isRejected)
+      const contentToSend = isRejected ? 'Answer rejected' : text;
+      postData(questionId, isRejected, contentToSend)
         .then((data) => {
           console.log('POST 요청 응답:', data);
         })
@@ -21,11 +22,11 @@ function AnswerInput({ questionId }) {
   async function postData(
     questionId,
     isRejected,
-    //questionId = 9795,
+    content,
     url = `https://openmind-api.vercel.app/6-14/questions/${questionId}/answers/`,
     data = {
       questionId: questionId,
-      content: text,
+      content: content,
       isRejected: isRejected,
       team: '6-14',
     }
