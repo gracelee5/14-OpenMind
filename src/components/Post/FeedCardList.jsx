@@ -15,7 +15,7 @@ async function getSubject(SubjectId = 5718) {
   const body = await response.json();
   return body;
 }
-let questionId = 9791;
+const questionId = 10054;
 async function getAnswer(questionId) {
   const response = await fetch(`${BASE_URL}answers/${questionId}/`);
   const body = await response.json();
@@ -134,7 +134,7 @@ function FeedCardList({ items }) {
   }, []);
 
   useEffect(() => {
-    getAnswer().then((answer) => setAnswer(answer));
+    getAnswer(questionId).then((answer) => setAnswer(answer));
   }, []);
 
   return (
