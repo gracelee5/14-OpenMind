@@ -129,7 +129,11 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           )}
         </UserInfoWrap>
         <ButtonWrap>
-          <ButtonInput item={question.like} />
+          <ButtonInput
+            questionId={question.id}
+            like={question.like}
+            dislike={question.dislike}
+          />
         </ButtonWrap>
       </CardItem>
     </>
