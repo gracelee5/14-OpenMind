@@ -112,6 +112,13 @@ const Header = styled.div`
   background-position: center;
   position: relative;
   height: 234px;
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 767px) {
+    height: 177px;
+  }
 `;
 const BodyContainer = styled.div`
   background-color: #f9f9f9;
@@ -125,6 +132,9 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media only screen and (max-width: 767px) {
+    height: 177px;
+  }
 `;
 const Logo = styled.img`
   position: absolute;
@@ -139,6 +149,11 @@ const ProfileImg = styled.img`
   margin-top: -100px;
   z-index: 1;
   border-radius: 50%;
+  @media only screen and (max-width: 767px) {
+    width: 104px;
+    height: 104px;
+    margin-top: -50px;
+  }
 `;
 const UserName = styled.p`
   align-items: center;
@@ -149,6 +164,9 @@ const UserName = styled.p`
   color: #000000;
   height: 40px;
   margin-top: 20px;
+  @media only screen and (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 const LinkSection = styled.div`
   display: flex;
@@ -171,6 +189,12 @@ const PostContainer = styled.div`
   border: 1px solid #c7bbb5;
   border-radius: 16px;
   margin-top: 50px;
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
+    width: 704px;
+  }
+  @media only screen and (max-width: 767px) {
+    width: 327px;
+  }
 `;
 const Empty = styled.img`
   width: 150px;

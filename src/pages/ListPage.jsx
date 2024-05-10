@@ -1,7 +1,8 @@
 import ListHeader from '../components/ListHeader';
 import DropDownButton from '../components/DropdownButton';
-import UserCard from '../components/UserCard';
 import styled from 'styled-components';
+import UserCard from '../components/UserCard';
+import users from '../api/mock.json';
 
 const WhoQuestion = styled.p`
   display: flex;
@@ -21,7 +22,9 @@ function ListPage() {
       </div>
       <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
       <DropDownButton />
-      <UserCard />
+      <div>
+        <UserCard users={users} />
+      </div>
     </>
   );
 }
