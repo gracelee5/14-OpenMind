@@ -6,6 +6,7 @@ import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
 import ButtonInput from './ButtonInput';
 import AnswerEdit from './AnswerEdit';
+import AnswerInput from './AnswerInput';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
@@ -14,8 +15,8 @@ async function getSubject(SubjectId = 5718) {
   const body = await response.json();
   return body;
 }
-
-async function getAnswer(questionId = 4393) {
+const questionId = 10054;
+async function getAnswer(questionId) {
   const response = await fetch(`${BASE_URL}answers/${questionId}/`);
   const body = await response.json();
   return body;
@@ -54,12 +55,23 @@ function Badge(item) {
   }
 }
 
-function FeedCard({ item, post, answer }) {
+function FeedCard({ item, post, answer, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
 
   return (
     <>
-      <CardItem>
+      <CardItem
+        onClick={() => onSelect(item.id)}
+        style={
+          isSelected
+            ? {
+                border: '2px solid',
+                borderImage:
+                  'linear-gradient(to right, transparent, brown, transparent) 1',
+              }
+            : {}
+        }
+      >
         <CardTop>
           <BadgeStyle>
             <Badge item={item} />
@@ -88,12 +100,21 @@ function FeedCard({ item, post, answer }) {
             <DateText>{formatData(answer.createdAt)}</DateText>
           </UserInfo>
           {idCheck === true ? (
-            <AnswerEdit initialContent={item.answer?.content} />
+            <>
+              {' '}
+              {item.answer ? (
+                <AnswerEdit
+                  initialContent={item.answer?.content}
+                  answerId={item.answer.id}
+                />
+              ) : (
+                <AnswerInput questionId={questionId} />
+              )}
+            </>
           ) : (
             <AnswerView>{item.answer?.content}</AnswerView>
           )}
         </UserInfoWrap>
-
         <ButtonWrap>
           <ButtonInput item={item.like} />
         </ButtonWrap>
@@ -105,13 +126,15 @@ function FeedCard({ item, post, answer }) {
 function FeedCardList({ items }) {
   const [post, setPost] = useState([]);
   const [answer, setAnswer] = useState([]);
+  //삭제하기용 선택한 아이템
+  const [selectedCardId, setSelectedCardId] = useState(null);
 
   useEffect(() => {
     getSubject().then((post) => setPost(post));
   }, []);
 
   useEffect(() => {
-    getAnswer().then((answer) => setAnswer(answer));
+    getAnswer(questionId).then((answer) => setAnswer(answer));
   }, []);
 
   return (
@@ -119,7 +142,13 @@ function FeedCardList({ items }) {
       {items.map((item) => {
         return (
           <li key={item.id}>
-            <FeedCard item={item} post={post} answer={answer}></FeedCard>
+            <FeedCard
+              item={item}
+              post={post}
+              answer={answer}
+              onSelect={setSelectedCardId}
+              isSelected={item.id === selectedCardId}
+            ></FeedCard>{' '}
           </li>
         );
       })}
@@ -146,6 +175,7 @@ const CardItem = styled.div`
   flex-direction: column;
   margin: 16px 0;
   width: 684px;
+  border: 2px solid transparent;
 `;
 
 const CardTop = styled.div`

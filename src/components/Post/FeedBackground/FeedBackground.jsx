@@ -42,7 +42,15 @@ function FeedBackground() {
       setToast(true);
     });
   };
-
+  // 카카오톡 공유
+  const shareKakao = () => {
+    if (window.Kakao) {
+      const currentUrl2 = window.location.href;
+      window.Kakao.Link.sendScrap({
+        requestUrl: currentUrl2,
+      });
+    }
+  };
   //페이스북 공유
   const url = window.location.href;
   const shareFacebook = () => {
@@ -63,7 +71,7 @@ function FeedBackground() {
           <UserName>{data.name}</UserName>
           <LinkSection>
             <ShareButton src={link} onClick={handleCopyUrl} />
-            <ShareButton src={kakao} />
+            <ShareButton src={kakao} onClick={shareKakao} />
             <ShareButton src={facebook} onClick={shareFacebook} />
           </LinkSection>
         </Section>
@@ -149,6 +157,7 @@ const LinkSection = styled.div`
 const ShareButton = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 const PostContainer = styled.div`
   box-sizing: border-box;

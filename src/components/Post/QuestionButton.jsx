@@ -1,10 +1,12 @@
 import React from 'react';
-import Modal from './Modal/Modal';
+import AddQuestionModal from './Modal/AddQuestionModal';
 import styled from 'styled-components';
 
 export default function QuestionButton() {
   return (
-    <Modal trigger={<QuestionFormButton>질문 작성하기</QuestionFormButton>} />
+    <AddQuestionModal
+      trigger={<QuestionFormButton>질문 작성하기</QuestionFormButton>}
+    />
   );
 }
 const QuestionFormButton = styled.div`
@@ -26,4 +28,12 @@ const QuestionFormButton = styled.div`
   color: #ffffff;
   height: 54px;
   width: 208px;
+  transition: all 0.05s ease-in-out;
+  cursor: pointer;
+  &:active {
+    transform: scale(0.95);
+  }
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  }
 `;
