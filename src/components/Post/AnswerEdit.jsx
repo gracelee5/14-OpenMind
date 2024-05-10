@@ -1,22 +1,23 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-function AnswerEdit({ initialContent, answerId }) {
+function AnswerEdit({ initialContent, answerId, onEditSuccess }) {
   const [text, setText] = useState(initialContent);
 
   const handleChange = (event) => {
     setText(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (text) {
-      putData(answerId)
+      await putData(answerId)
         .then((data) => {
           console.log('PUT 요청 응답:', data);
         })
         .catch((error) => {
           console.error('PUT 요청 오류:', error);
         });
+      onEditSuccess();
     }
   };
 

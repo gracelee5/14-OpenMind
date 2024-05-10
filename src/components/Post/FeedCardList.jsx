@@ -15,9 +15,9 @@ async function getSubject(SubjectId = 5718) {
   const body = await response.json();
   return body;
 }
-const questionId = 10054;
-async function getAnswer(questionId) {
-  const response = await fetch(`${BASE_URL}answers/${questionId}/`);
+const questionId = 10057;
+async function getAnswer(id) {
+  const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
   return body;
 }
@@ -55,13 +55,23 @@ function Badge(item) {
   }
 }
 
-function FeedCard({ item, post, answer, onSelect, isSelected }) {
+function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
+  const [answer, setAnswer] = useState(null);
 
+  useEffect(() => {
+    if (question.answer?.id) {
+      getAnswer(question.answer.id).then((answer) => setAnswer(answer));
+    }
+  }, [question.answer?.id]);
+
+  if (!question.answer) {
+    return null;
+  }
   return (
     <>
       <CardItem
-        onClick={() => onSelect(item.id)}
+        onClick={() => onSelect(question.id)}
         style={
           isSelected
             ? {
@@ -74,7 +84,7 @@ function FeedCard({ item, post, answer, onSelect, isSelected }) {
       >
         <CardTop>
           <BadgeStyle>
-            <Badge item={item} />
+            <Badge item={question} />
           </BadgeStyle>
           {post.id === 5718 ? (
             <ButtonModify
@@ -87,9 +97,9 @@ function FeedCard({ item, post, answer, onSelect, isSelected }) {
         </CardTop>
         <QuestionSection>
           <DateText>
-            질문 · <span>{formatData(item.createdAt)}</span>
+            질문 · <span>{formatData(question.createdAt)}</span>
           </DateText>
-          <Title>{item.content}</Title>
+          <Title>{question.content}</Title>
         </QuestionSection>
         <UserInfoWrap>
           <ProfileImg>
@@ -97,26 +107,29 @@ function FeedCard({ item, post, answer, onSelect, isSelected }) {
           </ProfileImg>
           <UserInfo>
             <UserName>{post.name}</UserName>
-            <DateText>{formatData(answer.createdAt)}</DateText>
+            {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
           </UserInfo>
           {idCheck === true ? (
             <>
-              {' '}
-              {item.answer ? (
+              {answer ? (
                 <AnswerEdit
-                  initialContent={item.answer?.content}
-                  answerId={item.answer.id}
+                  initialContent={answer?.content}
+                  answerId={answer.id}
+                  onEditSuccess={() => {
+                    getAnswer(answer.id).then((answer) => setAnswer(answer));
+                    setIdCheck(false);
+                  }}
                 />
               ) : (
                 <AnswerInput questionId={questionId} />
               )}
             </>
           ) : (
-            <AnswerView>{item.answer?.content}</AnswerView>
+            <AnswerView>{answer?.content}</AnswerView>
           )}
         </UserInfoWrap>
         <ButtonWrap>
-          <ButtonInput item={item.like} />
+          <ButtonInput item={question.like} />
         </ButtonWrap>
       </CardItem>
     </>
@@ -134,7 +147,7 @@ function FeedCardList({ items }) {
   }, []);
 
   useEffect(() => {
-    getAnswer(questionId).then((answer) => setAnswer(answer));
+    getAnswer().then((answer) => setAnswer(answer));
   }, []);
 
   return (
