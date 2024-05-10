@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as MessageIcon } from '../../../images/Messages.svg';
 import { ReactComponent as XIcon } from '../../../images/x.svg';
-import profile from '../../../images/profile-img.svg';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 let id = 5718;
@@ -23,11 +22,18 @@ async function postQuestion(content) {
   }
 }
 
-const Modal = ({ trigger }) => {
+async function getSubject() {
+  const response = await fetch(`${BASE_URL}subjects/${id}/`);
+  const body = await response.json();
+  return body;
+}
+
+const AddQuestionModal = ({ trigger }) => {
   const [openModal, setOpenModal] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [buttonColor, setButtonColor] = useState('#AAAAAA');
   const [isSendQuestion, setIsSendQuestion] = useState(false);
+  const [subject, setSubject] = useState(null);
 
   useEffect(() => {
     if (inputValue) {
@@ -44,6 +50,10 @@ const Modal = ({ trigger }) => {
       setIsSendQuestion(false);
     }
   }, [isSendQuestion]);
+
+  useEffect(() => {
+    getSubject().then(setSubject);
+  }, []);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -63,6 +73,7 @@ const Modal = ({ trigger }) => {
     postQuestion(inputValue);
     setIsSendQuestion(true);
     setOpenModal(false);
+    location.reload();
   };
 
   return (
@@ -80,8 +91,8 @@ const Modal = ({ trigger }) => {
             </ModalTItle>
             <ModalTo>
               <To>To.</To>
-              <ProfileImg src={profile} alt='profile' />
-              <Name>아초는고양이</Name>
+              <ProfileImg src={subject.imageSource} alt='profile' />
+              <Name>{subject.name}</Name>
             </ModalTo>
             <InputField
               type='text'
@@ -199,6 +210,7 @@ const ProfileImg = styled.img`
   margin-left: 4px;
   width: 28px;
   height: 28px;
+  border-radius: 50%;
   z-index: 1;
 `;
 
@@ -211,6 +223,7 @@ const Name = styled.span`
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
+  text-align: left;
   @media (max-width: 768px) {
     white-space: nowrap;
     width: 100%;
@@ -237,6 +250,9 @@ const InputField = styled.textarea`
     width: 279px;
     height: 358px;
   }
+  &:focus {
+    outline: none;
+  }
 `;
 
 const SendButton = styled.button`
@@ -254,4 +270,4 @@ const SendButton = styled.button`
   }
 `;
 
-export default Modal;
+export default AddQuestionModal;

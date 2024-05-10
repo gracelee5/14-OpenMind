@@ -1,10 +1,17 @@
 import React from 'react';
+import DeleteUserModal from './Modal/DeleteUserModal';
 import styled from 'styled-components';
 
-export function DeleteButton() {
-  return <Button>삭제하기</Button>;
+export default function DeleteButton() {
+  return (
+    <DeleteUserModal
+      trigger={<DeleteUserFormModal>삭제하기</DeleteUserFormModal>}
+    />
+  );
 }
-const Button = styled.button`
+
+const DeleteUserFormModal = styled.button`
+  white-space: nowrap;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -24,4 +31,11 @@ const Button = styled.button`
   font-size: 15px;
   line-height: 25px;
   color: #ffffff;
+  transition: all 0.05s ease-in-out;
+  &:active {
+    transform: scale(0.95);
+  }
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  }
 `;

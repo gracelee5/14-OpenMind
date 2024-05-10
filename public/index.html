@@ -2,12 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link
+      rel="icon"
+      href="https://14-openmind.s3.ap-northeast-2.amazonaws.com/logo.png"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="코드잇 6기 14팀 프로젝트, 질의응답 소통 플랫폼 오픈마인드"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
@@ -24,6 +27,20 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <meta property="og:title" content="OpenMind" />
+    <meta
+      property="og:description"
+      content="코드잇 6기 14팀 프로젝트, 질의응답 소통 플랫폼 오픈마인드"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://14-openmind.s3.ap-northeast-2.amazonaws.com/logo.png"
+    />
+    <meta
+      property="og:url"
+      content="http://14-openmind.s3-website.ap-northeast-2.amazonaws.com/"
+    />
     <title>React App</title>
   </head>
   <body>
@@ -39,5 +56,9 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      Kakao.init('0e85150dbf7795508ea414b347aafa90');
+    </script>
   </body>
 </html>

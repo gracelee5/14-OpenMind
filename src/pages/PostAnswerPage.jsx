@@ -1,6 +1,6 @@
 import React from 'react';
 import FeedBackground from '../components/Post/FeedBackground/FeedBackground';
-import { DeleteButton } from '../components/Post/DeleteButton';
+import DeleteButton from '../components/Post/DeleteButton';
 import { useParams } from 'react-router-dom';
 
 function PostAnswerPage() {

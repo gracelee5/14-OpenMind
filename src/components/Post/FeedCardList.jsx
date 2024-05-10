@@ -6,6 +6,7 @@ import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
 import ButtonInput from './ButtonInput';
 import AnswerEdit from './AnswerEdit';
+import AnswerInput from './AnswerInput';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
@@ -14,9 +15,9 @@ async function getSubject(SubjectId = 5718) {
   const body = await response.json();
   return body;
 }
-
-async function getAnswer(questionId = 4393) {
-  const response = await fetch(`${BASE_URL}answers/${questionId}/`);
+const questionId = 10057;
+async function getAnswer(id) {
+  const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
   return body;
 }
@@ -54,15 +55,36 @@ function Badge(item) {
   }
 }
 
-function FeedCard({ item, post, answer }) {
+function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
+  const [answer, setAnswer] = useState(null);
 
+  useEffect(() => {
+    if (question.answer?.id) {
+      getAnswer(question.answer.id).then((answer) => setAnswer(answer));
+    }
+  }, [question.answer?.id]);
+
+  if (!question.answer) {
+    return null;
+  }
   return (
     <>
-      <CardItem>
+      <CardItem
+        onClick={() => onSelect(question.id)}
+        style={
+          isSelected
+            ? {
+                border: '2px solid',
+                borderImage:
+                  'linear-gradient(to right, transparent, brown, transparent) 1',
+              }
+            : {}
+        }
+      >
         <CardTop>
           <BadgeStyle>
-            <Badge item={item} />
+            <Badge item={question} />
           </BadgeStyle>
           {post.id === 5718 ? (
             <ButtonModify
@@ -75,9 +97,9 @@ function FeedCard({ item, post, answer }) {
         </CardTop>
         <QuestionSection>
           <DateText>
-            질문 · <span>{formatData(item.createdAt)}</span>
+            질문 · <span>{formatData(question.createdAt)}</span>
           </DateText>
-          <Title>{item.content}</Title>
+          <Title>{question.content}</Title>
         </QuestionSection>
         <UserInfoWrap>
           <ProfileImg>
@@ -85,17 +107,29 @@ function FeedCard({ item, post, answer }) {
           </ProfileImg>
           <UserInfo>
             <UserName>{post.name}</UserName>
-            <DateText>{formatData(answer.createdAt)}</DateText>
+            {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
           </UserInfo>
           {idCheck === true ? (
-            <AnswerEdit initialContent={item.answer?.content} />
+            <>
+              {answer ? (
+                <AnswerEdit
+                  initialContent={answer?.content}
+                  answerId={answer.id}
+                  onEditSuccess={() => {
+                    getAnswer(answer.id).then((answer) => setAnswer(answer));
+                    setIdCheck(false);
+                  }}
+                />
+              ) : (
+                <AnswerInput questionId={questionId} />
+              )}
+            </>
           ) : (
-            <AnswerView>{item.answer?.content}</AnswerView>
+            <AnswerView>{answer?.content}</AnswerView>
           )}
         </UserInfoWrap>
-
         <ButtonWrap>
-          <ButtonInput item={item.like} />
+          <ButtonInput item={question.like} />
         </ButtonWrap>
       </CardItem>
     </>
@@ -105,6 +139,8 @@ function FeedCard({ item, post, answer }) {
 function FeedCardList({ items }) {
   const [post, setPost] = useState([]);
   const [answer, setAnswer] = useState([]);
+  //삭제하기용 선택한 아이템
+  const [selectedCardId, setSelectedCardId] = useState(null);
 
   useEffect(() => {
     getSubject().then((post) => setPost(post));
@@ -119,7 +155,13 @@ function FeedCardList({ items }) {
       {items.map((item) => {
         return (
           <li key={item.id}>
-            <FeedCard item={item} post={post} answer={answer}></FeedCard>
+            <FeedCard
+              item={item}
+              post={post}
+              answer={answer}
+              onSelect={setSelectedCardId}
+              isSelected={item.id === selectedCardId}
+            ></FeedCard>{' '}
           </li>
         );
       })}
@@ -146,6 +188,7 @@ const CardItem = styled.div`
   flex-direction: column;
   margin: 16px 0;
   width: 684px;
+  border: 2px solid transparent;
 `;
 
 const CardTop = styled.div`
