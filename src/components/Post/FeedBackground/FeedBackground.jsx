@@ -149,6 +149,11 @@ const ProfileImg = styled.img`
   margin-top: -100px;
   z-index: 1;
   border-radius: 50%;
+  @media only screen and (max-width: 767px) {
+    width: 104px;
+    height: 104px;
+    margin-top: -50px;
+  }
 `;
 const UserName = styled.p`
   align-items: center;
@@ -160,7 +165,7 @@ const UserName = styled.p`
   height: 40px;
   margin-top: 20px;
   @media only screen and (max-width: 767px) {
-    width: 327px;
+    font-size: 24px;
   }
 `;
 const LinkSection = styled.div`
