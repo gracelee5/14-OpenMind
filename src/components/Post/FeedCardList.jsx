@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
-import ButtonInput from './ButtonInput';
+import ButtonThumbs from './ButtonThumbs';
 import AnswerEdit from './AnswerEdit';
 import AnswerInput from './AnswerInput';
 
@@ -129,7 +129,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           )}
         </UserInfoWrap>
         <ButtonWrap>
-          <ButtonInput
+          <ButtonThumbs
             questionId={question.id}
             like={question.like}
             dislike={question.dislike}
