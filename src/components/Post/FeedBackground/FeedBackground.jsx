@@ -112,7 +112,7 @@ const Header = styled.div`
   background-position: center;
   position: relative;
   height: 234px;
-  @media only screen and (min-width: 768px) and (max-width: 1200px) {
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
     width: 100%;
   }
 
@@ -189,7 +189,7 @@ const PostContainer = styled.div`
   border: 1px solid #c7bbb5;
   border-radius: 16px;
   margin-top: 50px;
-  @media only screen and (min-width: 768px) and (max-width: 1200px) {
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
     width: 704px;
   }
   @media only screen and (max-width: 767px) {

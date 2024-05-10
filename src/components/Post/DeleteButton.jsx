@@ -24,7 +24,7 @@ const Section = styled.div`
   position: absolute;
   width: 710px;
   top: 375px;
-  @media only screen and (min-width: 768px) and (max-width: 1200px) {
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
     width: 700px;
   }
   @media only screen and (max-width: 767px) {
@@ -58,7 +58,7 @@ const DeleteUserFormModal = styled.button`
   &:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   }
-  @media only screen and (min-width: 768px) and (max-width: 1200px) {
+  @media only screen and (min-width: 768px) and (max-width: 1199px) {
     left: 600px;
   }
   @media only screen and (max-width: 767px) {
