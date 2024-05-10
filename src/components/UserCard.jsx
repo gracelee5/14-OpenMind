@@ -1,40 +1,31 @@
-import styled from 'styled-components';
-import Catpicture from '../images/Catpictured.svg';
-import QuestionMark from '../images/QuestionMark.svg';
 import { Link } from 'react-router-dom';
+import QuestionMark from '../images/QuestionMark.svg';
+import styled from 'styled-components';
 
-const AnswerBox = styled.button`
+const UserCardGlobal = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 940px;
+  height: 474px;
+  top: 261px;
+  left: 130px;
+`;
+
+const UserCardBox = styled.div`
   width: 220px;
   height: 187px;
-  border-radius: 16px;
-  background-color: white;
+  border: 3px solid #000;
+  display: inline-block;
+  border-radius: 8px;
+`;
+
+const UserCardImage = styled.div`
   position: relative;
-`;
-
-const CatBox = styled.div`
-  position: absolute;
-  align-items: flex-end;
-  font-family: 'Pretendard';
-  font-size: 20px;
-  width: 180;
-  line-height: 25px;
-`;
-
-const ImgBox = styled.div`
-  position: absolute;
   top: 10px;
   bottom: 170px;
   width: 60px;
   height: 60px;
-`;
-
-const CatQuestion = styled.div`
-  position: absolute;
-  bottom: 10px;
-  top: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const CountNumber = styled.span`
@@ -42,90 +33,43 @@ const CountNumber = styled.span`
   left: 100px;
 `;
 
-const GlobalSection = styled.div`
-  position: relative;
-  left: 200px;
-  right: 200px;
-  width: 940px;
-  height: 474px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: cetner;
+const CatQuestion = styled.div`
+  bottom: 200px;
 `;
 
-function AnswerFeed() {
+function UserInformation({ usercarddata }) {
   return (
-    <GlobalSection>
-      <AnswerBox>
-        <ImgBox>
-          <img src={Catpicture} alt='고양이 사진' />
-        </ImgBox>
-
-        <CatBox>아초는 고양이</CatBox>
-
+    <UserCardGlobal>
+      <UserCardBox>
+        <UserCardImage>
+          <img src={usercarddata.imageSource} alt={usercarddata.name} />
+        </UserCardImage>
+        <h1>{usercarddata.name}</h1>
         <CatQuestion>
-          <img src={QuestionMark} alt='questionmark' />
-          <Link to='/Post'> 받은 질문 </Link>
-          <CountNumber> 9개 </CountNumber>
+          <img src={QuestionMark} alt='받은 질문' />
+          <Link to='/post'> 받은 질문 </Link>
         </CatQuestion>
-      </AnswerBox>
-
-      <AnswerBox>
-        <ImgBox>
-          <img src={Catpicture} alt='고양이 사진' />
-        </ImgBox>
-
-        <CatBox>아초는 고양이</CatBox>
-
-        <CatQuestion>
-          <img src={QuestionMark} alt='questionmark' />
-          <Link to='/Post'> 받은 질문 </Link>
-          <CountNumber> 9개 </CountNumber>
-        </CatQuestion>
-      </AnswerBox>
-
-      <AnswerBox>
-        <ImgBox>
-          <img src={Catpicture} alt='고양이 사진' />
-        </ImgBox>
-
-        <CatBox>아초는 고양이</CatBox>
-
-        <CatQuestion>
-          <img src={QuestionMark} alt='questionmark' />
-          <Link to='/Post'> 받은 질문 </Link>
-          <CountNumber> 9개 </CountNumber>
-        </CatQuestion>
-      </AnswerBox>
-      <AnswerBox>
-        <ImgBox>
-          <img src={Catpicture} alt='고양이 사진' />
-        </ImgBox>
-
-        <CatBox>아초는 고양이</CatBox>
-
-        <CatQuestion>
-          <img src={QuestionMark} alt='questionmark' />
-          <Link to='/Post'> 받은 질문 </Link>
-          <CountNumber> 9개 </CountNumber>
-        </CatQuestion>
-      </AnswerBox>
-      <AnswerBox>
-        <ImgBox>
-          <img src={Catpicture} alt='고양이 사진' />
-        </ImgBox>
-
-        <CatBox>아초는 고양이</CatBox>
-
-        <CatQuestion>
-          <img src={QuestionMark} alt='questionmark' />
-          <Link to='/Post'> 받은 질문 </Link>
-          <CountNumber> 9개 </CountNumber>
-        </CatQuestion>
-      </AnswerBox>
-    </GlobalSection>
+        <CountNumber> 9개 </CountNumber>
+      </UserCardBox>
+    </UserCardGlobal>
   );
 }
 
-export default AnswerFeed;
+function UserCard({ users }) {
+  return (
+    <>
+      {' '}
+      {users &&
+        users.map(function (usercarddata) {
+          return (
+            <div key={usercarddata}>
+              <UserInformation usercarddata={usercarddata} />
+            </div>
+          );
+        })}
+      ;
+    </>
+  );
+}
+
+export default UserCard;
