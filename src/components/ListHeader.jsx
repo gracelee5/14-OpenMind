@@ -63,7 +63,9 @@ function ListHeader() {
           </Logo>
           <Spacer />
           <div>
-            <AnswerButton> 답변하러 가기 ➝ </AnswerButton>
+            <Link to='/post/:id/answer'>
+              <AnswerButton> 답변하러 가기 ➝ </AnswerButton>
+            </Link>
           </div>
         </HeaderContents>
       </WhiteBackground>

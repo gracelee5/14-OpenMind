@@ -61,7 +61,7 @@ function FeedBackground() {
   return (
     <>
       <Header>
-        <Link to='/'>
+        <Link to='/list'>
           <Logo src={logo} />
         </Link>
       </Header>
