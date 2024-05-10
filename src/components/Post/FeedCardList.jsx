@@ -19,6 +19,7 @@ const questionId = 10057;
 async function getAnswer(id) {
   const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
+  console.log('subject', body);
   return body;
 }
 
