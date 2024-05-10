@@ -25,7 +25,6 @@ function CreateFeed() {
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
-  //GET /{team}/subjects/{id}/
   const handleSubmit = async () => {
     const userId = getUserIdFromLocalStorage(name);
     if (!userId) {
@@ -90,6 +89,7 @@ const IconImage = Styled.img`
 const BackgroundImg = Styled.img`
   position: relative;
   width: 100%;
+  margin-top: auto;
 
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     display: flex;
@@ -104,7 +104,6 @@ const BackgroundImg = Styled.img`
 
 `;
 const InputContainer = Styled.div`
-  display: flex;
   margin: 0 auto;
   gap: 16px;
   background-color: rgba(255, 255, 255, 1);

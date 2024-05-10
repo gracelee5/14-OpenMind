@@ -14,14 +14,25 @@ function MainPage() {
           <img src={arrowRight} alt='' />
         </AskButton>
       </Link>
-      <AskButtonBar />
-      <CreateFeed />
+      <MainBody>
+        <AskButtonBar />
+        <CreateFeed />
+      </MainBody>
       {}
     </>
   );
 }
 export default MainPage;
 
+const MainBody = Styled.div`
+  display: flex;
+  flex-direction: column;
+  
+
+
+
+
+`;
 const AskButton = Styled.div`
   background-color: rgba(245, 241, 238, 1);
   color: rgba(84, 47, 26, 1);
@@ -51,8 +62,8 @@ const AskButton = Styled.div`
 `;
 
 const AskButtonBar = Styled.div`
-  width: 100%;
-  height: 50vh;
+  width: 100vh;
+  height: 100vh;
   background-color: rgba(249, 249, 249, 1); 
 
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
