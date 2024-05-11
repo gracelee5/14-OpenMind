@@ -14,17 +14,22 @@ const WhoQuestion = styled.p`
   font-size: 40px;
 `;
 
+const DropDownButtonBox = styled.div`
+  padding: 30px;
+`;
+
 function ListPage() {
   return (
     <>
-      <div>
-        <ListHeader />
-      </div>
+      <ListHeader />
+
       <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
-      <DropDownButton />
-      <div>
-        <UserCard users={users} />
-      </div>
+
+      <DropDownButtonBox>
+        <DropDownButton />
+      </DropDownButtonBox>
+
+      <UserCard users={users} />
     </>
   );
 }

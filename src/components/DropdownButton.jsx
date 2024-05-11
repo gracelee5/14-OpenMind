@@ -19,6 +19,8 @@ const DropButton = styled.button`
 `;
 
 const DropLi = styled.li`
+  border-radius: 5px;
+  border: 1px solid black;
   list-style: none;
   cursor: pointer;
   color: #818181;
@@ -51,7 +53,7 @@ const DropDown = styled.button`
   border: none;
   outline: none;
   position: relative;
-  width: 80px;
+  width: 60px;
 `;
 
 const ListContainer = styled.div`
