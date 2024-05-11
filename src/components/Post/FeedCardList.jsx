@@ -66,9 +66,6 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
     }
   }, [question.answer?.id]);
 
-  if (!question.answer) {
-    return null;
-  }
   return (
     <>
       <CardItem
