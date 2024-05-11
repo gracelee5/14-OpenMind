@@ -49,7 +49,7 @@ function formatData(value) {
 }
 
 function Badge(item) {
-  if (item.answer === null || item.answer === 'undefined') {
+  if (item.answer === null || item.answer === undefined) {
     return <div className='badge yet'>미작성</div>;
   } else {
     return <div className='badge done'>답변 완료</div>;
