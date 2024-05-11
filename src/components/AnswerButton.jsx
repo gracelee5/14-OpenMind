@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 const AButton = styled.button`
 display: inline-flex;
-    align-items: center;
     margin-left: 30px;
     border: solid;
     border-radius: 4px;
@@ -13,12 +12,23 @@ display: inline-flex;
     cursor: pointer;
     height: 2.25rem;
     font-size: 1rem;
-    background: #E4D5C9;
+    background: #F5F1EE;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    gap: 8px;
+    width: 161px;
+    height: 46px;
+    border: 1px solid #542F1A;
+    border-radius: 8px;
+
     &:hover{    
-        background: #F5F1EE;
+        background: #E4D5C9;
     }
     &:active{
-        background: #F5F1EE;
+        background: #E4D5C9;
         & + & {
             margin-left: 1rem;
         }
