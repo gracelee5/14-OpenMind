@@ -21,16 +21,15 @@ const DropDownButtonBox = styled.div`
 function ListPage() {
   return (
     <>
-      <div>
-        <ListHeader />
-      </div>
+      <ListHeader />
+
       <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
+
       <DropDownButtonBox>
         <DropDownButton />
       </DropDownButtonBox>
-      <div>
-        <UserCard users={users} />
-      </div>
+
+      <UserCard users={users} />
     </>
   );
 }
