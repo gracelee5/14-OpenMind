@@ -49,7 +49,7 @@ function formatData(value) {
 }
 
 function Badge(item) {
-  if (item.answer === null || item.answer === 'undefined') {
+  if (item.answer === null || item.answer === undefined) {
     return <div className='badge yet'>미작성</div>;
   } else {
     return <div className='badge done'>답변 완료</div>;
@@ -100,24 +100,35 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           <Title>{question.content}</Title>
         </QuestionSection>
         <UserInfoWrap>
-          <ProfileImg>
+          {/* <ProfileImg>
             <img src={post.imageSource} alt={post.imageSource} />
           </ProfileImg>
           <UserInfo>
             <UserName>{post.name}</UserName>
             {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-          </UserInfo>
+          </UserInfo> */}
           {idCheck === true ? (
             <>
               {answer ? (
-                <AnswerEdit
-                  initialContent={answer?.content}
-                  answerId={answer.id}
-                  onEditSuccess={() => {
-                    getAnswer(answer.id).then((answer) => setAnswer(answer));
-                    setIdCheck(false);
-                  }}
-                />
+                <>
+                  <ProfileImg>
+                    <img src={post.imageSource} alt={post.imageSource} />
+                  </ProfileImg>
+                  <UserInfo>
+                    <UserName>{post.name}</UserName>
+                    {answer && (
+                      <DateText>{formatData(answer.createdAt)}</DateText>
+                    )}
+                  </UserInfo>
+                  <AnswerEdit
+                    initialContent={answer?.content}
+                    answerId={answer.id}
+                    onEditSuccess={() => {
+                      getAnswer(answer.id).then((answer) => setAnswer(answer));
+                      setIdCheck(false);
+                    }}
+                  />
+                </>
               ) : (
                 <AnswerInput questionId={questionId} />
               )}
