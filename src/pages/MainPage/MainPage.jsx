@@ -14,41 +14,34 @@ function MainPage() {
           <img src={arrowRight} alt='' />
         </AskButton>
       </Link>
-      <MainBody>
-        <AskButtonBar />
-        <CreateFeed />
-      </MainBody>
+      <CreateFeed />
       {}
     </>
   );
 }
 export default MainPage;
 
-const MainBody = Styled.div`
-  display: flex;
-  flex-direction: column;
-  
-
-
-
-
-`;
+//질문하러가기 버튼
 const AskButton = Styled.div`
+  display: flex;
   background-color: rgba(245, 241, 238, 1);
   color: rgba(84, 47, 26, 1);
   border-radius: 8px;
   border: 1px solid rgba(84, 47, 26, 1);
   cursor: pointer;
-  display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 45px;
-  float: right;
+  margin-left: auto;
   margin-right: 130px;
-  padding: 12px 24px 12px 24px;
+  width: 161px;
+  height: 46px;
+  margin-bottom: 80px;
+  padding: 12px 19px 12px 19px;
+  font-size: 16px;
   font-family: "Pretendard";
   font-weight: 400;
-  // position: absolute;
+  
 
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     top: 44px;
@@ -56,22 +49,13 @@ const AskButton = Styled.div`
   }
 
   @media only screen and (max-width: 767px) {
-    flex-wrap: wrap;
-  }
-
-`;
-
-const AskButtonBar = Styled.div`
-  width: 100vh;
-  height: 100vh;
-  background-color: rgba(249, 249, 249, 1); 
-
-  @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    width: 100%;
-  }
-
-  @media only screen and (max-width: 767px) {
-    flex-wrap: wrap;
+    height: 34px;
+    font-size: 13px;
+    display: flex;
+    margin-top: 270px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 143px;
   }
 
 `;
