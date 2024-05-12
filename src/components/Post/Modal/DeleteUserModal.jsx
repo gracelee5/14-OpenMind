@@ -1,30 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
-//나중에 삭제할 id값은 로컬스토리지(?) 등으로 받아와야 함니다
-let id = 1111;
-
-async function postDeleteUser() {
-  try {
-    await fetch(`${BASE_URL}subjects/${id}/`, {
-      method: 'DELETE',
-    });
-  } catch (error) {
-    console.error('Failed to post question:', error);
-  }
-}
-
 const DeleteUserModal = ({ trigger }) => {
   const [openModal, setOpenModal] = useState(false);
   const [isSendQuestion, setIsSendQuestion] = useState(false);
+  const [id, setId] = useState(1111);
+  const [recentKey, setRecentKey] = useState(null);
 
   useEffect(() => {
     if (isSendQuestion) {
-      localStorage.removeItem('inputValue');
       setIsSendQuestion(false);
     }
   }, [isSendQuestion]);
+
+  useEffect(() => {
+    if (localStorage.key(0)) {
+      // 가장 최근에 저장된 key값을 가져옴
+      const recentKey = localStorage.key(0);
+      // key값을 이용하여 value값(=id)를 가져옴
+      const targetValue = JSON.parse(localStorage.getItem(recentKey));
+      setId(targetValue.id);
+      setRecentKey(recentKey);
+    }
+  }, []);
+
+  async function postDeleteUser() {
+    try {
+      await fetch(`${BASE_URL}subjects/${id}/`, {
+        method: 'DELETE',
+      });
+    } catch (error) {
+      console.error('Failed to post question:', error);
+      throw new Error('Failed to delete user');
+    }
+  }
+
+  const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
   const handleDeleteUerFormModalClick = () => {
     setOpenModal(true);
@@ -34,11 +45,20 @@ const DeleteUserModal = ({ trigger }) => {
     setOpenModal(false);
   };
 
-  const handleSendQuestion = () => {
-    postDeleteUser();
-    setIsSendQuestion(true);
-    setOpenModal(false);
-    location.reload();
+  const handleSendQuestion = async () => {
+    try {
+      await postDeleteUser();
+      setIsSendQuestion(true);
+      setOpenModal(false);
+      // location.reload();
+    } catch (error) {
+      console.error('Failed to delete user:', error);
+      alert('사용자 삭제에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      if (recentKey) {
+        localStorage.removeItem(recentKey);
+      }
+    }
   };
 
   return (
