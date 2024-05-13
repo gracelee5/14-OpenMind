@@ -105,7 +105,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                       handleConfirmClick;
                     }}
                   >
-                    답변하기
+                    수정하기
                   </MenuItem>
                   <MenuItem>삭제하기</MenuItem>
                 </ModifyMenu>
