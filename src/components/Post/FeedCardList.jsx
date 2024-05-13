@@ -68,9 +68,9 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
     if (localId === post.id) {
       setIdCheck(true);
     }
-    console.log('로컬 아이디', localId);
-    console.log('post', post);
-  }, [post]);
+    //console.log('로컬 아이디', localId);
+    //console.log('post 아이디', post.id);
+  }, [post.id]);
 
   const [showMenu, setShowMenu] = useState(false);
 
