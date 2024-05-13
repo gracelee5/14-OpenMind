@@ -48,8 +48,8 @@ function formatData(value) {
   return `${Math.floor(betweenTimeDay / 365)}년전`;
 }
 
-function Badge(item) {
-  if (item.answer === null || item.answer === undefined) {
+function Badge({ item }) {
+  if (item === null || item === undefined) {
     return <div className='badge yet'>미작성</div>;
   } else {
     return <div className='badge done'>답변 완료</div>;
@@ -68,7 +68,6 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   }
 
   const [showMenu, setShowMenu] = useState(false);
-
 
   useEffect(() => {
     if (question.answer?.id) {
@@ -101,7 +100,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
       >
         <CardTop>
           <BadgeStyle>
-            <Badge item={question} />
+            <Badge item={question.answer} />
           </BadgeStyle>
 
           {post.id != localId ? (
@@ -121,7 +120,6 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                 </ModifyMenu>
               )}
             </ButtonModify>
-
           ) : null}
           {/* <ButtonModify></ButtonModify> */}
         </CardTop>
@@ -131,43 +129,58 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           </DateText>
           <Title>{question.content}</Title>
         </QuestionSection>
-        <UserInfoWrap>
-          <ProfileImg>
-            <img src={post.imageSource} alt={post.imageSource} />
-          </ProfileImg>
-          <UserInfo>
-            <UserName>{post.name}</UserName>
-            {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-          </UserInfo>
-          {idCheck === true && answer ? (
-            <>
-              <ProfileImg>
-                <img src={post.imageSource} alt={post.imageSource} />
-              </ProfileImg>
-              <UserInfo>
-                <UserName>{post.name}</UserName>
-                {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-              </UserInfo>
-              <AnswerEdit
-                initialContent={answer?.content}
-                answerId={answer.id}
-                onEditSuccess={() => {
-                  getAnswer(answer.id).then((answer) => setAnswer(answer));
-                  setIdCheck(false);
-                }}
-              />
-            </>
-          ) : idCheck === true && !answer ? (
+        {idCheck === true && answer ? (
+          <UserInfoWrap>
+            <ProfileImg>
+              <img src={post.imageSource} alt={post.imageSource} />
+            </ProfileImg>
+            <UserInfo>
+              <UserName>{post.name}</UserName>
+              {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
+            </UserInfo>
+            <AnswerEdit
+              initialContent={answer?.content}
+              answerId={answer.id}
+              onEditSuccess={() => {
+                getAnswer(answer.id).then((answer) => setAnswer(answer));
+                setIdCheck(false);
+              }}
+            />
+          </UserInfoWrap>
+        ) : idCheck === true && !answer ? (
+          <UserInfoWrap>
+            <ProfileImg>
+              <img src={post.imageSource} alt={post.imageSource} />
+            </ProfileImg>
+            <UserInfo>
+              <UserName>{post.name}</UserName>
+              {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
+            </UserInfo>
             <AnswerInput
               questionId={questionId}
               onInputSuccess={() => {
                 getAnswer(answer.id).then((answer) => setAnswer(answer));
               }}
             />
-          ) : (
-            <AnswerView>{answer?.content}</AnswerView>
-          )}
-        </UserInfoWrap>
+          </UserInfoWrap>
+        ) : (
+          <>
+            {answer?.content ? (
+              <UserInfoWrap>
+                <ProfileImg>
+                  <img src={post.imageSource} alt={post.imageSource} />
+                </ProfileImg>
+                <UserInfo>
+                  <UserName>{post.name}</UserName>
+                  {answer && (
+                    <DateText>{formatData(answer.createdAt)}</DateText>
+                  )}
+                </UserInfo>
+                <AnswerView>{answer?.content}</AnswerView>
+              </UserInfoWrap>
+            ) : null}
+          </>
+        )}
         <ButtonWrap>
           <ButtonThumbs
             questionId={question.id}
