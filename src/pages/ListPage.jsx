@@ -41,6 +41,7 @@ function ListPage() {
         </DropDownButtonBox>
 
         <button onClick={handleLoadClick}>불러오기</button>
+        <UserCard results={items} />
       </main>
 
       <footer></footer>
