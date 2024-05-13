@@ -41,11 +41,11 @@ function CreateFeed() {
       const data = await response.json();
       const id = data.id;
 
-      localStorage.setItem(name, JSON.stringify({ id }));
+      localStorage.setItem('id', id);
 
       alert(`${name}님 피드가 등록되었습니다`);
 
-      navigate(`/post/:id/answer`);
+      navigate(`/post/${userId}/answer`);
     } else {
       alert(`${name}님 페이지로 이동합니다`);
 

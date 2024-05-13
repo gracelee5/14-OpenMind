@@ -15,7 +15,7 @@ async function getSubject(SubjectId = 5718) {
   const body = await response.json();
   return body;
 }
-const questionId = 10057;
+const questionId = 10604;
 async function getAnswer(id) {
   const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
@@ -59,6 +59,12 @@ function Badge(item) {
 function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
+  const localId = localStorage.getItem('id');
+  console.log('로컬 아이디', localId);
+  console.log('post 아이디', post.id);
+  if (localId === post.id) {
+    setIdCheck(true);
+  }
 
   useEffect(() => {
     if (question.answer?.id) {
@@ -84,7 +90,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           <BadgeStyle>
             <Badge item={question} />
           </BadgeStyle>
-          {post.id === 5718 ? (
+          {post.id != localId ? (
             <ButtonModify
               onClick={() => {
                 setIdCheck(!idCheck);
@@ -100,39 +106,38 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           <Title>{question.content}</Title>
         </QuestionSection>
         <UserInfoWrap>
-          {/* <ProfileImg>
+          <ProfileImg>
             <img src={post.imageSource} alt={post.imageSource} />
           </ProfileImg>
           <UserInfo>
             <UserName>{post.name}</UserName>
             {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-          </UserInfo> */}
-          {idCheck === true ? (
+          </UserInfo>
+          {idCheck === true && answer ? (
             <>
-              {answer ? (
-                <>
-                  <ProfileImg>
-                    <img src={post.imageSource} alt={post.imageSource} />
-                  </ProfileImg>
-                  <UserInfo>
-                    <UserName>{post.name}</UserName>
-                    {answer && (
-                      <DateText>{formatData(answer.createdAt)}</DateText>
-                    )}
-                  </UserInfo>
-                  <AnswerEdit
-                    initialContent={answer?.content}
-                    answerId={answer.id}
-                    onEditSuccess={() => {
-                      getAnswer(answer.id).then((answer) => setAnswer(answer));
-                      setIdCheck(false);
-                    }}
-                  />
-                </>
-              ) : (
-                <AnswerInput questionId={questionId} />
-              )}
+              <ProfileImg>
+                <img src={post.imageSource} alt={post.imageSource} />
+              </ProfileImg>
+              <UserInfo>
+                <UserName>{post.name}</UserName>
+                {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
+              </UserInfo>
+              <AnswerEdit
+                initialContent={answer?.content}
+                answerId={answer.id}
+                onEditSuccess={() => {
+                  getAnswer(answer.id).then((answer) => setAnswer(answer));
+                  setIdCheck(false);
+                }}
+              />
             </>
+          ) : idCheck === true && !answer ? (
+            <AnswerInput
+              questionId={questionId}
+              onInputSuccess={() => {
+                getAnswer(answer.id).then((answer) => setAnswer(answer));
+              }}
+            />
           ) : (
             <AnswerView>{answer?.content}</AnswerView>
           )}
