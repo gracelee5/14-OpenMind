@@ -26,6 +26,7 @@ function ListPage() {
     const { results } = await ListApi();
     setItems(results);
   };
+
   return (
     <>
       <header>
@@ -39,7 +40,7 @@ function ListPage() {
         </DropDownButtonBox>
 
         <UserCard items={items} />
-        <button onClickCapture={handleLoadClick}>불러오기</button>
+        <button onClick={handleLoadClick}>불러오기</button>
       </main>
 
       <footer></footer>
