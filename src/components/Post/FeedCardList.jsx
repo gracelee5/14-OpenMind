@@ -4,8 +4,8 @@ import React from 'react';
 import styled from 'styled-components';
 import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
-import edit from '../../images/icons/Edit.svg';
-import x from '../../images/x.svg';
+import { ReactComponent as edit } from '../../images/icons/Edit.svg';
+import { ReactComponent as x } from '../../images/x.svg';
 import ButtonThumbs from './ButtonThumbs';
 import AnswerEdit from './AnswerEdit';
 import AnswerInput from './AnswerInput';
@@ -116,11 +116,21 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                       handleConfirmClick;
                     }}
                   >
-                    <StyledEditX src={edit} alt='edit' />
+                    <Stylededit src={edit} alt='edit' />
                     수정하기
                   </MenuItem>
-                  <MenuItem>
-                    <StyledEditX src={x} alt='x' />
+                  <MenuItem
+                    onClick={async () => {
+                      await fetch(
+                        `https://openmind-api.vercel.app/6-14/questions/${question.id}/`,
+                        {
+                          method: 'DELETE',
+                        }
+                      );
+                      location.reload();
+                    }}
+                  >
+                    <Styledx src={x} alt='x' />
                     삭제하기
                   </MenuItem>
                 </ModifyMenu>
@@ -379,7 +389,9 @@ const ModifyMenu = styled.div`
   white-space: nowrap;
 `;
 
-const MenuItem = styled.div`
+const MenuItem = styled.button`
+  display: flex;
+  justify-content: center;
   width: 103px;
   height: 30px;
   padding: 6px 0;
@@ -388,12 +400,18 @@ const MenuItem = styled.div`
   font-weight: 500;
   line-height: 18px;
   color: #515151;
-  cursor: pointer;
   &:hover {
-    background: linear-gradient(to right, #f0f0f0, transparent);
+    color: #1877f2;
+    stroke: #1877f2;
+    stroke-width: 0.5;
   }
 `;
-const StyledEditX = styled.img`
+const Stylededit = styled(edit)`
+  width: 14px;
+  height: 14px;
+  margin: 0 6px 0 0;
+`;
+const Styledx = styled(x)`
   width: 14px;
   height: 14px;
   margin: 0 6px 0 0;
