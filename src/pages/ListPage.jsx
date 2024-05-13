@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import UserCard from '../components/UserCard';
 import { useEffect, useState } from 'react';
 import { ListApi } from '../api/Listapi';
+import ReactPaginate from 'react-paginate';
 
 const WhoQuestion = styled.p`
   display: flex;
@@ -17,6 +18,11 @@ const WhoQuestion = styled.p`
 
 const DropDownButtonBox = styled.div`
   padding: 30px;
+`;
+
+const PaginationDesign = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 function ListPage() {
@@ -37,6 +43,21 @@ function ListPage() {
     UserCard(items);
   }, [items]);
 
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 8;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = items.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(items.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % items.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
       <header>
@@ -51,7 +72,17 @@ function ListPage() {
         <UserCard results={items} />
       </main>
 
-      <footer></footer>
+      <PaginationDesign>
+        <ReactPaginate
+          firstPage={currentItems}
+          nextLabel='next >'
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel='< previous'
+          renderOnZeroPageCount={null}
+        />
+      </PaginationDesign>
     </>
   );
 }
