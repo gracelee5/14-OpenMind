@@ -10,6 +10,11 @@ const UserCardGlobal = styled.div`
   height: 474px;
 `;
 
+const AllDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const UserCardBox = styled.div`
   width: 220px;
   height: 187px;
@@ -23,35 +28,39 @@ const CountNumber = styled.span`
 `;
 
 const PersnoalQuestion = styled.div`
-  position: relative;
-  bottom: 1px;
+  margin-top: 40px;
+  margin-right: 20px;
+  margin-left: 10px;
 `;
 
 const PersnoalImage = styled.div`
-  width: 180px;
-  height: 97px;
-  gap: 12px;
-  padding: 16px;
-  border: 1px;
-  border-radius: 16px;
+  width: 60px;
+  height: 60px;
+  border-radius: 70%;
+  overflow: hidden;
+  margin: 10px;
+`;
+
+const ImageBox = styled.div`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const PersnoalName = styled.h1`
-  padding: 20 5;
+  margin-top: 20px;
+  margin-left: 20px;
 `;
 
 function UserInformation({ usercarddata }) {
   return (
     <UserCardBox>
       <PersnoalImage>
-        <img
-          src={usercarddata.imageSource}
-          width='60px'
-          height='60px'
-          alt={usercarddata.name}
-        />
-        <PersnoalName>{usercarddata.name}</PersnoalName>
+        <ImageBox>
+          <img src={usercarddata.imageSource} alt={usercarddata.name} />
+        </ImageBox>
       </PersnoalImage>
+      <PersnoalName>{usercarddata.name}</PersnoalName>
       <PersnoalQuestion>
         <img src={QuestionMark} alt='받은 질문' />
         <Link to='/post'> 받은 질문 </Link>
@@ -63,17 +72,19 @@ function UserInformation({ usercarddata }) {
 
 function UserCard({ users }) {
   return (
-    <UserCardGlobal>
-      {users &&
-        users.map(function (usercarddata) {
-          return (
-            <div key={usercarddata}>
-              <UserInformation usercarddata={usercarddata} />
-            </div>
-          );
-        })}
-      ;
-    </UserCardGlobal>
+    <AllDiv>
+      <UserCardGlobal>
+        {users &&
+          users.map(function (usercarddata) {
+            return (
+              <div key={usercarddata}>
+                <UserInformation usercarddata={usercarddata} />
+              </div>
+            );
+          })}
+        ;
+      </UserCardGlobal>
+    </AllDiv>
   );
 }
 
