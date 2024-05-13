@@ -63,12 +63,14 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
 
-  const localId = localStorage.getItem('id');
-  //console.log('로컬 아이디', localId);
-  //console.log('post 아이디', post.id);
-  if (localId === post.id) {
-    setIdCheck(true);
-  }
+  useEffect(() => {
+    const localId = localStorage.getItem('id');
+    if (localId === post.id) {
+      setIdCheck(true);
+    }
+    console.log('로컬 아이디', localId);
+    console.log('post', post);
+  }, [post]);
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -106,7 +108,7 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
             <Badge item={question.answer} />
           </BadgeStyle>
 
-          {post.id != localId ? (
+          {idCheck ? (
             <ButtonModify onClick={toggleMenu}>
               <img src={more} alt='more' />
               {showMenu && (
