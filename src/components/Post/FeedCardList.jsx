@@ -69,7 +69,6 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
 
   const [showMenu, setShowMenu] = useState(false);
 
-
   useEffect(() => {
     if (question.answer?.id) {
       getAnswer(question.answer.id).then((answer) => setAnswer(answer));
@@ -111,17 +110,15 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                 <ModifyMenu>
                   <MenuItem
                     onClick={() => {
-                      setIdCheck(!idCheck);
-                      handleConfirmClick;
+                      handleConfirmClick();
                     }}
                   >
-                    답변하기
+                    수정하기
                   </MenuItem>
                   <MenuItem>삭제하기</MenuItem>
                 </ModifyMenu>
               )}
             </ButtonModify>
-
           ) : null}
           {/* <ButtonModify></ButtonModify> */}
         </CardTop>
@@ -141,13 +138,13 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           </UserInfo>
           {idCheck === true && answer ? (
             <>
-              <ProfileImg>
+              {/*<ProfileImg>
                 <img src={post.imageSource} alt={post.imageSource} />
               </ProfileImg>
               <UserInfo>
                 <UserName>{post.name}</UserName>
                 {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-              </UserInfo>
+          </UserInfo>*/}
               <AnswerEdit
                 initialContent={answer?.content}
                 answerId={answer.id}
