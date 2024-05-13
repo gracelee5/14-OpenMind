@@ -25,6 +25,7 @@ function ListPage() {
   const handleLoadClick = async () => {
     const { results } = await ListApi();
     setItems(results);
+    UserCard(items);
   };
 
   return (
@@ -39,7 +40,6 @@ function ListPage() {
           <DropDownButton />
         </DropDownButtonBox>
 
-        <UserCard items={items} />
         <button onClick={handleLoadClick}>불러오기</button>
       </main>
 
