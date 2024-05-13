@@ -82,7 +82,6 @@ function UserCard({ results }) {
               </div>
             );
           })}
-        ;
       </UserCardGlobal>
     </AllDiv>
   );
