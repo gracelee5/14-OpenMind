@@ -2,7 +2,8 @@ import ListHeader from '../components/ListHeader';
 import DropDownButton from '../components/DropdownButton';
 import styled from 'styled-components';
 import UserCard from '../components/UserCard';
-import users from '../api/mock.json';
+import { useState } from 'react';
+import { ListApi } from '../api/Listapi';
 
 const WhoQuestion = styled.p`
   display: flex;
@@ -19,17 +20,30 @@ const DropDownButtonBox = styled.div`
 `;
 
 function ListPage() {
+  const [items, setItems] = useState([]);
+
+  const handleLoadClick = async () => {
+    const { results } = await ListApi();
+    setItems(results);
+    UserCard(items);
+  };
+
   return (
     <>
-      <ListHeader />
+      <header>
+        <ListHeader />
+      </header>
+      <main>
+        <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
 
-      <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
+        <DropDownButtonBox>
+          <DropDownButton />
+        </DropDownButtonBox>
 
-      <DropDownButtonBox>
-        <DropDownButton />
-      </DropDownButtonBox>
+        <button onClick={handleLoadClick}>불러오기</button>
+      </main>
 
-      <UserCard users={users} />
+      <footer></footer>
     </>
   );
 }

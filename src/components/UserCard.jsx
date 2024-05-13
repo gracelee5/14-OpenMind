@@ -52,33 +52,33 @@ const PersnoalName = styled.h1`
   margin-left: 20px;
 `;
 
-function UserInformation({ usercarddata }) {
+function UserInformation({ results }) {
   return (
     <UserCardBox>
       <PersnoalImage>
         <ImageBox>
-          <img src={usercarddata.imageSource} alt={usercarddata.name} />
+          <img src={results.imageSource} alt={results.name} />
         </ImageBox>
       </PersnoalImage>
-      <PersnoalName>{usercarddata.name}</PersnoalName>
+      <PersnoalName>{results.name}</PersnoalName>
       <PersnoalQuestion>
         <img src={QuestionMark} alt='받은 질문' />
         <Link to='/post'> 받은 질문 </Link>
-        <CountNumber> {usercarddata.questionCount} 개</CountNumber>
+        <CountNumber> {results.questionCount} 개</CountNumber>
       </PersnoalQuestion>
     </UserCardBox>
   );
 }
 
-function UserCard({ users }) {
+function UserCard({ results }) {
   return (
     <AllDiv>
       <UserCardGlobal>
-        {users &&
-          users.map(function (usercarddata) {
+        {results &&
+          results.map((results) => {
             return (
-              <div key={usercarddata}>
-                <UserInformation usercarddata={usercarddata} />
+              <div key={results.id}>
+                <UserInformation results={results} />
               </div>
             );
           })}
