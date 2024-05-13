@@ -52,7 +52,7 @@ function formatData(value) {
 
 function Badge({ item }) {
   if (item === null || item === undefined) {
-    return <div className='badge yet'>미작성</div>;
+    return <div className='badge yet'>미답변</div>;
   } else {
     return <div className='badge done'>답변 완료</div>;
   }
