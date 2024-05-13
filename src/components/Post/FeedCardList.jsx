@@ -4,6 +4,8 @@ import React from 'react';
 import styled from 'styled-components';
 import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
+import edit from '../../images/icons/Edit.svg';
+import x from '../../images/x.svg';
 import ButtonThumbs from './ButtonThumbs';
 import AnswerEdit from './AnswerEdit';
 import AnswerInput from './AnswerInput';
@@ -114,9 +116,13 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                       handleConfirmClick;
                     }}
                   >
-                    답변하기
+                    <StyledEditX src={edit} alt='edit' />
+                    수정하기
                   </MenuItem>
-                  <MenuItem>삭제하기</MenuItem>
+                  <MenuItem>
+                    <StyledEditX src={x} alt='x' />
+                    삭제하기
+                  </MenuItem>
                 </ModifyMenu>
               )}
             </ButtonModify>
@@ -362,25 +368,33 @@ const ButtonWrap = styled.div`
 `;
 
 const ModifyMenu = styled.div`
-  position: absolute;
-  top: 32px;
-  right: 0;
+  box-sizing: border-box;
+  width: 103px;
+  height: 68px;
   background-color: #fff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  padding: 8px 0;
+  border: 1px solid #cfcfcf;
+  padding: 4px 0;
+  white-space: nowrap;
 `;
 
 const MenuItem = styled.div`
-  padding: 8px 16px;
+  width: 103px;
+  height: 30px;
+  padding: 6px 0;
   font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 22px;
-  text-align: left;
-  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #515151;
   cursor: pointer;
   &:hover {
-    background-color: #f7f7f7;
+    background: linear-gradient(to right, #f0f0f0, transparent);
   }
+`;
+const StyledEditX = styled.img`
+  width: 14px;
+  height: 14px;
+  margin: 0 6px 0 0;
 `;
