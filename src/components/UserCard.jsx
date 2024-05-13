@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import QuestionMark from '../images/QuestionMark.svg';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 
 const UserCardGlobal = styled.div`
   display: grid;
@@ -53,8 +54,12 @@ const PersnoalName = styled.h1`
 `;
 
 function UserInformation({ results }) {
+  const navigate = useNavigate();
+  const handleCardClick = (subjectId) => {
+    navigate(`/post/${subjectId}`);
+  };
   return (
-    <UserCardBox>
+    <UserCardBox onClick={() => handleCardClick(results.id)}>
       <PersnoalImage>
         <ImageBox>
           <img src={results.imageSource} alt={results.name} />

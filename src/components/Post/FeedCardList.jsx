@@ -4,8 +4,6 @@ import React from 'react';
 import styled from 'styled-components';
 import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
-import edit from '../../images/icons/Edit.svg';
-import x from '../../images/x.svg';
 import ButtonThumbs from './ButtonThumbs';
 import AnswerEdit from './AnswerEdit';
 import AnswerInput from './AnswerInput';
@@ -50,8 +48,8 @@ function formatData(value) {
   return `${Math.floor(betweenTimeDay / 365)}년전`;
 }
 
-function Badge({ item }) {
-  if (item === null || item === undefined) {
+function Badge(item) {
+  if (item.answer === null || item.answer === undefined) {
     return <div className='badge yet'>미작성</div>;
   } else {
     return <div className='badge done'>답변 완료</div>;
@@ -102,7 +100,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
       >
         <CardTop>
           <BadgeStyle>
-            <Badge item={question.answer} />
+            <Badge item={question} />
           </BadgeStyle>
 
           {post.id != localId ? (
@@ -112,17 +110,12 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                 <ModifyMenu>
                   <MenuItem
                     onClick={() => {
-                      setIdCheck(!idCheck);
-                      handleConfirmClick;
+                      handleConfirmClick();
                     }}
                   >
-                    <StyledEditX src={edit} alt='edit' />
                     수정하기
                   </MenuItem>
-                  <MenuItem>
-                    <StyledEditX src={x} alt='x' />
-                    삭제하기
-                  </MenuItem>
+                  <MenuItem>삭제하기</MenuItem>
                 </ModifyMenu>
               )}
             </ButtonModify>
@@ -135,58 +128,43 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           </DateText>
           <Title>{question.content}</Title>
         </QuestionSection>
-        {idCheck === true && answer ? (
-          <UserInfoWrap>
-            <ProfileImg>
-              <img src={post.imageSource} alt={post.imageSource} />
-            </ProfileImg>
-            <UserInfo>
-              <UserName>{post.name}</UserName>
-              {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-            </UserInfo>
-            <AnswerEdit
-              initialContent={answer?.content}
-              answerId={answer.id}
-              onEditSuccess={() => {
-                getAnswer(answer.id).then((answer) => setAnswer(answer));
-                setIdCheck(false);
-              }}
-            />
-          </UserInfoWrap>
-        ) : idCheck === true && !answer ? (
-          <UserInfoWrap>
-            <ProfileImg>
-              <img src={post.imageSource} alt={post.imageSource} />
-            </ProfileImg>
-            <UserInfo>
-              <UserName>{post.name}</UserName>
-              {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-            </UserInfo>
+        <UserInfoWrap>
+          <ProfileImg>
+            <img src={post.imageSource} alt={post.imageSource} />
+          </ProfileImg>
+          <UserInfo>
+            <UserName>{post.name}</UserName>
+            {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
+          </UserInfo>
+          {idCheck === true && answer ? (
+            <>
+              {/*<ProfileImg>
+                <img src={post.imageSource} alt={post.imageSource} />
+              </ProfileImg>
+              <UserInfo>
+                <UserName>{post.name}</UserName>
+                {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
+          </UserInfo>*/}
+              <AnswerEdit
+                initialContent={answer?.content}
+                answerId={answer.id}
+                onEditSuccess={() => {
+                  getAnswer(answer.id).then((answer) => setAnswer(answer));
+                  setIdCheck(false);
+                }}
+              />
+            </>
+          ) : idCheck === true && !answer ? (
             <AnswerInput
               questionId={questionId}
               onInputSuccess={() => {
                 getAnswer(answer.id).then((answer) => setAnswer(answer));
               }}
             />
-          </UserInfoWrap>
-        ) : (
-          <>
-            {answer?.content ? (
-              <UserInfoWrap>
-                <ProfileImg>
-                  <img src={post.imageSource} alt={post.imageSource} />
-                </ProfileImg>
-                <UserInfo>
-                  <UserName>{post.name}</UserName>
-                  {answer && (
-                    <DateText>{formatData(answer.createdAt)}</DateText>
-                  )}
-                </UserInfo>
-                <AnswerView>{answer?.content}</AnswerView>
-              </UserInfoWrap>
-            ) : null}
-          </>
-        )}
+          ) : (
+            <AnswerView>{answer?.content}</AnswerView>
+          )}
+        </UserInfoWrap>
         <ButtonWrap>
           <ButtonThumbs
             questionId={question.id}
@@ -358,6 +336,7 @@ const AnswerView = styled.div`
   font-weight: 400;
   line-height: 22px;
   text-align: left;
+  color: ${({ isRejected }) => (isRejected ? 'red' : 'black')};
 `;
 
 const ButtonWrap = styled.div`
@@ -368,33 +347,25 @@ const ButtonWrap = styled.div`
 `;
 
 const ModifyMenu = styled.div`
-  box-sizing: border-box;
-  width: 103px;
-  height: 68px;
+  position: absolute;
+  top: 32px;
+  right: 0;
   background-color: #fff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  border: 1px solid #cfcfcf;
-  padding: 4px 0;
-  white-space: nowrap;
+  padding: 8px 0;
 `;
 
 const MenuItem = styled.div`
-  width: 103px;
-  height: 30px;
-  padding: 6px 0;
+  padding: 8px 16px;
   font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  color: #515151;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: left;
+  color: #000;
   cursor: pointer;
   &:hover {
-    background: linear-gradient(to right, #f0f0f0, transparent);
+    background-color: #f7f7f7;
   }
-`;
-const StyledEditX = styled.img`
-  width: 14px;
-  height: 14px;
-  margin: 0 6px 0 0;
 `;

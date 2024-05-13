@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import FeedCardList from '../components/Post/FeedCardList';
+import { useParams } from 'react-router-dom';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
@@ -15,6 +16,7 @@ async function getQuestions(postId = 5718, order = 'createdAt') {
 function PostCardList() {
   const [items, setItems] = useState([]);
   const sortedItems = items.sort((a, b) => b.createdAt - a.createdAt);
+  const { subjectId } = useParams();
 
   const handleLoad = async () => {
     const { results } = await getQuestions();
@@ -27,7 +29,7 @@ function PostCardList() {
 
   return (
     <div>
-      <FeedCardList items={sortedItems}></FeedCardList>
+      <FeedCardList items={sortedItems} SubjectId={subjectId}></FeedCardList>
     </div>
   );
 }
