@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 const PAGE_SIZE = 5; // 한 번에 가져올 항목 수
 
-async function getQuestions(postId = 5718, order = 'createdAt', offset = 0) {
+async function getQuestions(postId, order = 'createdAt', offset = 0) {
   const query = `order=${order}&offset=${offset}&limit=${PAGE_SIZE}`;
   const response = await fetch(
     `${BASE_URL}subjects/${postId}/questions/?${query}`
@@ -19,17 +19,13 @@ function PostCardList() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const sortedItems = items.sort((a, b) => b.createdAt - a.createdAt);
-  const { subjectId } = useParams();
+  const { id } = useParams();
   const pageOffset = useRef(0); // 페이지 오프셋
   const isFirstLoad = useRef(true); // 처음 로드 여부를 기록
 
   const handleLoad = async () => {
     setIsLoading(true);
-    const { results } = await getQuestions(
-      subjectId,
-      'createdAt',
-      pageOffset.current
-    );
+    const { results } = await getQuestions(id, 'createdAt', pageOffset.current);
     if (results.length > 0) {
       setItems((prevItems) => [...prevItems, ...results]);
       pageOffset.current += PAGE_SIZE; // 다음 페이지 오프셋 설정
@@ -46,7 +42,7 @@ function PostCardList() {
       isFirstLoad.current = false; // 다음에 호출되지 않도록 설정
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subjectId]); // subjectId가 변경될 때마다 호출
+  }, [id]); // subjectId가 변경될 때마다 호출
 
   const handleScroll = () => {
     if (!isLoading && hasMore) {
@@ -67,7 +63,7 @@ function PostCardList() {
 
   return (
     <div>
-      <FeedCardList items={sortedItems} SubjectId={subjectId}></FeedCardList>
+      <FeedCardList items={sortedItems}></FeedCardList>
       {isLoading && <p>로딩이다.....</p>}
       {!isLoading && !hasMore && <p>이젠 없어... 그만해...</p>}
     </div>

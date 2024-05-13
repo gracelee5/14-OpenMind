@@ -9,11 +9,12 @@ import x from '../../images/x.svg';
 import ButtonThumbs from './ButtonThumbs';
 import AnswerEdit from './AnswerEdit';
 import AnswerInput from './AnswerInput';
+import { useParams } from 'react-router-dom';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
-async function getSubject(SubjectId = 5718) {
-  const response = await fetch(`${BASE_URL}subjects/${SubjectId}/`);
+async function getSubject(subjectId) {
+  const response = await fetch(`${BASE_URL}subjects/${subjectId}/`);
   const body = await response.json();
   return body;
 }
@@ -204,10 +205,10 @@ function FeedCardList({ items }) {
   const [answer, setAnswer] = useState([]);
   //삭제하기용 선택한 아이템
   const [selectedCardId, setSelectedCardId] = useState(null);
-
+  const { id: subjectId } = useParams;
   useEffect(() => {
-    getSubject().then((post) => setPost(post));
-  }, []);
+    getSubject(subjectId).then((post) => setPost(post));
+  }, [subjectId]);
 
   useEffect(() => {
     getAnswer().then((answer) => setAnswer(answer));
