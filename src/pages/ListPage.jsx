@@ -2,7 +2,7 @@ import ListHeader from '../components/ListHeader';
 import DropDownButton from '../components/DropdownButton';
 import styled from 'styled-components';
 import UserCard from '../components/UserCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ListApi } from '../api/Listapi';
 
 const WhoQuestion = styled.p`
@@ -22,11 +22,20 @@ const DropDownButtonBox = styled.div`
 function ListPage() {
   const [items, setItems] = useState([]);
 
-  const handleLoadClick = async () => {
-    const { results } = await ListApi();
-    setItems(results);
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 ListApi 호출
+    const fetchData = async () => {
+      const { results } = await ListApi();
+      setItems(results);
+    };
+
+    fetchData(); // fetchData 함수 호출
+  }, []); // 빈 배열을 전달하여 한 번만 실행되도록 설정
+
+  useEffect(() => {
+    // items 값이 변경될 때 UserCard 호출
     UserCard(items);
-  };
+  }, [items]);
 
   return (
     <>
@@ -39,8 +48,6 @@ function ListPage() {
         <DropDownButtonBox>
           <DropDownButton />
         </DropDownButtonBox>
-
-        <button onClick={handleLoadClick}>불러오기</button>
         <UserCard results={items} />
       </main>
 
