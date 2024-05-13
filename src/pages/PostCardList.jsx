@@ -22,6 +22,7 @@ function PostCardList() {
   const { id } = useParams();
   const pageOffset = useRef(0); // 페이지 오프셋
   const isFirstLoad = useRef(true); // 처음 로드 여부를 기록
+  const [question, setQuestion] = useState(0);
 
   const handleLoad = async () => {
     setIsLoading(true);
@@ -33,6 +34,7 @@ function PostCardList() {
       setHasMore(false); // 더 이상 가져올 데이터가 없음을 표시
     }
     setIsLoading(false);
+    setQuestion(results);
   };
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function PostCardList() {
 
   return (
     <div>
-      <FeedCardList items={sortedItems}></FeedCardList>
+      <FeedCardList items={sortedItems} questionId={question.id}></FeedCardList>
       {isLoading && <p>로딩이다.....</p>}
       {!isLoading && !hasMore && <p>이젠 없어... 그만해...</p>}
     </div>

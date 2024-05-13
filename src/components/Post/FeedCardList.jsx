@@ -18,7 +18,7 @@ async function getSubject(subjectId) {
   const body = await response.json();
   return body;
 }
-const questionId = 10604;
+
 async function getAnswer(id) {
   const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
@@ -59,13 +59,13 @@ function Badge({ item }) {
   }
 }
 
-function FeedCard({ item: question, post, onSelect, isSelected }) {
+function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
 
   const localId = localStorage.getItem('id');
-  console.log('로컬 아이디', localId);
-  console.log('post 아이디', post.id);
+  //console.log('로컬 아이디', localId);
+  //console.log('post 아이디', post.id);
   if (localId === post.id) {
     setIdCheck(true);
   }
@@ -200,14 +200,16 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   );
 }
 
-function FeedCardList({ items }) {
+function FeedCardList({ items, questionId }) {
   const [post, setPost] = useState([]);
   const [answer, setAnswer] = useState([]);
+
   //삭제하기용 선택한 아이템
   const [selectedCardId, setSelectedCardId] = useState(null);
   const { id: subjectId } = useParams;
   useEffect(() => {
     getSubject(subjectId).then((post) => setPost(post));
+    console.log(getSubject(subjectId));
   }, [subjectId]);
 
   useEffect(() => {
@@ -225,6 +227,7 @@ function FeedCardList({ items }) {
               answer={answer}
               onSelect={setSelectedCardId}
               isSelected={item.id === selectedCardId}
+              questionId={questionId}
             ></FeedCard>{' '}
           </li>
         );
