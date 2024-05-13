@@ -10,7 +10,7 @@ import AnswerInput from './AnswerInput';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
-async function getSubject(SubjectId = 5718) {
+async function getSubject(SubjectId) {
   const response = await fetch(`${BASE_URL}subjects/${SubjectId}/`);
   const body = await response.json();
   return body;
