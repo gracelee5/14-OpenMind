@@ -336,6 +336,7 @@ const AnswerView = styled.div`
   font-weight: 400;
   line-height: 22px;
   text-align: left;
+  color: ${({ isRejected }) => (isRejected ? 'red' : 'black')};
 `;
 
 const ButtonWrap = styled.div`
