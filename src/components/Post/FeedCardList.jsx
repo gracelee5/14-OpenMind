@@ -59,12 +59,22 @@ function Badge(item) {
 function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     if (question.answer?.id) {
       getAnswer(question.answer.id).then((answer) => setAnswer(answer));
     }
   }, [question.answer?.id]);
+
+  const handleConfirmClick = () => {
+    setShowMenu(false);
+    setIdCheck(!idCheck);
+  };
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
 
   return (
     <>
@@ -85,11 +95,22 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
             <Badge item={question} />
           </BadgeStyle>
           {post.id === 5718 ? (
-            <ButtonModify
-              onClick={() => {
-                setIdCheck(!idCheck);
-              }}
-            ></ButtonModify>
+            <ButtonModify onClick={toggleMenu}>
+              <img src={more} alt='more' />
+              {showMenu && (
+                <ModifyMenu>
+                  <MenuItem
+                    onClick={() => {
+                      setIdCheck(!idCheck);
+                      handleConfirmClick;
+                    }}
+                  >
+                    답변하기
+                  </MenuItem>
+                  <MenuItem>삭제하기</MenuItem>
+                </ModifyMenu>
+              )}
+            </ButtonModify>
           ) : null}
           {/* <ButtonModify></ButtonModify> */}
         </CardTop>
@@ -315,4 +336,28 @@ const ButtonWrap = styled.div`
   border-top: 1px solid #cfcfcf;
   padding-top: 24px;
   gap: 32px;
+`;
+
+const ModifyMenu = styled.div`
+  position: absolute;
+  top: 32px;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  padding: 8px 0;
+`;
+
+const MenuItem = styled.div`
+  padding: 8px 16px;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: left;
+  color: #000;
+  cursor: pointer;
+  &:hover {
+    background-color: #f7f7f7;
+  }
 `;
