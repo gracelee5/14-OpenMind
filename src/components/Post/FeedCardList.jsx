@@ -183,10 +183,7 @@ function FeedCard({
               <img src={post.imageSource} alt={post.imageSource} />
             </ProfileImg>
             <UserInfo>
-              <UserName>
-                {post.name}
-                {post.id}
-              </UserName>
+              <UserName>{post.name}</UserName>
               {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
             </UserInfo>
             <AnswerInput
