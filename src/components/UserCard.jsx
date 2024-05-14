@@ -63,7 +63,7 @@ function UserInformation({ results }) {
       <PersnoalName>{results.name}</PersnoalName>
       <PersnoalQuestion>
         <img src={QuestionMark} alt='받은 질문' />
-        <Link to='/post'> 받은 질문 </Link>
+        <Link to={`/post/:id`}> 받은 질문 </Link>
         <CountNumber> {results.questionCount} 개</CountNumber>
       </PersnoalQuestion>
     </UserCardBox>
