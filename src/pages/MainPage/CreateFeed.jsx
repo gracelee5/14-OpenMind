@@ -29,6 +29,7 @@ function CreateFeed() {
 
   const handleSubmit = async () => {
     const userId = getUserIdFromLocalStorage(name);
+
     if (!userId) {
       const response = await fetch(`${BASE_URL}/subjects/`, {
         method: 'POST',
@@ -42,10 +43,8 @@ function CreateFeed() {
       const id = data.id;
 
       localStorage.setItem('id', id);
-
       alert(`${name}님 피드가 등록되었습니다`);
-
-      navigate(`/post/${userId}/answer`);
+      navigate(`/post/${id}/answer`);
     } else {
       alert(`${name}님 페이지로 이동합니다`);
 
