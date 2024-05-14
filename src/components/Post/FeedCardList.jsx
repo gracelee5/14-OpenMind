@@ -176,7 +176,8 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
             <AnswerInput
               questionId={question.id}
               onInputSuccess={() => {
-                getAnswer(answer.id).then((answer) => setAnswer(answer));
+                //getAnswer(answer.id).then((answer) => setAnswer(answer));
+                location.reload();
               }}
             />
           </UserInfoWrap>
