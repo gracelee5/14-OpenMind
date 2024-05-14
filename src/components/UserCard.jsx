@@ -55,8 +55,14 @@ const PersnoalName = styled.h1`
 
 function UserInformation({ results }) {
   const navigate = useNavigate();
+  const localId = localStorage.getItem('id'); // 로컬 아이디 가져오기
+
   const handleCardClick = (subjectId) => {
-    navigate(`/post/${subjectId}`);
+    if (localId == subjectId) {
+      navigate(`/post/${subjectId}/answer`); // 로컬 아이디와 subjectId가 같으면 다른 경로로 이동
+    } else {
+      navigate(`/post/${subjectId}`); // 로컬 아이디와 subjectId가 다르면 기본 경로로 이동
+    }
   };
   return (
     <UserCardBox onClick={() => handleCardClick(results.id)}>

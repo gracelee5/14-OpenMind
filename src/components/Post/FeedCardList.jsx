@@ -22,7 +22,7 @@ async function getSubject(subjectId) {
 async function getAnswer(id) {
   const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
-  console.log('subject', body);
+  //console.log('subject', body);
   return body;
 }
 
@@ -58,19 +58,16 @@ function Badge({ item }) {
     return <div className='badge done'>답변 완료</div>;
   }
 }
-
 function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
-
+  const { id } = useParams();
   useEffect(() => {
     const localId = localStorage.getItem('id');
-    if (localId === post.id) {
+    if (localId === id) {
       setIdCheck(true);
     }
-    //console.log('로컬 아이디', localId);
-    console.log('post 아이디', post.id);
-  }, [post.id]);
+  }, [id]);
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -221,7 +218,7 @@ function FeedCardList({ items, questionId }) {
   const { id: subjectId } = useParams;
   useEffect(() => {
     getSubject(subjectId).then((post) => setPost(post));
-    console.log('getsubject:', getSubject(subjectId));
+    //console.log('getsubject:', getSubject(subjectId));
   }, [subjectId]);
 
   useEffect(() => {

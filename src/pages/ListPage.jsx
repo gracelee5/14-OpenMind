@@ -61,7 +61,6 @@ function ListPage() {
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 8;
   const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(maxCount / itemsPerPage);
 
