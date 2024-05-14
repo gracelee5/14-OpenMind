@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 
 const DeleteUserModal = ({ trigger }) => {
   const [openModal, setOpenModal] = useState(false);
   const [isSendQuestion, setIsSendQuestion] = useState(false);
   const [id, setId] = useState(1111);
-  const [recentKey, setRecentKey] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (isSendQuestion) {
       setIsSendQuestion(false);
@@ -14,14 +14,8 @@ const DeleteUserModal = ({ trigger }) => {
   }, [isSendQuestion]);
 
   useEffect(() => {
-    if (localStorage.key(0)) {
-      // 가장 최근에 저장된 key값을 가져옴
-      const recentKey = localStorage.key(0);
-      // key값을 이용하여 value값(=id)를 가져옴
-      const targetValue = JSON.parse(localStorage.getItem(recentKey));
-      setId(targetValue.id);
-      setRecentKey(recentKey);
-    }
+    const id = localStorage.getItem('id');
+    setId(id);
   }, []);
 
   async function postDeleteUser() {
@@ -55,8 +49,9 @@ const DeleteUserModal = ({ trigger }) => {
       console.error('Failed to delete user:', error);
       alert('사용자 삭제에 실패했습니다. 다시 시도해 주세요.');
     } finally {
-      if (recentKey) {
-        localStorage.removeItem(recentKey);
+      if (id) {
+        localStorage.removeItem('id');
+        navigate('/');
       }
     }
   };
