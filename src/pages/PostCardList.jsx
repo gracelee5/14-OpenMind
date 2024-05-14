@@ -23,7 +23,7 @@ function PostCardList() {
   const { id } = useParams();
   const pageOffset = useRef(0); // 페이지 오프셋
   const isFirstLoad = useRef(true); // 처음 로드 여부를 기록
-  const [question, setQuestion] = useState(0);
+  const [question, setQuestion] = useState([]);
 
   const handleLoad = async () => {
     setIsLoading(true);
@@ -37,6 +37,9 @@ function PostCardList() {
     setIsLoading(false);
     setQuestion(results);
   };
+  useEffect(() => {
+    console.log('question', question);
+  }, [question]);
 
   useEffect(() => {
     if (isFirstLoad.current) {

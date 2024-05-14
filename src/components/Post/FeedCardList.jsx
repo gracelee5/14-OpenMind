@@ -112,8 +112,9 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
                 <ModifyMenu>
                   <MenuItem
                     onClick={() => {
-                      setIdCheck(!idCheck);
-                      handleConfirmClick;
+                      if (answer !== null) {
+                        handleConfirmClick();
+                      }
                     }}
                   >
                     <Stylededit src={edit} alt='edit' />
