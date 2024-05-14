@@ -9,12 +9,14 @@ const Positioner = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 10px;
+
   width: 100%;
+  z-index: 1;
 `;
 
 // 흰 배경, 내용 중간 정렬
 const WhiteBackground = styled.div`
+  padding: 10px;
   background: white;
   display: flex;
   justify-content: center;
