@@ -58,7 +58,7 @@ function Badge({ item }) {
     return <div className='badge done'>답변 완료</div>;
   }
 }
-function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
+function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
   const { id } = useParams();
@@ -70,7 +70,7 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   }, [id]);
 
   const [showMenu, setShowMenu] = useState(false);
-
+  const [editButtonClick, setEditButtonClick] = useState(false);
   useEffect(() => {
     if (question.answer?.id) {
       getAnswer(question.answer.id).then((answer) => setAnswer(answer));
@@ -78,8 +78,8 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   }, [question.answer?.id]);
 
   const handleConfirmClick = () => {
-    setShowMenu(false);
-    setIdCheck(!idCheck);
+    console.log('클릭');
+    setEditButtonClick(true);
   };
 
   const toggleMenu = () => {
@@ -112,8 +112,9 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
                 <ModifyMenu>
                   <MenuItem
                     onClick={() => {
-                      setIdCheck(!idCheck);
-                      handleConfirmClick;
+                      if (answer !== null) {
+                        handleConfirmClick();
+                      }
                     }}
                   >
                     <Stylededit src={edit} alt='edit' />
@@ -145,7 +146,7 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
           </DateText>
           <Title>{question.content}</Title>
         </QuestionSection>
-        {idCheck === true && answer ? (
+        {idCheck === true && editButtonClick ? (
           <UserInfoWrap>
             <ProfileImg>
               <img src={post.imageSource} alt={post.imageSource} />
@@ -159,7 +160,7 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
               answerId={answer.id}
               onEditSuccess={() => {
                 getAnswer(answer.id).then((answer) => setAnswer(answer));
-                setIdCheck(false);
+                setEditButtonClick(false);
               }}
             />
           </UserInfoWrap>
@@ -173,15 +174,16 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
               {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
             </UserInfo>
             <AnswerInput
-              questionId={questionId}
+              questionId={question.id}
               onInputSuccess={() => {
-                getAnswer(answer.id).then((answer) => setAnswer(answer));
+                //getAnswer(answer.id).then((answer) => setAnswer(answer));
+                location.reload();
               }}
             />
           </UserInfoWrap>
         ) : (
           <>
-            {answer?.content ? (
+            {!idCheck || answer ? (
               <UserInfoWrap>
                 <ProfileImg>
                   <img src={post.imageSource} alt={post.imageSource} />
