@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-function AnswerInput({ questionId, onInputSuccess }) {
+function AnswerInput({ questionId, onInputSuccess, onRejected }) {
   const [text, setText] = useState('');
   const handleChange = (event) => {
     setText(event.target.value);
   };
   const handleSubmit = (isRejected) => {
     if (text !== '' || isRejected) {
-      const contentToSend = isRejected ? 'Answer rejected' : text;
+      const contentToSend = isRejected ? '답변 거절' : text;
       postData(questionId, isRejected, contentToSend)
         .then((data) => {
           console.log('POST 요청 응답:', data);
@@ -16,6 +16,9 @@ function AnswerInput({ questionId, onInputSuccess }) {
           console.error('POST 요청 오류:', error);
         });
       onInputSuccess();
+      if (isRejected) {
+        onRejected();
+      }
     }
   };
 
