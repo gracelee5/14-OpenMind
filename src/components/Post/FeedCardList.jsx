@@ -74,12 +74,12 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [isRejected, setIsRejected] = useState(false);
   useEffect(() => {
     if (question.answer?.id) {
-      getAnswer(question.answer.id).then((answer) => setAnswer(answer));
+      getAnswer(question.answer.id).then((answer) => {
+        setAnswer(answer);
+        setIsRejected(answer.isRejected);
+      });
     }
   }, [question.answer?.id]);
-  useEffect(() => {
-    console.log('isRejected:', isRejected);
-  }, [isRejected]); //임시방편
 
   const handleConfirmClick = () => {
     console.log('클릭');
@@ -116,7 +116,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                 <ModifyMenu>
                   <MenuItem
                     onClick={() => {
-                      if (answer !== null) {
+                      if (!isRejected && answer !== null) {
                         handleConfirmClick();
                       }
                     }}
@@ -182,9 +182,6 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
               onInputSuccess={() => {
                 //getAnswer(answer.id).then((answer) => setAnswer(answer));
                 location.reload();
-              }}
-              onRejected={() => {
-                setIsRejected(true);
               }}
             />
           </UserInfoWrap>
@@ -382,7 +379,7 @@ const AnswerView = styled.div`
   font-weight: 400;
   line-height: 22px;
   text-align: left;
-  color: ${(props) => (props.isRejected ? 'red' : 'inherit')};
+  color: ${(props) => (props.isRejected ? '#b93333' : 'black')};
 `;
 
 const ButtonWrap = styled.div`
