@@ -9,15 +9,16 @@ import { ReactComponent as x } from '../../images/x.svg';
 import ButtonThumbs from './ButtonThumbs';
 import AnswerEdit from './AnswerEdit';
 import AnswerInput from './AnswerInput';
+import { useParams } from 'react-router-dom';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
-async function getSubject(SubjectId = 5718) {
-  const response = await fetch(`${BASE_URL}subjects/${SubjectId}/`);
+async function getSubject(subjectId) {
+  const response = await fetch(`${BASE_URL}subjects/${subjectId}/`);
   const body = await response.json();
   return body;
 }
-const questionId = 10604;
+
 async function getAnswer(id) {
   const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
@@ -58,16 +59,18 @@ function Badge({ item }) {
   }
 }
 
-function FeedCard({ item: question, post, onSelect, isSelected }) {
+function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
 
-  const localId = localStorage.getItem('id');
-  console.log('로컬 아이디', localId);
-  console.log('post 아이디', post.id);
-  if (localId === post.id) {
-    setIdCheck(true);
-  }
+  useEffect(() => {
+    const localId = localStorage.getItem('id');
+    if (localId === post.id) {
+      setIdCheck(true);
+    }
+    //console.log('로컬 아이디', localId);
+    //console.log('post 아이디', post.id);
+  }, [post.id]);
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -105,7 +108,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
             <Badge item={question.answer} />
           </BadgeStyle>
 
-          {post.id != localId ? (
+          {idCheck ? (
             <ButtonModify onClick={toggleMenu}>
               <img src={more} alt='more' />
               {showMenu && (
@@ -209,15 +212,17 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   );
 }
 
-function FeedCardList({ items }) {
+function FeedCardList({ items, questionId }) {
   const [post, setPost] = useState([]);
   const [answer, setAnswer] = useState([]);
+
   //삭제하기용 선택한 아이템
   const [selectedCardId, setSelectedCardId] = useState(null);
-
+  const { id: subjectId } = useParams;
   useEffect(() => {
-    getSubject().then((post) => setPost(post));
-  }, []);
+    getSubject(subjectId).then((post) => setPost(post));
+    console.log(getSubject(subjectId));
+  }, [subjectId]);
 
   useEffect(() => {
     getAnswer().then((answer) => setAnswer(answer));
@@ -234,6 +239,7 @@ function FeedCardList({ items }) {
               answer={answer}
               onSelect={setSelectedCardId}
               isSelected={item.id === selectedCardId}
+              questionId={questionId}
             ></FeedCard>{' '}
           </li>
         );

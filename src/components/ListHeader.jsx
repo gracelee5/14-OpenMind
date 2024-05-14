@@ -50,6 +50,8 @@ const GradientBorder = styled.div`
 `;
 
 function ListHeader() {
+  const localId = localStorage.getItem('id');
+  const linkTo = localId ? `/post/${localId}/answer` : '/';
   return (
     <Positioner>
       <WhiteBackground>
@@ -63,7 +65,7 @@ function ListHeader() {
           </Logo>
           <Spacer />
           <div>
-            <Link to='/post/:id/answer'>
+            <Link to={linkTo}>
               <AnswerButton> 답변하러 가기 ➝ </AnswerButton>
             </Link>
           </div>
