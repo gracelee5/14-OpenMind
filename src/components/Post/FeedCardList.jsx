@@ -58,7 +58,7 @@ function Badge({ item }) {
     return <div className='badge done'>답변 완료</div>;
   }
 }
-function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
+function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
   const { id } = useParams();
@@ -70,7 +70,7 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   }, [id]);
 
   const [showMenu, setShowMenu] = useState(false);
-
+  const [viewAnswer, setViewAnswer] = useState(true);
   useEffect(() => {
     if (question.answer?.id) {
       getAnswer(question.answer.id).then((answer) => setAnswer(answer));
@@ -78,9 +78,15 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
   }, [question.answer?.id]);
 
   const handleConfirmClick = () => {
-    setShowMenu(false);
     setIdCheck(!idCheck);
   };
+  useEffect(() => {
+    if (answer?.content) {
+      setViewAnswer(true);
+    } else {
+      setViewAnswer(false);
+    }
+  }, [answer?.content]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -174,7 +180,7 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
               {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
             </UserInfo>
             <AnswerInput
-              questionId={questionId}
+              questionId={question.id}
               onInputSuccess={() => {
                 getAnswer(answer.id).then((answer) => setAnswer(answer));
               }}
@@ -182,7 +188,7 @@ function FeedCard({ item: question, post, onSelect, isSelected, questionId }) {
           </UserInfoWrap>
         ) : (
           <>
-            {answer?.content ? (
+            {viewAnswer ? (
               <UserInfoWrap>
                 <ProfileImg>
                   <img src={post.imageSource} alt={post.imageSource} />

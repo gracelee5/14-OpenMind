@@ -37,9 +37,6 @@ function PostCardList() {
     setIsLoading(false);
     setQuestion(results);
   };
-  useEffect(() => {
-    console.log('question', question);
-  }, [question]);
 
   useEffect(() => {
     if (isFirstLoad.current) {
