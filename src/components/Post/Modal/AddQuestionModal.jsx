@@ -70,8 +70,8 @@ const AddQuestionModal = ({ trigger }) => {
     localStorage.removeItem('inputValue');
   };
 
-  const handleSendQuestion = () => {
-    postQuestion(inputValue, id);
+  const handleSendQuestion = async () => {
+    await postQuestion(inputValue, id);
     setIsSendQuestion(true);
     setOpenModal(false);
     location.reload();

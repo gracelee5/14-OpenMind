@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import FeedCardList from '../components/Post/FeedCardList';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 const PAGE_SIZE = 5; // 한 번에 가져올 항목 수
@@ -66,10 +67,23 @@ function PostCardList() {
   return (
     <div>
       <FeedCardList items={sortedItems} questionId={question.id}></FeedCardList>
-      {isLoading && <p>로딩이다.....</p>}
-      {!isLoading && !hasMore && <p>이젠 없어... 그만해...</p>}
+      {isLoading && (
+        <LoadingText>피드를 불러오는 중 &#183; &#183; &#183;</LoadingText>
+      )}
+      {/* {!isLoading && !hasMore && <p>피드가 없습니다.</p>} */}
     </div>
   );
 }
 
 export default PostCardList;
+
+const LoadingText = styled.div`
+  background: #c7bbb5;
+  display: flex;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 50em;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8em 1.2em;
+`;
