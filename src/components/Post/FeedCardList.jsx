@@ -70,7 +70,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   }, [id]);
 
   const [showMenu, setShowMenu] = useState(false);
-  const [viewAnswer, setViewAnswer] = useState(true);
+  const [editButtonClick, setEditButtonClick] = useState(false);
   useEffect(() => {
     if (question.answer?.id) {
       getAnswer(question.answer.id).then((answer) => setAnswer(answer));
@@ -78,15 +78,9 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   }, [question.answer?.id]);
 
   const handleConfirmClick = () => {
-    setIdCheck(!idCheck);
+    console.log('클릭');
+    setEditButtonClick(true);
   };
-  useEffect(() => {
-    if (answer?.content) {
-      setViewAnswer(true);
-    } else {
-      setViewAnswer(false);
-    }
-  }, [answer?.content]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -152,7 +146,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           </DateText>
           <Title>{question.content}</Title>
         </QuestionSection>
-        {idCheck === true && answer ? (
+        {idCheck === true && editButtonClick ? (
           <UserInfoWrap>
             <ProfileImg>
               <img src={post.imageSource} alt={post.imageSource} />
@@ -166,7 +160,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
               answerId={answer.id}
               onEditSuccess={() => {
                 getAnswer(answer.id).then((answer) => setAnswer(answer));
-                setIdCheck(false);
+                setEditButtonClick(false);
               }}
             />
           </UserInfoWrap>
@@ -188,7 +182,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           </UserInfoWrap>
         ) : (
           <>
-            {viewAnswer ? (
+            {!idCheck || answer ? (
               <UserInfoWrap>
                 <ProfileImg>
                   <img src={post.imageSource} alt={post.imageSource} />
