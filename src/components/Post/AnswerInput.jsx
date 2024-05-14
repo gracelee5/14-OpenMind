@@ -7,7 +7,7 @@ function AnswerInput({ questionId, onInputSuccess }) {
   };
   const handleSubmit = (isRejected) => {
     if (text !== '' || isRejected) {
-      const contentToSend = isRejected ? 'Answer rejected' : text;
+      const contentToSend = isRejected ? '답변 거절' : text;
       postData(questionId, isRejected, contentToSend)
         .then((data) => {
           console.log('POST 요청 응답:', data);

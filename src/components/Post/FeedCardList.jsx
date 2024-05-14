@@ -71,9 +71,13 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
 
   const [showMenu, setShowMenu] = useState(false);
   const [editButtonClick, setEditButtonClick] = useState(false);
+  const [isRejected, setIsRejected] = useState(false);
   useEffect(() => {
     if (question.answer?.id) {
-      getAnswer(question.answer.id).then((answer) => setAnswer(answer));
+      getAnswer(question.answer.id).then((answer) => {
+        setAnswer(answer);
+        setIsRejected(answer.isRejected);
+      });
     }
   }, [question.answer?.id]);
 
@@ -112,7 +116,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                 <ModifyMenu>
                   <MenuItem
                     onClick={() => {
-                      if (answer !== null) {
+                      if (!isRejected && answer !== null) {
                         handleConfirmClick();
                       }
                     }}
@@ -194,7 +198,9 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                     <DateText>{formatData(answer.createdAt)}</DateText>
                   )}
                 </UserInfo>
-                <AnswerView>{answer?.content}</AnswerView>
+                <AnswerView isRejected={isRejected}>
+                  {answer?.content}
+                </AnswerView>
               </UserInfoWrap>
             ) : null}
           </>
@@ -373,6 +379,7 @@ const AnswerView = styled.div`
   font-weight: 400;
   line-height: 22px;
   text-align: left;
+  color: ${(props) => (props.isRejected ? '#b93333' : 'black')};
 `;
 
 const ButtonWrap = styled.div`
