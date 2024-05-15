@@ -103,7 +103,6 @@ function UserCard({ users, order }) {
         </div>
       ))}
     </UserCardGlobal>
-
   );
 }
 
