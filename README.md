@@ -12,25 +12,13 @@
 # 2. 팀원소개
 
 
-이경원 팀장님
+|이경원|박지민|유기주|안상균|이소정|
+|---|---|---|---|---|
+| | | | | |
+|🔗[Github](https://github.com/gracelee5)|🔗[Github](https://github.com/JiminN2)|🔗[Github](https://github.com/YUKIJOO)|🔗[Github](https://github.com/emotigom)|🔗[Github](https://github.com/thatsrightcat)|
+|팀장, 포스트 페이지|메인페이지|리스트 페이지|모달 페이지|포스트 페이지|
 
-🔗[Github](https://github.com/gracelee5)
 
-박지민 팀원님
-
-🔗[Github](https://github.com/JiminN2)
-
-유기주 팀원님
-
-🔗[Github](https://github.com/YUKIJOO)
-
-안상균 팀원님
-
-🔗[Github](https://github.com/emotigom)
-
-이소정 팀원님
-
-🔗[Github](https://github.com/thatsrightcat)
 
 
 # 3. 개발기간
