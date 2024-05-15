@@ -6,15 +6,16 @@
 
 질문과 답변을 통해 마음을 열고 대화 나누는 소통 플랫폼입니다.
 
-!https://14-openmind.s3.ap-northeast-2.amazonaws.com/logo.png
+🔗 배포 URL: http://14-openmind.s3-website.ap-northeast-2.amazonaws.com/
 
+[1. 서비스 소개](1-서비스-소개)
 
 # 2. 팀원소개
 
 
 |이경원|박지민|유기주|안상균|이소정|
 |:---:|:---:|:---:|:---:|:---:|
-| <img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/4cb2839b-4e68-4c31-82ba-22c84f4c0777" width="200" height="200"> |<img src="(https://github.com/gracelee5/14-OpenMind/assets/113881477/b177a0b2-0c4c-4b84-8584-5acf6e483c63" width="200" height="200"> |<img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/5ba7c660-f7d4-48d5-82b7-0b95e0b77b55" width="200" height="200"> |<img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/5c62f30c-0d70-42b9-bc44-062883eca3c0" width="200" height="200"> |<img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/51e670e1-cf30-44d5-a0e6-b328a7da3159" width="200" height="200"> |
+| <img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/4cb2839b-4e68-4c31-82ba-22c84f4c0777" width="200" height="200"> |<img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/b177a0b2-0c4c-4b84-8584-5acf6e483c63" width="200" height="150"> |<img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/5ba7c660-f7d4-48d5-82b7-0b95e0b77b55" width="200" height="200"> |<img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/5c62f30c-0d70-42b9-bc44-062883eca3c0" width="200" height="200"> |<img src="https://github.com/gracelee5/14-OpenMind/assets/113881477/51e670e1-cf30-44d5-a0e6-b328a7da3159" width="200" height="200"> |
 |🔗[Github](https://github.com/gracelee5)|🔗[Github](https://github.com/JiminN2)|🔗[Github](https://github.com/YUKIJOO)|🔗[Github](https://github.com/emotigom)|🔗[Github](https://github.com/thatsrightcat)|
 |팀장, 포스트 페이지|메인페이지|리스트 페이지|모달 페이지|포스트 페이지|
 
