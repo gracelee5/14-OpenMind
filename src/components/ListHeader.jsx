@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import OpenmindLogo from '../images/logo.svg';
 import AnswerButton from './AnswerButton';
+import arrowRight from '../images/icons/arrow-right.svg';
 
 // 상단 고정, 그림자
 const Positioner = styled.div`
@@ -11,6 +12,15 @@ const Positioner = styled.div`
   position: fixed;
 
   width: 100%;
+
+  @media (min-width: 375px) {
+  }
+
+  @media (min-width: 768px) {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+
   z-index: 1;
 `;
 
@@ -54,6 +64,7 @@ const GradientBorder = styled.div`
 function ListHeader() {
   const localId = localStorage.getItem('id');
   const linkTo = localId ? `/post/${localId}/answer` : '/';
+
   return (
     <Positioner>
       <WhiteBackground>
@@ -68,7 +79,10 @@ function ListHeader() {
           <Spacer />
           <div>
             <Link to={linkTo}>
-              <AnswerButton> 답변하러 가기 ➝ </AnswerButton>
+              <AnswerButton>
+                {' '}
+                답변하러가기 <img src={arrowRight} alt='' />
+              </AnswerButton>
             </Link>
           </div>
         </HeaderContents>
