@@ -3,6 +3,7 @@ import DropDownButton from '../components/DropdownButton';
 import styled from 'styled-components';
 import UserCard from '../components/UserCard';
 import users from '../api/mock.json';
+import React, { useState } from 'react';
 
 const WhoQuestion = styled.p`
   display: flex;
@@ -19,6 +20,12 @@ const DropDownButtonBox = styled.div`
 `;
 
 function ListPage() {
+  const [order, setOrder] = useState('createdAt');
+
+  const handleNameClick = () => setOrder('name');
+
+  const handleNewestClick = () => setOrder('createdAt');
+
   return (
     <>
       <ListHeader />
@@ -26,10 +33,13 @@ function ListPage() {
       <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
 
       <DropDownButtonBox>
-        <DropDownButton />
+        <DropDownButton
+          handleNameClick={handleNameClick}
+          handleNewestClick={handleNewestClick}
+        />
       </DropDownButtonBox>
 
-      <UserCard users={users} />
+      <UserCard users={users} order={order} />
     </>
   );
 }

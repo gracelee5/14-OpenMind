@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import QuestionMark from '../images/QuestionMark.svg';
 import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
 
 const UserCardGlobal = styled.div`
   display: grid;
@@ -61,18 +62,26 @@ function UserInformation({ usercarddata }) {
   );
 }
 
-function UserCard({ users }) {
+function UserCard({ users, order }) {
+  const [sortedUsers, setSortedUsers] = useState([]);
+
+  useEffect(() => {
+    const sortedItems =
+      order === 'name'
+        ? [...users].sort((a, b) => a.name.localeCompare(b.name))
+        : [...users].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+    setSortedUsers(sortedItems);
+  }, [users, order]);
+
   return (
     <UserCardGlobal>
-      {users &&
-        users.map(function (usercarddata) {
-          return (
-            <div key={usercarddata}>
-              <UserInformation usercarddata={usercarddata} />
-            </div>
-          );
-        })}
-      ;
+      {sortedUsers.map((user) => (
+        <div key={user.id}>
+          <UserInformation usercarddata={user} />
+        </div>
+      ))}
     </UserCardGlobal>
   );
 }
