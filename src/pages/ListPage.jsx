@@ -72,7 +72,7 @@ function ListPage() {
       setMaxCount(count);
     };
 
-    fetchData(); // fetchData 함수 호출
+    fetchData();
   }, [itemOffset]); // 빈 배열을 전달하여 한 번만 실행되도록 설정
 
   useEffect(() => {
