@@ -19,22 +19,31 @@ export default function DeleteButton() {
 const Container = styled.div`
   display: flex;
   justify-content: center;
-`;
-const Section = styled.div`
   position: absolute;
   width: 710px;
   top: 375px;
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    width: 700px;
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: flex-end;
+  @media (max-width: 768px) {
+    width: 100%;
+    top: 330px;
   }
-  @media only screen and (max-width: 767px) {
-    width: 327px;
+  @media (max-width: 375px) {
+    top: 345px;
+  }
+`;
+const Section = styled.div`
+  @media (max-width: 768px) {
+    padding: 0 32px;
+  }
+  @media (max-width: 375px) {
+    padding: 0 24px;
   }
 `;
 const DeleteUserFormModal = styled.button`
   white-space: nowrap;
   display: flex;
-  position: relative;
   justify-content: center;
   align-items: center;
   padding: 12px 24px;
@@ -58,13 +67,9 @@ const DeleteUserFormModal = styled.button`
   &:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   }
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    left: 600px;
-  }
-  @media only screen and (max-width: 767px) {
+  @media (max-width: 375px) {
     width: 70px;
     height: 25px;
     font-size: 10px;
-    left: 257px;
   }
 `;

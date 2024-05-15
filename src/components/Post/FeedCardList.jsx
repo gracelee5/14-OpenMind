@@ -281,8 +281,16 @@ const CardItem = styled.div`
   padding: 32px;
   flex-direction: column;
   margin: 16px 0;
-  width: 684px;
+  width: 100%;
   border: 2px solid transparent;
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 30px;
+  }
+  @media (max-width: 375px) {
+    padding: 24px;
+    gap: 24px;
+  }
 `;
 
 const CardTop = styled.div`
@@ -328,6 +336,7 @@ const ButtonModify = styled.button`
 const QuestionSection = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 4px;
 `;
 
 const DateText = styled.div`
@@ -345,6 +354,9 @@ const Title = styled.div`
   font-weight: 400;
   line-height: 24px;
   text-align: left;
+  @media (max-width: 375px) {
+    font-size: 16px;
+  }
 `;
 
 const UserInfoWrap = styled.div`
@@ -367,6 +379,10 @@ const ProfileImg = styled.div`
     height: 100%;
     object-fit: cover;
   }
+  @media (max-width: 375px) {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -381,6 +397,9 @@ const UserName = styled.p`
   font-weight: 400;
   line-height: 24px;
   text-align: left;
+  @media (max-width: 375px) {
+    font-size: 14px;
+  }
 `;
 
 const AnswerView = styled.div`

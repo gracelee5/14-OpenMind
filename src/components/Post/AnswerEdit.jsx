@@ -64,7 +64,7 @@ const Section = styled.div`
 const TextArea = styled.textarea`
   padding: 16px;
   gap: 10px;
-  width: 560px;
+  width: 100%;
   height: 186px;
   background: #f9f9f9;
   border-radius: 8px;
@@ -77,7 +77,6 @@ const Button = styled.button`
   align-items: center;
   padding: 12px 24px;
   gap: 10px;
-  width: 560px;
   height: 46px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   background-color: ${({ disabled }) => (disabled ? '#c7bbb5' : '#542F1A')};

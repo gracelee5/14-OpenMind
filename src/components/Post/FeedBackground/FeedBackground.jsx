@@ -127,14 +127,19 @@ const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 768px) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  @media (max-width: 375px) {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
 `;
 const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media only screen and (max-width: 767px) {
-    height: 177px;
-  }
 `;
 const Logo = styled.img`
   position: absolute;
@@ -181,7 +186,6 @@ const PostContainer = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 16px;
   width: 716px;
   min-height: 330px;
@@ -189,11 +193,8 @@ const PostContainer = styled.div`
   border: 1px solid #c7bbb5;
   border-radius: 16px;
   margin-top: 50px;
-  @media only screen and (min-width: 768px) and (max-width: 1199px) {
-    width: 704px;
-  }
-  @media only screen and (max-width: 767px) {
-    width: 327px;
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 const Empty = styled.img`
@@ -204,6 +205,7 @@ const Empty = styled.img`
 const QuestionStatus = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-family: 'Actor';
   font-style: normal;
@@ -211,4 +213,7 @@ const QuestionStatus = styled.div`
   font-size: 20px;
   height: 25px;
   color: #542f1a;
+  @media (max-width: 375px) {
+    font-size: 18px;
+  }
 `;
