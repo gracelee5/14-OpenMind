@@ -14,10 +14,28 @@ const WhoQuestion = styled.p`
   top: 100px;
   bottom: 5px;
   font-size: 40px;
+  font-family: 'Actor-Regular';
+
+  @media (min-width: 375px) and (max-width: 768px) {
+    font-size: 24px;
+    width: 240px;
+    height: 30px;
+    margin-top: 60px;
+  }
 `;
 
 const DropDownButtonBox = styled.div`
   padding: 30px;
+
+  @media (min-width: 375px) and (max-width: 768px) {
+    width: Hug (335px) px;
+    height: Hug (34px) px;
+    top: 203px;
+    left: 24px;
+    gap: 42px;
+    opacity: 0px;
+    marinn-right: 24px;
+  }
 `;
 
 const MyPaginate = styled(ReactPaginate).attrs({
@@ -52,6 +70,14 @@ const MyPaginate = styled(ReactPaginate).attrs({
   }
   @media (max-width: 600px) {
     font-size: 15px;
+  }
+`;
+
+const QuestionBox = styled.div`
+  @media (min-width: 375px) and (max-width: 768px) {
+    margin: 0 24px;
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -91,11 +117,14 @@ function ListPage() {
         <ListHeader />
       </header>
       <main>
-        <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
+        <QuestionBox>
+          <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
 
-        <DropDownButtonBox>
-          <DropDownButton />
-        </DropDownButtonBox>
+          <DropDownButtonBox>
+            <DropDownButton />
+          </DropDownButtonBox>
+        </QuestionBox>
+
         <UserCard results={items} />
       </main>
 

@@ -5,10 +5,24 @@ import { useNavigate } from 'react-router';
 
 const UserCardGlobal = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: 32px 8px;
   width: 940px;
   height: 474px;
+
+  @media (min-width: 375px) {
+    margin: 0 24px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 32px;
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 24px;
+  }
 `;
 
 const AllDiv = styled.div`
@@ -21,6 +35,8 @@ const UserCardBox = styled.div`
   height: 187px;
   border: 1px solid #000;
   border-radius: 16px;
+  min-width: 186px;
+  font-family: 'pretendard';
 `;
 
 const CountNumber = styled.span`

@@ -24,6 +24,7 @@ const DropLi = styled.li`
   list-style: none;
   cursor: pointer;
   color: #818181;
+  font-family: 'pretendard';
 `;
 
 const LI = styled.li`
