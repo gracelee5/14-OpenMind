@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
 
 const DropButton = styled.button`
   margin: 130px auto 0;
@@ -52,22 +51,10 @@ const UI = styled.ul`
 `;
 
 const DropDown = styled.button`
+  border: none;
+  outline: none;
   position: relative;
   width: 60px;
-  margin: 130px auto 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  color: white;
-  width: 79px;
-  height: 34px;
-  border-radius: 8px;
-
-  padding: 8px 12px;
-  gap: 4px;
-  background: #ffffff;
-  border: 1px solid #818181;
-  border-radius: 8px;
 `;
 
 const ListContainer = styled.div`
@@ -76,9 +63,10 @@ const ListContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   padding: 3px;
-  margin-top: 107px;
+  margin-top: 9px;
   position: absolute;
   display: none;
+  left: -13px;
   padding: 4px 0px;
   height: 68px;
   width: 79px;
@@ -93,6 +81,7 @@ const ListContainer = styled.div`
     display: block;
   }
 `;
+
 function DropDownButton() {
   return (
     <LI>

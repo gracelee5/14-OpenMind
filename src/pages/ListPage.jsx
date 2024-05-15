@@ -15,6 +15,7 @@ const WhoQuestion = styled.p`
   bottom: 5px;
   font-size: 40px;
   font-family: 'Actor-Regular';
+  font-weight: bold;
 
   @media (min-width: 375px) and (max-width: 768px) {
     font-size: 24px;

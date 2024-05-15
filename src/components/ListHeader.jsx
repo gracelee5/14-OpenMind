@@ -13,7 +13,6 @@ const Positioner = styled.div`
 
   width: 100%;
 
-
   @media (min-width: 375px) {
   }
 
@@ -23,7 +22,6 @@ const Positioner = styled.div`
   }
 
   z-index: 1;
-
 `;
 
 // 흰 배경, 내용 중간 정렬
