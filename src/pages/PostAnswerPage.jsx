@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 function PostAnswerPage() {
   const { id } = useParams();
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative', minWidth: 320 }}>
       <FeedBackground id={id} />
       <DeleteButton />
     </div>
