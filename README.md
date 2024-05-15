@@ -7,21 +7,24 @@
 질문과 답변을 통해 마음을 열고 대화 나누는 소통 플랫폼입니다.
 
 🔗 배포 URL: http://14-openmind.s3-website.ap-northeast-2.amazonaws.com/
+---
+## 📍 목차
 
-[1. 프로젝트 소개](#1-프로젝트-소개)  
-[2. 팀원 소개](#2-팀원소개)  
-[3. 개발 기간](#3-개발기간)  
-[4. 프로젝트 목표](#4-프로젝트-목표)  
-[5. 협업 방법](#5-협업-방법)  
-[6. 컨벤션](#6-컨벤션)  
-[7. 개발 환경](#7-개발환경)  
-[8. 폴더 구조](#8-폴더-구조)  
-[9. 역할분담](#9-역할분담)  
-[10. 기능시연](#10-기능시연)  
-[11. 코드 특징과 구현 방식](#11-코드-특징과-구현-방식)  
-[12. 트러블 슈팅](#12-트러블-슈팅)  
-[13. 프로젝트 후시](#13-프로젝트-후기)  
+ [1. 프로젝트 소개](#1-프로젝트-소개)  
+ [2. 팀원 소개](#2-팀원소개)  
+ [3. 개발 기간](#3-개발기간)  
+ [4. 프로젝트 목표](#4-프로젝트-목표)  
+ [5. 협업 방법](#5-협업-방법)  
+ [6. 컨벤션](#6-컨벤션)  
+ [7. 개발 환경](#7-개발환경)  
+ [8. 폴더 구조](#8-폴더-구조)  
+ [9. 역할분담](#9-역할분담)  
+ [10. 기능시연](#10-기능시연)  
+ [11. 코드 특징과 구현 방식](#11-코드-특징과-구현-방식)  
+ [12. 트러블 슈팅](#12-트러블-슈팅)  
+ [13. 프로젝트 후기](#13-프로젝트-후기)  
 
+---
 # 2. 팀원소개
 
 
@@ -192,9 +195,6 @@ http://14-openmind.s3-website.ap-northeast-2.amazonaws.com/
 - **해결 :**
     - 사용해야 하는 프로퍼티 값을 usercard 태그에 제대로 넣어주어, 객체 정보들을 받아올 수 있게 해주었습니다.
 
-![ListPage.jsx](https://prod-files-secure.s3.us-west-2.amazonaws.com/7dcdb443-5a1b-401e-9f0f-14f34f3653b8/4884f97a-b1c1-4e86-ac4e-253f102661ec/Untitled.png)
-
-ListPage.jsx
 
 3. 답변 수정 후 변경된 내용 반영 관련 내용
 - **문제 :**
@@ -203,38 +203,7 @@ ListPage.jsx
     - 수정한 내용을 반영하기 위해서는 답변 수정 컴포넌트에서 상위 컴포넌트로 수정했다는 사실을 전달하고 답변 내용을 다시 불러와야 하는데 그렇지 않았기 때문에 발생했습니다.
 - **해결 :**
     - FeedCardList에서 AnswerEdit 컴포넌트를 불러올 때 props로 onEditSuccess 함수를 전달해서 답변을 수정할 경우 함수를 실행하도록 하였습니다. onEditSuccess 함수에는 답변 내용을 받아오는 코드를 넣었습니다.
-    - FeedCardList.jsx
     
-    ```jsx
-    <AnswerEdit
-       initialContent={answer?.content}
-       answerId={answer.id}
-       onEditSuccess={() => {
-         getAnswer(answer.id).then((answer) => setAnswer(answer));
-         setEditButtonClick(false);
-       }}
-    ```
-    
-    - AnswerEdit.jsx
-    
-    ```jsx
-    function AnswerEdit({ initialContent, answerId, onEditSuccess }) {
-    
-      const handleSubmit = async () => {
-        if (text) {
-          await putData(answerId)
-            .then((data) => {
-              console.log('PUT 요청 응답:', data);
-            })
-            .catch((error) => {
-              console.error('PUT 요청 오류:', error);
-            });
-          onEditSuccess();
-        }
-      };
-      
-      ...
-    ```
     
 4. Main 페이지
 - **문제 :**
