@@ -13,8 +13,8 @@ import { useParams } from 'react-router-dom';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
-async function getSubject(subjectId) {
-  const response = await fetch(`${BASE_URL}subjects/${subjectId}/`);
+async function getSubject(id) {
+  const response = await fetch(`${BASE_URL}subjects/${id}/`);
   const body = await response.json();
   return body;
 }
@@ -58,7 +58,14 @@ function Badge({ item }) {
     return <div className='badge done'>답변 완료</div>;
   }
 }
-function FeedCard({ item: question, post, onSelect, isSelected }) {
+
+function FeedCard({
+  item: question,
+  post,
+  onSelect,
+  isSelected,
+  questionAnswerId,
+}) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
   const { id } = useParams();
@@ -73,13 +80,15 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   const [editButtonClick, setEditButtonClick] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
   useEffect(() => {
-    if (question.answer?.id) {
-      getAnswer(question.answer.id).then((answer) => {
+    // 수정된 부분
+    if (questionAnswerId) {
+      // questionAnswerId가 존재할 때에만 getAnswer 호출
+      getAnswer(questionAnswerId).then((answer) => {
         setAnswer(answer);
         setIsRejected(answer.isRejected);
       });
     }
-  }, [question.answer?.id]);
+  }, [questionAnswerId]); // 수정된 부분
 
   const handleConfirmClick = () => {
     console.log('클릭');
@@ -194,7 +203,7 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
                 </ProfileImg>
                 <UserInfo>
                   <UserName>{post.name}</UserName>
-                  {answer && (
+                  {answer !== null && (
                     <DateText>{formatData(answer.createdAt)}</DateText>
                   )}
                 </UserInfo>
@@ -217,17 +226,17 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   );
 }
 
-function FeedCardList({ items, questionId }) {
+function FeedCardList({ items, id }) {
   const [post, setPost] = useState([]);
   const [answer, setAnswer] = useState([]);
 
   //삭제하기용 선택한 아이템
   const [selectedCardId, setSelectedCardId] = useState(null);
-  const { id: subjectId } = useParams;
+  // const { id } = useParams;
   useEffect(() => {
-    getSubject(subjectId).then((post) => setPost(post));
-    //console.log('getsubject:', getSubject(subjectId));
-  }, [subjectId]);
+    getSubject(id).then((post) => setPost(post));
+    console.log('getsubject:', getSubject(id));
+  }, [id]);
 
   useEffect(() => {
     getAnswer().then((answer) => setAnswer(answer));
@@ -239,12 +248,13 @@ function FeedCardList({ items, questionId }) {
         return (
           <li key={item.id}>
             <FeedCard
-              item={item}
-              post={post}
+              item={item} //question c
+              post={post} //question c
               answer={answer}
-              onSelect={setSelectedCardId}
-              isSelected={item.id === selectedCardId}
-              questionId={questionId}
+              onSelect={setSelectedCardId} //question c
+              isSelected={item.id === selectedCardId} //question c
+              // questionId={item.id}
+              questionAnswerId={item.answer ? item.answer.id : null}
             ></FeedCard>{' '}
           </li>
         );

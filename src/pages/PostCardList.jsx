@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import FeedCardList from '../components/Post/FeedCardList';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
@@ -15,15 +15,15 @@ async function getQuestions(postId, order = 'createdAt', offset = 0) {
   return body;
 }
 
-function PostCardList() {
+function PostCardList({ id }) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const sortedItems = items.sort((a, b) => b.createdAt - a.createdAt);
-  const { id } = useParams();
+  // const { id } = useParams();
   const pageOffset = useRef(0); // 페이지 오프셋
   const isFirstLoad = useRef(true); // 처음 로드 여부를 기록
-  const [question, setQuestion] = useState([]);
+  // const [question, setQuestion] = useState(null); // 단일 객체로 변경
 
   const handleLoad = async () => {
     setIsLoading(true);
@@ -31,11 +31,13 @@ function PostCardList() {
     if (results.length > 0) {
       setItems((prevItems) => [...prevItems, ...results]);
       pageOffset.current += PAGE_SIZE; // 다음 페이지 오프셋 설정
+
+      // 첫 번째 질문의 ID를 question 상태로 설정
+      // setQuestion(results[0]); // 첫 번째 질문만 가져옴
     } else {
       setHasMore(false); // 더 이상 가져올 데이터가 없음을 표시
     }
     setIsLoading(false);
-    setQuestion(results);
   };
 
   useEffect(() => {
@@ -66,7 +68,13 @@ function PostCardList() {
 
   return (
     <div>
-      <FeedCardList items={sortedItems} questionId={question.id}></FeedCardList>
+      {/* {question ? question.id : null} */}
+      <FeedCardList
+        id={id}
+        items={sortedItems}
+        // questionId={question ? question.id : null}
+      ></FeedCardList>
+
       {isLoading && (
         <LoadingText>피드를 불러오는 중 &#183; &#183; &#183;</LoadingText>
       )}

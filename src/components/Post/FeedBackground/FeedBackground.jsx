@@ -90,7 +90,7 @@ function FeedBackground({ id }) {
                 <img src={message} alt='message img' />
                 <p>{data.questionCount}개의 질문이 있습니다</p>
               </QuestionStatus>
-              <PostCardList />
+              <PostCardList id={id} />
             </>
           )}
         </PostContainer>
