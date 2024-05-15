@@ -57,7 +57,6 @@ const MyPaginate = styled(ReactPaginate).attrs({
 `;
 
 function ListPage() {
-
   const [order, setOrder] = useState('createdAt');
 
   const handleNameClick = () => setOrder('name');
@@ -101,16 +100,14 @@ function ListPage() {
       <main>
         <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
 
+        <DropDownButtonBox>
+          <DropDownButton
+            handleNameClick={handleNameClick}
+            handleNewestClick={handleNewestClick}
+          />
+        </DropDownButtonBox>
 
-      <DropDownButtonBox>
-        <DropDownButton
-          handleNameClick={handleNameClick}
-          handleNewestClick={handleNewestClick}
-        />
-      </DropDownButtonBox>
-
-      <UserCard users={users} order={order} />
-
+        <UserCard users={users} order={order} />
       </main>
 
       <MyPaginate
