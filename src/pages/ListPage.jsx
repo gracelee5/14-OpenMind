@@ -2,8 +2,7 @@ import ListHeader from '../components/ListHeader';
 import DropDownButton from '../components/DropdownButton';
 import styled from 'styled-components';
 import UserCard from '../components/UserCard';
-import users from '../api/mock.json';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ListApi } from '../api/Listapi';
 import ReactPaginate from 'react-paginate';
 
@@ -57,13 +56,6 @@ const MyPaginate = styled(ReactPaginate).attrs({
 `;
 
 function ListPage() {
-
-  const [order, setOrder] = useState('createdAt');
-
-  const handleNameClick = () => setOrder('name');
-
-  const handleNewestClick = () => setOrder('createdAt');
-
   const [items, setItems] = useState([]);
   const [maxCount, setMaxCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -80,7 +72,7 @@ function ListPage() {
       setMaxCount(count);
     };
 
-    fetchData();
+    fetchData(); // fetchData 함수 호출
   }, [itemOffset]); // 빈 배열을 전달하여 한 번만 실행되도록 설정
 
   useEffect(() => {
@@ -101,16 +93,10 @@ function ListPage() {
       <main>
         <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
 
-
-      <DropDownButtonBox>
-        <DropDownButton
-          handleNameClick={handleNameClick}
-          handleNewestClick={handleNewestClick}
-        />
-      </DropDownButtonBox>
-
-      <UserCard users={users} order={order} />
-
+        <DropDownButtonBox>
+          <DropDownButton />
+        </DropDownButtonBox>
+        <UserCard results={items} />
       </main>
 
       <MyPaginate
