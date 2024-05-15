@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-function AnswerInput({ questionId }) {
+function AnswerInput({ questionId, onInputSuccess }) {
   const [text, setText] = useState('');
   const handleChange = (event) => {
     setText(event.target.value);
   };
-  const handleSubmit = (isRejected) => {
+  const handleSubmit = async (isRejected) => {
     if (text !== '' || isRejected) {
-      const contentToSend = isRejected ? 'Answer rejected' : text;
-      postData(questionId, isRejected, contentToSend)
-        .then((data) => {
-          console.log('POST 요청 응답:', data);
-        })
-        .catch((error) => {
-          console.error('POST 요청 오류:', error);
-        });
+      const contentToSend = isRejected ? '답변 거절' : text;
+      try {
+        const data = await postData(questionId, isRejected, contentToSend);
+        console.log('POST 요청 응답:', data);
+      } catch (error) {
+        console.error('POST 요청 오류:', error);
+      }
+      onInputSuccess();
     }
   };
 

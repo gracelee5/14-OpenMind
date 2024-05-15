@@ -9,12 +9,14 @@ const Positioner = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 10px;
+
   width: 100%;
+  z-index: 1;
 `;
 
 // 흰 배경, 내용 중간 정렬
 const WhiteBackground = styled.div`
+  padding: 10px;
   background: white;
   display: flex;
   justify-content: center;
@@ -50,6 +52,8 @@ const GradientBorder = styled.div`
 `;
 
 function ListHeader() {
+  const localId = localStorage.getItem('id');
+  const linkTo = localId ? `/post/${localId}/answer` : '/';
   return (
     <Positioner>
       <WhiteBackground>
@@ -63,7 +67,7 @@ function ListHeader() {
           </Logo>
           <Spacer />
           <div>
-            <Link to='/post/:id/answer'>
+            <Link to={linkTo}>
               <AnswerButton> 답변하러 가기 ➝ </AnswerButton>
             </Link>
           </div>

@@ -6,7 +6,7 @@ import Person from '../../images/icons/Person.svg';
 import { useNavigate } from 'react-router-dom';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14';
-
+/*
 function getUserIdFromLocalStorage(name) {
   if (isNameInLocalStorage(name)) {
     const storedData = localStorage.getItem(name);
@@ -20,7 +20,7 @@ function isNameInLocalStorage(name) {
   const storedData = localStorage.getItem(name);
   return storedData !== null;
 }
-
+*/
 function CreateFeed() {
   const [name, setName] = useState('');
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ function CreateFeed() {
   const isNameEmpty = name.trim() === '';
 
   const handleSubmit = async () => {
-    const userId = getUserIdFromLocalStorage(name);
-    if (!userId) {
+    const idVaule = localStorage.getItem('id');
+    if (!idVaule) {
       const response = await fetch(`${BASE_URL}/subjects/`, {
         method: 'POST',
         body: JSON.stringify({ name, team: '6-14' }),
@@ -41,15 +41,13 @@ function CreateFeed() {
       const data = await response.json();
       const id = data.id;
 
-      localStorage.setItem(name, JSON.stringify({ id }));
-
+      localStorage.setItem('id', id);
       alert(`${name}님 피드가 등록되었습니다`);
-
-      navigate(`/post/:id/answer`);
+      navigate(`/post/${id}/answer`);
     } else {
-      alert(`${name}님 페이지로 이동합니다`);
+      alert(`로컬에 이미 피드가 존재합니다.`);
 
-      navigate(`/post/${userId}/answer`);
+      navigate(`/post/${idVaule}/answer`);
     }
   };
   return (

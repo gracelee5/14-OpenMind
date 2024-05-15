@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as MessageIcon } from '../../../images/Messages.svg';
 import { ReactComponent as XIcon } from '../../../images/x.svg';
+import { useParams } from 'react-router-dom';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
-let id = 5718;
 
-async function postQuestion(content) {
+async function postQuestion(content, id) {
   try {
     const response = await fetch(`${BASE_URL}subjects/${id}/questions/`, {
       method: 'POST',
@@ -22,7 +22,7 @@ async function postQuestion(content) {
   }
 }
 
-async function getSubject() {
+async function getSubject(id) {
   const response = await fetch(`${BASE_URL}subjects/${id}/`);
   const body = await response.json();
   return body;
@@ -34,6 +34,7 @@ const AddQuestionModal = ({ trigger }) => {
   const [buttonColor, setButtonColor] = useState('#AAAAAA');
   const [isSendQuestion, setIsSendQuestion] = useState(false);
   const [subject, setSubject] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
     if (inputValue) {
@@ -52,8 +53,8 @@ const AddQuestionModal = ({ trigger }) => {
   }, [isSendQuestion]);
 
   useEffect(() => {
-    getSubject().then(setSubject);
-  }, []);
+    getSubject(id).then(setSubject);
+  }, [id]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -69,8 +70,8 @@ const AddQuestionModal = ({ trigger }) => {
     localStorage.removeItem('inputValue');
   };
 
-  const handleSendQuestion = () => {
-    postQuestion(inputValue);
+  const handleSendQuestion = async () => {
+    await postQuestion(inputValue, id);
     setIsSendQuestion(true);
     setOpenModal(false);
     location.reload();

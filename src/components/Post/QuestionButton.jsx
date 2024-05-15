@@ -24,8 +24,9 @@ const Container = styled.div`
   }
 `;
 const Section = styled.div`
-  position: absolute;
+  position: fixed;
   width: 230px;
+  bottom: 10px;
   @media only screen and (max-width: 767px) {
     width: 327px;
   }

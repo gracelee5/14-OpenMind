@@ -12,10 +12,10 @@ import Toast from './Toast';
 import PostCardList from '../../../pages/PostCardList';
 
 //원래는 FeedBackground({id})라고 작성해야 하는데 아직 list 페이지가 안 만들어졌으므로 에러 안 나게하려고
-function FeedBackground() {
+function FeedBackground({ id }) {
   const [toast, setToast] = useState(false);
   const [data, setData] = useState(0);
-  let id = 5718;
+
   useEffect(() => {
     const fetchProfileFeed = async () => {
       try {
@@ -90,7 +90,7 @@ function FeedBackground() {
                 <img src={message} alt='message img' />
                 <p>{data.questionCount}개의 질문이 있습니다</p>
               </QuestionStatus>
-              <PostCardList />
+              <PostCardList id={id} />
             </>
           )}
         </PostContainer>

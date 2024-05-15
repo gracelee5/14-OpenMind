@@ -4,22 +4,25 @@ import React from 'react';
 import styled from 'styled-components';
 import profile from '../../images/profile-img.svg';
 import more from '../../images/icons/More.svg';
+import { ReactComponent as edit } from '../../images/icons/Edit.svg';
+import { ReactComponent as x } from '../../images/x.svg';
 import ButtonThumbs from './ButtonThumbs';
 import AnswerEdit from './AnswerEdit';
 import AnswerInput from './AnswerInput';
+import { useParams } from 'react-router-dom';
 
 const BASE_URL = 'https://openmind-api.vercel.app/6-14/';
 
-async function getSubject(SubjectId = 5718) {
-  const response = await fetch(`${BASE_URL}subjects/${SubjectId}/`);
+async function getSubject(id) {
+  const response = await fetch(`${BASE_URL}subjects/${id}/`);
   const body = await response.json();
   return body;
 }
-const questionId = 10057;
+
 async function getAnswer(id) {
   const response = await fetch(`${BASE_URL}answers/${id}/`);
   const body = await response.json();
-  console.log('subject', body);
+  //console.log('subject', body);
   return body;
 }
 
@@ -48,23 +51,53 @@ function formatData(value) {
   return `${Math.floor(betweenTimeDay / 365)}년전`;
 }
 
-function Badge(item) {
-  if (item.answer === null || item.answer === undefined) {
-    return <div className='badge yet'>미작성</div>;
+function Badge({ item }) {
+  if (item === null || item === undefined) {
+    return <div className='badge yet'>미답변</div>;
   } else {
     return <div className='badge done'>답변 완료</div>;
   }
 }
 
-function FeedCard({ item: question, post, onSelect, isSelected }) {
+function FeedCard({
+  item: question,
+  post,
+  onSelect,
+  isSelected,
+  questionAnswerId,
+}) {
   const [idCheck, setIdCheck] = useState(false);
   const [answer, setAnswer] = useState(null);
-
+  const { id } = useParams();
   useEffect(() => {
-    if (question.answer?.id) {
-      getAnswer(question.answer.id).then((answer) => setAnswer(answer));
+    const localId = localStorage.getItem('id');
+    if (localId === id) {
+      setIdCheck(true);
     }
-  }, [question.answer?.id]);
+  }, [id]);
+
+  const [showMenu, setShowMenu] = useState(false);
+  const [editButtonClick, setEditButtonClick] = useState(false);
+  const [isRejected, setIsRejected] = useState(false);
+  useEffect(() => {
+    // 수정된 부분
+    if (questionAnswerId) {
+      // questionAnswerId가 존재할 때에만 getAnswer 호출
+      getAnswer(questionAnswerId).then((answer) => {
+        setAnswer(answer);
+        setIsRejected(answer.isRejected);
+      });
+    }
+  }, [questionAnswerId]); // 수정된 부분
+
+  const handleConfirmClick = () => {
+    console.log('클릭');
+    setEditButtonClick(true);
+  };
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
 
   return (
     <>
@@ -82,14 +115,41 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
       >
         <CardTop>
           <BadgeStyle>
-            <Badge item={question} />
+            <Badge item={question.answer} />
           </BadgeStyle>
-          {post.id === 5718 ? (
-            <ButtonModify
-              onClick={() => {
-                setIdCheck(!idCheck);
-              }}
-            ></ButtonModify>
+
+          {idCheck ? (
+            <ButtonModify onClick={toggleMenu}>
+              <img src={more} alt='more' />
+              {showMenu && (
+                <ModifyMenu>
+                  <MenuItem
+                    onClick={() => {
+                      if (!isRejected && answer !== null) {
+                        handleConfirmClick();
+                      }
+                    }}
+                  >
+                    <Stylededit src={edit} alt='edit' />
+                    수정하기
+                  </MenuItem>
+                  <MenuItem
+                    onClick={async () => {
+                      await fetch(
+                        `https://openmind-api.vercel.app/6-14/questions/${question.id}/`,
+                        {
+                          method: 'DELETE',
+                        }
+                      );
+                      location.reload();
+                    }}
+                  >
+                    <Styledx src={x} alt='x' />
+                    삭제하기
+                  </MenuItem>
+                </ModifyMenu>
+              )}
+            </ButtonModify>
           ) : null}
           {/* <ButtonModify></ButtonModify> */}
         </CardTop>
@@ -99,44 +159,61 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
           </DateText>
           <Title>{question.content}</Title>
         </QuestionSection>
-        <UserInfoWrap>
-          {/* <ProfileImg>
-            <img src={post.imageSource} alt={post.imageSource} />
-          </ProfileImg>
-          <UserInfo>
-            <UserName>{post.name}</UserName>
-            {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
-          </UserInfo> */}
-          {idCheck === true ? (
-            <>
-              {answer ? (
-                <>
-                  <ProfileImg>
-                    <img src={post.imageSource} alt={post.imageSource} />
-                  </ProfileImg>
-                  <UserInfo>
-                    <UserName>{post.name}</UserName>
-                    {answer && (
-                      <DateText>{formatData(answer.createdAt)}</DateText>
-                    )}
-                  </UserInfo>
-                  <AnswerEdit
-                    initialContent={answer?.content}
-                    answerId={answer.id}
-                    onEditSuccess={() => {
-                      getAnswer(answer.id).then((answer) => setAnswer(answer));
-                      setIdCheck(false);
-                    }}
-                  />
-                </>
-              ) : (
-                <AnswerInput questionId={questionId} />
-              )}
-            </>
-          ) : (
-            <AnswerView>{answer?.content}</AnswerView>
-          )}
-        </UserInfoWrap>
+        {idCheck === true && editButtonClick ? (
+          <UserInfoWrap>
+            <ProfileImg>
+              <img src={post.imageSource} alt={post.imageSource} />
+            </ProfileImg>
+            <UserInfo>
+              <UserName>{post.name}</UserName>
+              {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
+            </UserInfo>
+            <AnswerEdit
+              initialContent={answer?.content}
+              answerId={answer.id}
+              onEditSuccess={() => {
+                getAnswer(answer.id).then((answer) => setAnswer(answer));
+                setEditButtonClick(false);
+              }}
+            />
+          </UserInfoWrap>
+        ) : idCheck === true && !answer ? (
+          <UserInfoWrap>
+            <ProfileImg>
+              <img src={post.imageSource} alt={post.imageSource} />
+            </ProfileImg>
+            <UserInfo>
+              <UserName>{post.name}</UserName>
+              {answer && <DateText>{formatData(answer.createdAt)}</DateText>}
+            </UserInfo>
+            <AnswerInput
+              questionId={question.id}
+              onInputSuccess={() => {
+                //getAnswer(answer.id).then((answer) => setAnswer(answer));
+                location.reload();
+              }}
+            />
+          </UserInfoWrap>
+        ) : (
+          <>
+            {!idCheck || answer ? (
+              <UserInfoWrap>
+                <ProfileImg>
+                  <img src={post.imageSource} alt={post.imageSource} />
+                </ProfileImg>
+                <UserInfo>
+                  <UserName>{post.name}</UserName>
+                  {answer !== null && (
+                    <DateText>{formatData(answer.createdAt)}</DateText>
+                  )}
+                </UserInfo>
+                <AnswerView isRejected={isRejected}>
+                  {answer?.content}
+                </AnswerView>
+              </UserInfoWrap>
+            ) : null}
+          </>
+        )}
         <ButtonWrap>
           <ButtonThumbs
             questionId={question.id}
@@ -149,15 +226,17 @@ function FeedCard({ item: question, post, onSelect, isSelected }) {
   );
 }
 
-function FeedCardList({ items }) {
+function FeedCardList({ items, id }) {
   const [post, setPost] = useState([]);
   const [answer, setAnswer] = useState([]);
+
   //삭제하기용 선택한 아이템
   const [selectedCardId, setSelectedCardId] = useState(null);
-
+  // const { id } = useParams;
   useEffect(() => {
-    getSubject().then((post) => setPost(post));
-  }, []);
+    getSubject(id).then((post) => setPost(post));
+    console.log('getsubject:', getSubject(id));
+  }, [id]);
 
   useEffect(() => {
     getAnswer().then((answer) => setAnswer(answer));
@@ -169,11 +248,13 @@ function FeedCardList({ items }) {
         return (
           <li key={item.id}>
             <FeedCard
-              item={item}
-              post={post}
+              item={item} //question c
+              post={post} //question c
               answer={answer}
-              onSelect={setSelectedCardId}
-              isSelected={item.id === selectedCardId}
+              onSelect={setSelectedCardId} //question c
+              isSelected={item.id === selectedCardId} //question c
+              // questionId={item.id}
+              questionAnswerId={item.answer ? item.answer.id : null}
             ></FeedCard>{' '}
           </li>
         );
@@ -308,6 +389,7 @@ const AnswerView = styled.div`
   font-weight: 400;
   line-height: 22px;
   text-align: left;
+  color: ${(props) => (props.isRejected ? '#b93333' : 'black')};
 `;
 
 const ButtonWrap = styled.div`
@@ -315,4 +397,44 @@ const ButtonWrap = styled.div`
   border-top: 1px solid #cfcfcf;
   padding-top: 24px;
   gap: 32px;
+`;
+
+const ModifyMenu = styled.div`
+  box-sizing: border-box;
+  width: 103px;
+  height: 68px;
+  background-color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border: 1px solid #cfcfcf;
+  padding: 4px 0;
+  white-space: nowrap;
+`;
+
+const MenuItem = styled.button`
+  display: flex;
+  justify-content: center;
+  width: 103px;
+  height: 30px;
+  padding: 6px 0;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #515151;
+  &:hover {
+    color: #1877f2;
+    stroke: #1877f2;
+    stroke-width: 0.5;
+  }
+`;
+const Stylededit = styled(edit)`
+  width: 14px;
+  height: 14px;
+  margin: 0 6px 0 0;
+`;
+const Styledx = styled(x)`
+  width: 14px;
+  height: 14px;
+  margin: 0 6px 0 0;
 `;
