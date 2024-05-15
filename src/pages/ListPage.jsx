@@ -3,7 +3,7 @@ import DropDownButton from '../components/DropdownButton';
 import styled from 'styled-components';
 import UserCard from '../components/UserCard';
 import users from '../api/mock.json';
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ListApi } from '../api/Listapi';
 import ReactPaginate from 'react-paginate';
 
