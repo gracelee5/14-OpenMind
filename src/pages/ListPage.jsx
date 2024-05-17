@@ -83,14 +83,21 @@ const QuestionBox = styled.div`
 `;
 
 function ListPage() {
+  const [order, setOrder] = useState('createdAt');
+
+  const handleNameClick = () => setOrder('name');
+
+  const handleNewestClick = () => setOrder('createdAt');
+
   const [items, setItems] = useState([]);
   const [maxCount, setMaxCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 8;
   const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items.slice(itemOffset, endOffset);
+
   const pageCount = Math.ceil(maxCount / itemsPerPage);
 
+  const [currentItems, setCurrentItems] = useState([]);
   useEffect(() => {
     // 컴포넌트가 마운트될 때 ListApi 호출
     const fetchData = async () => {
@@ -103,8 +110,9 @@ function ListPage() {
   }, [itemOffset]); // 빈 배열을 전달하여 한 번만 실행되도록 설정
 
   useEffect(() => {
-    // items 값이 변경될 때 UserCard 호출
-    UserCard(items);
+    // currentItems 를 state 상태로 업데이트
+    const currentItems = items?.slice(itemOffset, endOffset);
+    setCurrentItems(currentItems);
   }, [items]);
 
   const handlePageClick = (event) => {
@@ -122,11 +130,14 @@ function ListPage() {
           <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
 
           <DropDownButtonBox>
-            <DropDownButton />
+            <DropDownButton
+              handleNameClick={handleNameClick}
+              handleNewestClick={handleNewestClick}
+            />
           </DropDownButtonBox>
         </QuestionBox>
 
-        <UserCard results={items} />
+        <UserCard currentItems={currentItems} order={order} />
       </main>
 
       <MyPaginate
