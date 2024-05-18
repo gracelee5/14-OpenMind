@@ -88,7 +88,13 @@ function DropDownButton({ handleNameClick, handleNewestClick }) {
   return (
     <LI>
       <DropButton>
-        <DropLi>이름순</DropLi>
+        <DropLi>
+          {activeItem === 'name'
+            ? '이름순'
+            : activeItem === 'newest'
+              ? '최신순'
+              : '최신순'}
+        </DropLi>
         <ListContainer>
           <UI>
             {/* 이름순 아이템 */}

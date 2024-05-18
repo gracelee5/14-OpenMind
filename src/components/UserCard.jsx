@@ -114,14 +114,6 @@ function UserCard({ currentItems, order }) {
   return (
     <AllDiv>
       <UserCardGlobal>
-        {/* {results &&
-          results.map((results) => {
-            return (
-              <div key={results.id}>
-                <UserInformation results={results} />
-              </div>
-            );
-          })} */}
         {sortedUsers.map((currentItems) => (
           <div key={currentItems.id}>
             <UserInformation results={currentItems} />
