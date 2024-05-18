@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const DropButton = styled.button`
@@ -19,7 +19,8 @@ const DropButton = styled.button`
 `;
 
 const DropLi = styled.li`
-  border-radius: 5px;
+  // border-radius: 5px;
+  // border: 1px solid black;
   list-style: none;
   cursor: pointer;
   color: #818181;
@@ -49,12 +50,12 @@ const UI = styled.ul`
   gap: 10px;
 `;
 
-const DropDown = styled.button`
-  border: none;
-  outline: none;
-  position: relative;
-  width: 60px;
-`;
+// const DropDown = styled.button`
+//   border: none;
+//   outline: none;
+//   position: relative;
+//   width: 60px;
+// `;
 
 const ListContainer = styled.div`
   border: 1px solid ${(props) => props.theme.borderColor};
@@ -62,10 +63,10 @@ const ListContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   padding: 3px;
-  margin-top: 9px;
+  margin-top: 107px;
   position: absolute;
   display: none;
-  left: -13px;
+  left: 592px;
   padding: 4px 0px;
   height: 68px;
   width: 79px;
@@ -73,27 +74,56 @@ const ListContainer = styled.div`
   border: 1px solid #cfcfcf;
   box-shadow: 0px 4px 4px rgba(140, 140, 140, 0.25);
   border-radius: 8px;
-  ${DropDown}:active & {
+  ${DropButton}:active & {
     display: block;
   }
-  ${DropDown}:focus & {
+  ${DropButton}:focus & {
     display: block;
   }
 `;
 
-function DropDownButton() {
+function DropDownButton({ handleNameClick, handleNewestClick }) {
+  const [activeItem, setActiveItem] = useState(null);
+
   return (
     <LI>
       <DropButton>
-        <DropDown>
-          <DropLi>이름순</DropLi>
-          <ListContainer>
-            <UI>
-              <LI>이름순</LI>
-              <LI>최신순</LI>
-            </UI>
-          </ListContainer>
-        </DropDown>
+        <DropLi>
+          {activeItem === 'name'
+            ? '이름순'
+            : activeItem === 'newest'
+              ? '최신순'
+              : '최신순'}
+        </DropLi>
+        <ListContainer>
+          <UI>
+            {/* 이름순 아이템 */}
+            <LI
+              onClick={() => {
+                handleNameClick();
+                setActiveItem('name');
+              }}
+              style={{
+                color: activeItem === 'name' ? 'rgba(24, 119, 242, 1)' : 'gray',
+              }}
+            >
+              이름순
+            </LI>
+            {/* 최신순 아이템 */}
+            <LI
+              onClick={() => {
+                handleNewestClick();
+                setActiveItem('newest');
+              }}
+              style={{
+                color:
+                  activeItem === 'newest' ? 'rgba(24, 119, 242, 1)' : 'gray',
+              }}
+            >
+              최신순
+            </LI>
+          </UI>
+        </ListContainer>
       </DropButton>
     </LI>
   );

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import QuestionMark from '../images/QuestionMark.svg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
+import React, { useState, useEffect } from 'react';
 
 const UserCardGlobal = styled.div`
   display: grid;
@@ -97,18 +98,27 @@ function UserInformation({ results }) {
   );
 }
 
-function UserCard({ results }) {
+function UserCard({ currentItems, order }) {
+  const [sortedUsers, setSortedUsers] = useState([]);
+
+  useEffect(() => {
+    const sortedItems =
+      order === 'name'
+        ? [...currentItems].sort((a, b) => a.name.localeCompare(b.name))
+        : [...currentItems].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+    setSortedUsers(sortedItems);
+  }, [currentItems, order]);
+
   return (
     <AllDiv>
       <UserCardGlobal>
-        {results &&
-          results.map((results) => {
-            return (
-              <div key={results.id}>
-                <UserInformation results={results} />
-              </div>
-            );
-          })}
+        {sortedUsers.map((currentItems) => (
+          <div key={currentItems.id}>
+            <UserInformation results={currentItems} />
+          </div>
+        ))}
       </UserCardGlobal>
     </AllDiv>
   );

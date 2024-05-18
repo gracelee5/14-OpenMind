@@ -2,7 +2,7 @@ import ListHeader from '../components/ListHeader';
 import DropDownButton from '../components/DropdownButton';
 import styled from 'styled-components';
 import UserCard from '../components/UserCard';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { ListApi } from '../api/Listapi';
 import ReactPaginate from 'react-paginate';
 
@@ -83,14 +83,22 @@ const QuestionBox = styled.div`
 `;
 
 function ListPage() {
+  const [order, setOrder] = useState('createdAt');
+
+  const handleNameClick = () => setOrder('name');
+
+  const handleNewestClick = () => setOrder('createdAt');
+  //items 빈 배열 상태로 넣음
   const [items, setItems] = useState([]);
   const [maxCount, setMaxCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 8;
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items.slice(itemOffset, endOffset);
+  // const endOffset = itemOffset + itemsPerPage;
+
   const pageCount = Math.ceil(maxCount / itemsPerPage);
 
+  // currentItems 를 state 상태로 업데이트
+  const [currentItems, setCurrentItems] = useState([]);
   useEffect(() => {
     // 컴포넌트가 마운트될 때 ListApi 호출
     const fetchData = async () => {
@@ -103,13 +111,14 @@ function ListPage() {
   }, [itemOffset]); // 빈 배열을 전달하여 한 번만 실행되도록 설정
 
   useEffect(() => {
-    // items 값이 변경될 때 UserCard 호출
-    UserCard(items);
+    // const items = items?.slice(itemOffset, endOffset);
+    setCurrentItems(items);
   }, [items]);
 
   const handlePageClick = (event) => {
     const newOffset = event.selected * itemsPerPage;
     setItemOffset(newOffset);
+    console.log(newOffset);
   };
 
   return (
@@ -122,11 +131,14 @@ function ListPage() {
           <WhoQuestion>누구에게 질문할까요?</WhoQuestion>
 
           <DropDownButtonBox>
-            <DropDownButton />
+            <DropDownButton
+              handleNameClick={handleNameClick}
+              handleNewestClick={handleNewestClick}
+            />
           </DropDownButtonBox>
         </QuestionBox>
 
-        <UserCard results={items} />
+        <UserCard currentItems={currentItems} order={order} />
       </main>
 
       <MyPaginate
