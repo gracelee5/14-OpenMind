@@ -67,6 +67,7 @@ const ListContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   position: absolute;
+  top: calc(110%);
   display: none;
   height: 68px;
   width: 79px;
@@ -74,20 +75,12 @@ const ListContainer = styled.div`
   border: 1px solid #cfcfcf;
   box-shadow: 0px 4px 4px rgba(140, 140, 140, 0.25);
   border-radius: 8px;
+  z-index: 999;
   ${DropButton}:active & {
     display: block;
   }
   ${DropButton}:focus & {
     display: block;
-  }
-  @media (min-width: 375px) {
-    top: 29%;
-  }
-  @media (min-width: 768px) {
-    top: 35%;
-  }
-  @media (min-width: 1280px) {
-    top: 28%;
   }
 `;
 
