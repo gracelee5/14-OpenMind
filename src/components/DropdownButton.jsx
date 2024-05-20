@@ -67,7 +67,7 @@ const ListContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   position: absolute;
-  top: calc(110%);
+  transform: translateY(55px);
   display: none;
   height: 68px;
   width: 79px;
