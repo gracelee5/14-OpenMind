@@ -10,12 +10,13 @@ const DropButton = styled.button`
   width: 79px;
   height: 34px;
   border-radius: 8px;
-
   padding: 8px 12px;
   gap: 4px;
   background: #ffffff;
   border: 1px solid #818181;
   border-radius: 8px;
+  &:hover {
+    border: 1px solid black;
 `;
 
 const DropLi = styled.li`
@@ -25,6 +26,9 @@ const DropLi = styled.li`
   cursor: pointer;
   color: #818181;
   font-family: 'pretendard';
+  &:hover {
+    color: black;
+  }
 `;
 
 const LI = styled.li`
@@ -62,12 +66,8 @@ const ListContainer = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  padding: 3px;
-  margin-top: 107px;
   position: absolute;
   display: none;
-  left: 592px;
-  padding: 4px 0px;
   height: 68px;
   width: 79px;
   background: #ffffff;
@@ -79,6 +79,15 @@ const ListContainer = styled.div`
   }
   ${DropButton}:focus & {
     display: block;
+  }
+  @media (min-width: 375px) {
+    top: 29%;
+  }
+  @media (min-width: 768px) {
+    top: 35%;
+  }
+  @media (min-width: 1280px) {
+    top: 28%;
   }
 `;
 
